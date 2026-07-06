@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "CACE-Bench: A Synthetic Agentic Evaluation Benchmark for LLM Credit-Pipeline Agents"
+abstract: "Compliance-Aware Credit-agent Evaluation (CACE-Bench): a fully synthetic, reproducible benchmark and generator for evaluating and auto-evolving LLM-agent credit pipelines under auditability constraints. Measures hallucination rate, recovery rate, compliance false-positive rate and step-level correctness across dialogue, task and agent levels."
+type: software
+authors:
+  - family-names: Akhtyamov
+    given-names: Ravil
+    # orcid: "https://orcid.org/0000-0000-0000-0000"   # add if you have an ORCID
+version: 0.1.0
+date-released: 2026-07-06
+license: MIT
+repository-code: "https://github.com/rav11l/cace-bench"
+url: "https://github.com/rav11l/cace-bench"
+# doi: 10.5281/zenodo.REPLACE_WITH_CONCEPT_DOI   # uncomment and fill after the first Zenodo release
+keywords:
+  - LLM agents
+  - agentic evaluation
+  - benchmark
+  - credit pipeline
+  - compliance
+  - auditability
