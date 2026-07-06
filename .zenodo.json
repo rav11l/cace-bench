@@ -1,0 +1,19 @@
+{
+  "title": "CACE-Bench: A Synthetic Agentic Evaluation Benchmark for LLM Credit-Pipeline Agents",
+  "version": "0.1.0",
+  "upload_type": "software",
+  "description": "Compliance-Aware Credit-agent Evaluation (CACE-Bench): a fully synthetic, reproducible benchmark and generator for evaluating and auto-evolving LLM-agent credit pipelines under auditability constraints. Measures hallucination rate, recovery rate, compliance false-positive rate and step-level correctness.",
+  "creators": [
+    { "name": "Akhtyamov, Ravil" }
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "keywords": [
+    "LLM agents",
+    "agentic evaluation",
+    "benchmark",
+    "credit pipeline",
+    "compliance",
+    "auditability"
+  ]
+}
