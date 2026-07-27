@@ -36,10 +36,11 @@ threshold and a regression block on self-evolution deployment.
 | Compliance false-positive rate | Share of correct outputs wrongly flagged (cost of the safety net). | Judge flags disagreeing with ground truth ÷ correct outputs. |
 | Step-level correctness | Decision quality scored step-by-step across the multi-agent trace, not only at the final answer. | Correct steps ÷ total steps against the synthetic ground-truth trace. |
 
-**The −78% headline.** State precisely what fell by 78% (candidate: hallucination rate),
-against which baseline (candidate: the evolution-off arm), on which synthetic split, with
-confidence interval and sample size: `‹FILL›`. A single number without these four elements
-is not defensible in front of a supervisor.
+**The −78% headline.** Per Digital Economy Lab's published figure this is the **compliance
+false-positive rate** (a 78% reduction). To make it defensible, state against which baseline
+(candidate: the evolution-off arm), on which synthetic split, with confidence interval and
+sample size: `‹FILL›`. A single number without these four elements is not defensible in
+front of a supervisor.
 
 ## 4. Dataset
 

@@ -62,15 +62,16 @@ retains a reasoning trace a human reviewer can check.
 
 | Metric | Baseline (evolution off) | With CACE (evolution on) | Δ | 95% CI | n |
 |---|---|---|---|---|---|
-| Hallucination rate | `‹FILL›` | `‹FILL›` | **`‹FILL: e.g., −78%›`** | `‹FILL›` | `‹FILL›` |
+| Hallucination rate | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` |
 | Recovery rate | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` |
-| Compliance false-positive rate | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` |
+| Compliance false-positive rate | `‹FILL›` | `‹FILL›` | **`‹FILL: e.g., −78%›`** | `‹FILL›` | `‹FILL›` |
 | Step-level correctness | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` |
 
-**The −78% headline.** State precisely *what* fell by 78% (candidate: hallucination
-rate), against *which* baseline (candidate: the evolution-off arm of the ablation), on
-*which* synthetic split, with *confidence interval* and *sample size*. The dataset is
-~23k labelled traces; the per-comparison n and CI still need to come from the run.
+**The −78% headline.** Per Digital Economy Lab's published figure, this is the
+**compliance false-positive rate** (a 78% reduction). To make it defensible, still state
+against *which* baseline (candidate: the evolution-off arm of the ablation), on *which*
+synthetic split, with *confidence interval* and *sample size*. The dataset is ~23k
+labelled traces; the per-comparison n and CI still need to come from the signed run.
 
 ## Repository structure
 
