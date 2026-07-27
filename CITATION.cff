@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "CASE-bench: an open, auditable benchmark for compliance-grade AI decisions in finance"
+title: "CACE-bench: Compliance-Aware Credit-agent Evaluation — a synthetic, reproducible benchmark for auditable LLM-agent credit pipelines"
 message: "If you use CASE-bench, please cite it as below."
 authors:
   - family-names: "Akhtyamov"

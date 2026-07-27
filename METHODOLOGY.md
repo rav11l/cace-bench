@@ -1,14 +1,15 @@
-# CASE — Methodology
+# CACE — Methodology
 
-> Scaffold. Replace every `‹FILL: …›` with the real, verified method. The prose
-> around the placeholders is reusable framing; the figures and definitions are not.
+> Compliance-Aware Credit-agent Evaluation. The framing is real; figures marked
+> `‹FILL: …›` are placeholders pending the published run.
 
 ## 1. Purpose
 
-CASE evaluates automated financial decisions on three axes that regulators and risk
+CACE evaluates LLM-agent credit pipelines on three axes that regulators and risk
 committees actually ask about: **is the decision correct, is it explainable, and is
-it auditable after the fact.** CASE-bench turns those axes into measurable quantities
-and compares a CASE-governed pipeline against a defined baseline.
+it auditable after the fact.** CACE-bench turns those axes into measurable quantities
+on fully synthetic data, and compares a CACE-governed pipeline against a defined
+baseline — supporting auto-evolving agents under the same auditability constraints.
 
 ## 2. Definitions
 

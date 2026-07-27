@@ -1,45 +1,50 @@
-# CASE-bench
+# CACE-bench
 
-**An open, auditable benchmark for compliance-grade AI decisions in finance.**
+**Compliance-Aware Credit-agent Evaluation** — a fully synthetic, reproducible
+benchmark and generator for evaluating and auto-evolving LLM-agent credit
+pipelines under auditability constraints.
 
-> ⚠️ **Scaffold / plantilla.** This README is a structure to be filled with the real
-> method and results. Every `‹FILL: …›` marker is a placeholder — replace it with
-> verified content before making the repository public. Do not publish placeholder
-> figures as if they were results.
+> ⚠️ **Work in progress.** The methodology and framing below are real; the
+> quantitative results marked `‹FILL: …›` are placeholders pending the published
+> run. Do not cite placeholder figures as results.
 
 ---
 
-## What is CASE?
+## What CACE-bench is
 
-CASE (`‹FILL: full expansion of the acronym — e.g., "Compliance-Aware Scoring Evaluation"›`)
-is a methodology and benchmark for making automated financial decisions
-**auditable, explainable and reproducible** — so that a bank risk committee or a
-supervisor can inspect *why* a decision was made, not just *what* it was.
+CACE-bench evaluates **LLM-agent credit pipelines** — systems that ingest a credit
+application, reason over it, and produce a decision — against **auditability
+constraints**: can each decision be explained, traced and reproduced?
 
-CASE-bench is the public, reproducible harness that measures how much the CASE
-methodology improves `‹FILL: the target metric — e.g., auditable-error rate /
-false-decision rate / reviewability›` over a defined baseline.
+It has two parts:
 
-**Why this exists.** Regulators and risk committees are moving toward requiring
-explainability and auditability of AI-driven decisions. CASE-bench is designed to
-be handed to them *before* those requirements are formalised — a common, open
-yardstick rather than a vendor claim.
+- **A generator** that produces *fully synthetic* credit cases and populations. No
+  real personal or financial data is used, so the benchmark is shareable, privacy-safe
+  and reproducible by anyone.
+- **A benchmark** that scores a pipeline on decision quality *and* on auditability /
+  explainability, and supports **auto-evolving** agents (iterative self-improvement
+  under the same constraints).
 
-## Headline result
+**Why it exists.** Regulators and bank risk committees are moving toward requiring
+explainable, auditable AI in credit. CACE-bench is a common, open yardstick — evidence
+you can put in front of a risk committee or supervisor *before* requirements are
+formalised, rather than a vendor claim.
 
-| Metric | Baseline | CASE | Δ |
+## Headline results
+
+> Reproducible from [REPRODUCIBILITY.md](REPRODUCIBILITY.md). Fill from the published run.
+
+| Metric | Baseline | With CACE | Δ |
 |---|---|---|---|
-| `‹FILL: metric name›` | `‹FILL›` | `‹FILL›` | **‹FILL: e.g., −78%›** |
-| `‹FILL: e.g., AUC›` | `‹FILL›` | `‹FILL: e.g., 0.887›` | `‹FILL›` |
+| `‹FILL: auditable-error / review-failure rate›` | `‹FILL›` | `‹FILL›` | **`‹FILL: e.g., −78%›`** |
+| `‹FILL: decision quality — e.g., AUC›` | `‹FILL›` | `‹FILL›` | `‹FILL›` |
 
-*All figures are reproducible from the steps in [REPRODUCIBILITY.md](REPRODUCIBILITY.md).*
+## What it measures
 
-## What CASE-bench measures
-
+- **Decision quality** — `‹FILL: how correctness is scored on synthetic cases›`
 - **Auditability** — `‹FILL: how you quantify that a decision can be traced/explained›`
-- **Error / reliability** — `‹FILL: the error metric and how CASE reduces it›`
-- **Explainability** — `‹FILL: how each decision exposes its reasoning (e.g., reasoning trace)›`
-- **Reproducibility** — every result in this repo can be regenerated from public inputs.
+- **Explainability** — each decision exposes a checkable reasoning trace (`‹FILL: format›`)
+- **Reproducibility** — every figure regenerates from the synthetic generator + fixed seeds.
 
 ## Repository structure
 
@@ -47,35 +52,36 @@ yardstick rather than a vendor claim.
 cace-bench/
 ├── README.md              — this document (public compliance artifact)
 ├── METHODOLOGY.md         — full methodology
-├── REPRODUCIBILITY.md     — environment, data and steps to reproduce
-├── CITATION.cff           — how to cite CASE-bench
+├── REPRODUCIBILITY.md     — environment, seeds and steps to reproduce
+├── CITATION.cff           — how to cite
+├── .zenodo.json           — Zenodo archiving metadata (DOI)
 ├── LICENSE                — ‹FILL: Apache-2.0 recommended›
-├── methodology/           — detailed specs, definitions, decision rubric
-├── data/                  — dataset description and access (‹FILL›)
-├── src/                   — benchmark code (‹FILL›)
+├── src/                   — generator + benchmark code (‹FILL›)
 └── results/               — signed, dated result reports
-    └── REPORT_TEMPLATE.md — template for each benchmark run
+    └── REPORT_TEMPLATE.md — template for each run
 ```
 
 ## Quickstart
 
 ```bash
 ‹FILL: e.g., uv sync›
-‹FILL: e.g., python -m case_bench.run --config configs/default.yaml›
+‹FILL: e.g., python -m cace_bench.generate --seed 0›
+‹FILL: e.g., python -m cace_bench.run --config configs/default.yaml›
 ```
-
-See [REPRODUCIBILITY.md](REPRODUCIBILITY.md) for the full protocol.
 
 ## Scope and honesty
 
-- CASE-bench measures `‹FILL›`. It does **not** claim `‹FILL: state explicit limits —
-  e.g., "to certify regulatory compliance in any jurisdiction"›`.
-- Results depend on the dataset and baseline defined here; other datasets may differ.
-- This benchmark is a methodology and evidence tool, not legal or regulatory advice.
+- Data is **fully synthetic** by design: this maximises reproducibility and removes
+  privacy risk, but results are on synthetic populations — state this plainly to any
+  supervisor and describe how the generator reflects real credit distributions (`‹FILL›`).
+- CACE-bench measures auditability and decision quality; it does **not** by itself
+  certify regulatory compliance in any jurisdiction.
+- This is an evidence and methodology tool, not legal or regulatory advice.
 
 ## How to cite
 
-See [CITATION.cff](CITATION.cff).
+See [CITATION.cff](CITATION.cff). A citable release (v0.1.0) and Zenodo metadata are
+included in the repository.
 
 ## License
 
