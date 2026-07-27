@@ -1,5 +1,7 @@
 # CACE-Bench
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21394049.svg)](https://doi.org/10.5281/zenodo.21394049)
+
 **Compliance-Aware Credit-agent Evaluation** — *a synthetic agentic evaluation
 benchmark for LLM credit-pipeline agents.* A fully synthetic, reproducible benchmark
 and generator for evaluating and auto-evolving LLM-agent credit pipelines under
@@ -113,8 +115,9 @@ cace-bench/
 
 ## How to cite
 
-See [CITATION.cff](CITATION.cff). A citable release (v0.1.0) and Zenodo metadata are
-included in the repository.
+Archived on Zenodo with a DOI. Cite **10.5281/zenodo.21394049** (concept DOI — always
+resolves to the latest version; v0.1.0 = 10.5281/zenodo.21394051). Machine-readable
+metadata in [CITATION.cff](CITATION.cff).
 
 ## License
 

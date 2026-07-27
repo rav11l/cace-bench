@@ -15,7 +15,15 @@ abstract: >-
   hallucination rate, recovery rate, compliance false-positive rate and
   step-level correctness on ~23k labelled multi-agent traces.
 version: "0.1.0"
-date-released: "‹FILL: YYYY-MM-DD of the v0.1.0 release›"
+date-released: "2026-07-16"
+doi: 10.5281/zenodo.21394049
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.21394049
+    description: Concept DOI (all versions; resolves to the latest)
+  - type: doi
+    value: 10.5281/zenodo.21394051
+    description: DOI for version 0.1.0
 license: MIT
 keywords:
   - LLM agents
