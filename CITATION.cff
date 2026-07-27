@@ -1,19 +1,27 @@
 cff-version: 1.2.0
-title: "CACE-bench: Compliance-Aware Credit-agent Evaluation — a synthetic, reproducible benchmark for auditable LLM-agent credit pipelines"
-message: "If you use CASE-bench, please cite it as below."
+title: "CACE-Bench: A Synthetic Agentic Evaluation Benchmark for LLM Credit-Pipeline Agents"
+message: "If you use CACE-Bench, please cite it as below."
+type: software
 authors:
   - family-names: "Akhtyamov"
     given-names: "Ravil"
     affiliation: "Digital Economy Lab"
 repository-code: "https://github.com/rav11l/cace-bench"
 url: "https://digitaleconomylab.org"
-version: "‹FILL: 0.1.0›"
-date-released: "‹FILL: YYYY-MM-DD›"
-license: "‹FILL: Apache-2.0›"
+abstract: >-
+  Compliance-Aware Credit-agent Evaluation (CACE-Bench): a fully synthetic,
+  reproducible benchmark and generator for evaluating and auto-evolving
+  LLM-agent credit pipelines under auditability constraints. Measures
+  hallucination rate, recovery rate, compliance false-positive rate and
+  step-level correctness on ~23k labelled multi-agent traces.
+version: "0.1.0"
+date-released: "‹FILL: YYYY-MM-DD of the v0.1.0 release›"
+license: MIT
 keywords:
-  - explainable AI
-  - auditability
-  - compliance
-  - credit
-  - pensions
+  - LLM agents
+  - agentic evaluation
   - benchmark
+  - credit pipeline
+  - compliance
+  - auditability
+  - explainable AI
