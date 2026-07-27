@@ -1,110 +1,86 @@
-# CACE-Bench
+# CASE-bench
 
-**Compliance-Aware Credit-agent Evaluation** — a fully synthetic, reproducible benchmark and
-generator for evaluating and *auto-evolving* LLM-agent credit pipelines under auditability
-constraints.
+**An open, auditable benchmark for compliance-grade AI decisions in finance.**
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Python](https://img.shields.io/badge/python-3.10%2B-blue)
-![Status](https://img.shields.io/badge/version-v0.1.0-informational)
-<!-- After you mint a Zenodo DOI (see "How to cite"), add:
-[![DOI](https://zenodo.org/badge/DOI/REPLACE_WITH_DOI.svg)](https://doi.org/REPLACE_WITH_DOI) -->
-
-> **Fully synthetic — no real personal or company data.** Identifiers (INN/OGRN) are
-> format-valid (correct checksums) but randomly generated; the "registry" is a self-authored
-> oracle; sanctioned entities are fictitious. For methodology and benchmarking only.
-
-CACE-Bench accompanies work on **compliance-bounded self-evolution** of LLM agents in regulated
-credit pipelines. Standard tabular credit datasets (German Credit, Home Credit) give feature
-distributions and a default label, but no dialogues, execution traces, or *labelled agent errors* —
-so they cannot measure hallucination, recovery, or instruction adherence, nor demonstrate an
-auto-evolution loop. CACE-Bench fills that gap with a controllable, reproducible **agentic** layer.
+> ⚠️ **Scaffold / plantilla.** This README is a structure to be filled with the real
+> method and results. Every `‹FILL: …›` marker is a placeholder — replace it with
+> verified content before making the repository public. Do not publish placeholder
+> figures as if they were results.
 
 ---
 
-## What's inside
+## What is CASE?
 
-```
-generate_dataset.py            # the generator (edit + rerun to regenerate; seed 20260701)
-DATASHEET.md                   # dataset documentation (composition, limits, ethics)
-requirements.txt               # numpy, pandas
-data/
-  applications.csv             # 3,000 applications + gold fields
-  registry_oracle.json         # 4,200 companies = compliance ground truth (checksum-valid IDs)
-  traces.jsonl                 # ~23,000 labelled multi-agent steps  <-- primary object
-  consistency_set.jsonl        # 300 x 5 repeated score_pd (Consistency metric)
-  splits.json                  # historical / dev / test, T_index, previously_correct
-reports/
-  metrics_report.md            # three-level metrics + auto-evolution ablation
-  stats.json                   # machine-readable metrics
-CITATION.cff  .zenodo.json  LICENSE
-```
+CASE (`‹FILL: full expansion of the acronym — e.g., "Compliance-Aware Scoring Evaluation"›`)
+is a methodology and benchmark for making automated financial decisions
+**auditable, explainable and reproducible** — so that a bank risk committee or a
+supervisor can inspect *why* a decision was made, not just *what* it was.
+
+CASE-bench is the public, reproducible harness that measures how much the CASE
+methodology improves `‹FILL: the target metric — e.g., auditable-error rate /
+false-decision rate / reviewability›` over a defined baseline.
+
+**Why this exists.** Regulators and risk committees are moving toward requiring
+explainability and auditability of AI-driven decisions. CASE-bench is designed to
+be handed to them *before* those requirements are formalised — a common, open
+yardstick rather than a vendor claim.
 
 ## Headline result
 
-At time **T** (70% of the chronologically ordered stream) a simulated regulatory re-interpretation
-degrades the compliance beneficiary primitive. Three conditions are compared on the post-T window:
+| Metric | Baseline | CASE | Δ |
+|---|---|---|---|
+| `‹FILL: metric name›` | `‹FILL›` | `‹FILL›` | **‹FILL: e.g., −78%›** |
+| `‹FILL: e.g., AUC›` | `‹FILL›` | `‹FILL: e.g., 0.887›` | `‹FILL›` |
 
-| Condition | Compliance FP rate |
-|---|---|
-| pre-T (healthy) | ~3% |
-| post-T baseline (degraded) | **23.7%** |
-| post-T local-only (Self-Harness) | 13.5% (−43% rel.) |
-| post-T dual-loop (+AEGIS) | **5.1% (−78% rel.)** |
+*All figures are reproducible from the steps in [REPRODUCIBILITY.md](REPRODUCIBILITY.md).*
 
-Hallucination rate falls 8.6% -> 5.4%; step-level correctness returns to 0.995 (no regression on
-previously correct cases). Full metrics in [`reports/metrics_report.md`](reports/metrics_report.md).
+## What CASE-bench measures
 
-## Quick start
+- **Auditability** — `‹FILL: how you quantify that a decision can be traced/explained›`
+- **Error / reliability** — `‹FILL: the error metric and how CASE reduces it›`
+- **Explainability** — `‹FILL: how each decision exposes its reasoning (e.g., reasoning trace)›`
+- **Reproducibility** — every result in this repo can be regenerated from public inputs.
+
+## Repository structure
+
+```
+cace-bench/
+├── README.md              — this document (public compliance artifact)
+├── METHODOLOGY.md         — full methodology
+├── REPRODUCIBILITY.md     — environment, data and steps to reproduce
+├── CITATION.cff           — how to cite CASE-bench
+├── LICENSE                — ‹FILL: Apache-2.0 recommended›
+├── methodology/           — detailed specs, definitions, decision rubric
+├── data/                  — dataset description and access (‹FILL›)
+├── src/                   — benchmark code (‹FILL›)
+└── results/               — signed, dated result reports
+    └── REPORT_TEMPLATE.md — template for each benchmark run
+```
+
+## Quickstart
 
 ```bash
-pip install -r requirements.txt
-python generate_dataset.py        # deterministic; regenerates data/ and reports/
+‹FILL: e.g., uv sync›
+‹FILL: e.g., python -m case_bench.run --config configs/default.yaml›
 ```
 
-To scale or reshape: edit `N_APPS`, `SANCTION_RATE`, the error-rate dicts
-(`BASE` / `DEGRADED` / `LOCAL_ONLY` / `DUAL_LOOP`) and `T_INDEX` at the top of the script.
+See [REPRODUCIBILITY.md](REPRODUCIBILITY.md) for the full protocol.
 
-## Trace schema (`data/traces.jsonl`)
+## Scope and honesty
 
-```json
-{"application_id":"APP-000013","step_id":4,"agent":"Agent-Compliance",
- "primitive":"check_beneficiary_115fz","gold":"clear","output":"flag",
- "injected_error":"false_positive","recovered":true,"final_correct":true,
- "period":"pre_T","variant":"baseline","split":"historical"}
-```
-
-- `variant` in {`baseline`, `local_only`, `dual_loop`} — `baseline` spans all applications;
-  the two evolution variants span the post-T eval window (for the ablation).
-- `period` in {`pre_T`, `post_T`} — split by the degradation time T.
-
-## Recommended use
-
-- Report the three-level metrics (dialogue / task / agent) from `traces.jsonl`.
-- Demonstrate auto-evolution: pre-T retro-test -> post-T recovery; ablation
-  `baseline vs local_only vs dual_loop`.
-- Check **no regression on previously-correct** cases (`splits.json -> previously_correct_ids`).
-- Calibrate an LLM-as-judge on a hand-labelled subset before trusting automated judging.
-
-## Limitations
-
-Synthetic -> limited external validity (numbers illustrate the *method*, not production
-performance). Sanctioned cases are rare (~2%), so the missed-check metric has small support — raise
-`SANCTION_RATE`. A real open base (German Credit / Home Credit) can be swapped under the agentic
-layer for external validity; see `DATASHEET.md`.
+- CASE-bench measures `‹FILL›`. It does **not** claim `‹FILL: state explicit limits —
+  e.g., "to certify regulatory compliance in any jurisdiction"›`.
+- Results depend on the dataset and baseline defined here; other datasets may differ.
+- This benchmark is a methodology and evidence tool, not legal or regulatory advice.
 
 ## How to cite
 
-After you create a GitHub **Release** from tag `v0.1.0` and archive it on **Zenodo**, a DOI is
-minted. Add the DOI badge above and cite as:
-
-> Akhtyamov, R. (2026). *CACE-Bench: A Synthetic Agentic Evaluation Benchmark for LLM
-> Credit-Pipeline Agents* (v0.1.0) [Software]. Zenodo. https://doi.org/REPLACE_WITH_DOI
-
-Repository: https://github.com/rav11l/cace-bench
+See [CITATION.cff](CITATION.cff).
 
 ## License
 
-Code: **MIT** (see [`LICENSE`](LICENSE)). Generated synthetic data are released for reuse; if you
-need an explicit data license, treat them as CC0-1.0. All data are synthetic; no real personal or
-company data are used.
+`‹FILL: Apache-2.0 recommended (same as Perseus), or your choice›`
+
+---
+
+*Maintained by Digital Economy Lab · cauceia.com · digitaleconomylab.org*
