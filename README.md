@@ -5,10 +5,11 @@ benchmark for LLM credit-pipeline agents.* A fully synthetic, reproducible bench
 and generator for evaluating and auto-evolving LLM-agent credit pipelines under
 auditability constraints.
 
-> ⚠️ **Work in progress.** The methodology, metrics and framing below are real and
-> match the published v0.1.0 metadata. The **quantitative results** marked `‹FILL: …›`
-> are placeholders pending a signed, dated run — do **not** cite them as results until
-> filled from [results/REPORT_TEMPLATE.md](results/REPORT_TEMPLATE.md).
+> ⚠️ **Work in progress.** The methodology and framing are real and match the published
+> v0.1.0 metadata. Headline figures below are Digital Economy Lab's published synthetic-run
+> results; **95% confidence intervals and sample size (n) are still pending** a signed,
+> dated report ([results/REPORT_TEMPLATE.md](results/REPORT_TEMPLATE.md)). Remaining
+> `‹FILL›` markers are not yet-published values — do not cite them as results.
 
 ---
 
@@ -62,16 +63,21 @@ retains a reasoning trace a human reviewer can check.
 
 | Metric | Baseline (evolution off) | With CACE (evolution on) | Δ | 95% CI | n |
 |---|---|---|---|---|---|
-| Hallucination rate | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` |
+| Hallucination rate | 8.6% | 5.4% | −37% | `‹FILL›` | `‹FILL›` |
 | Recovery rate | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` |
-| Compliance false-positive rate | `‹FILL›` | `‹FILL›` | **`‹FILL: e.g., −78%›`** | `‹FILL›` | `‹FILL›` |
-| Step-level correctness | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` | `‹FILL›` |
+| Compliance false-positive rate | 23.7% | 5.1% | **−78%** | `‹FILL›` | `‹FILL›` |
+| Step-level correctness | `‹FILL›` | `‹FILL›` | no regression on already-correct cases | `‹FILL›` | `‹FILL›` |
 
-**The −78% headline.** Per Digital Economy Lab's published figure, this is the
-**compliance false-positive rate** (a 78% reduction). To make it defensible, still state
-against *which* baseline (candidate: the evolution-off arm of the ablation), on *which*
-synthetic split, with *confidence interval* and *sample size*. The dataset is ~23k
-labelled traces; the per-comparison n and CI still need to come from the signed run.
+*Figures published by Digital Economy Lab (digitaleconomylab.org); data 100% synthetic.
+95% confidence intervals and per-comparison n are still pending a signed report.*
+
+**The −78% headline.** Under a rule-reinterpretation stress scenario on synthetic data, the
+**compliance false-positive rate** was **23.7%** with self-evolution off and was brought
+back to **5.1%** with self-evolution on — a **78% relative reduction** — while the
+**hallucination rate** fell from **8.6%** to **5.4%**, with no regression on already-correct
+cases. Baseline = evolution off; CACE = evolution on. Still needed for full defensibility:
+95% confidence intervals and per-comparison sample size (n) from the signed run; the dataset
+is ~23k labelled synthetic traces.
 
 ## Repository structure
 

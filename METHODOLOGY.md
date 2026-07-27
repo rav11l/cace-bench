@@ -36,11 +36,12 @@ threshold and a regression block on self-evolution deployment.
 | Compliance false-positive rate | Share of correct outputs wrongly flagged (cost of the safety net). | Judge flags disagreeing with ground truth ÷ correct outputs. |
 | Step-level correctness | Decision quality scored step-by-step across the multi-agent trace, not only at the final answer. | Correct steps ÷ total steps against the synthetic ground-truth trace. |
 
-**The −78% headline.** Per Digital Economy Lab's published figure this is the **compliance
-false-positive rate** (a 78% reduction). To make it defensible, state against which baseline
-(candidate: the evolution-off arm), on which synthetic split, with confidence interval and
-sample size: `‹FILL›`. A single number without these four elements is not defensible in
-front of a supervisor.
+**The −78% headline.** On synthetic data under a rule-reinterpretation stress scenario, the
+**compliance false-positive rate** was 23.7% with self-evolution off and 5.1% with
+self-evolution on — a 78% relative reduction — while the hallucination rate fell from 8.6%
+to 5.4% with no regression on already-correct cases. Baseline = evolution off; CACE =
+evolution on. Still to attach for full defensibility: 95% confidence interval and sample
+size (n) from the signed run (published by Digital Economy Lab; data 100% synthetic).
 
 ## 4. Dataset
 
