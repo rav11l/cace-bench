@@ -32,6 +32,9 @@ identifiers:
     value: 10.5281/zenodo.21628447
     description: DOI for version 0.2.0
   - type: doi
+    value: 10.5281/zenodo.21627856
+    description: DOI for version 0.1.1 (the Zenodo record is labelled 0.1.0; it archives tag v0.1.1)
+  - type: doi
     value: 10.5281/zenodo.21394051
     description: DOI for version 0.1.0
 license: MIT
