@@ -1,0 +1,243 @@
+{
+  "version": "2026-08-03",
+  "providers": {
+    "belvo": {
+      "class": "open_banking",
+      "partial_rate": 0.12,
+      "p95_latency_ms": 4000,
+      "cost_usd_per_pull": 0.0,
+      "countries": {
+        "MX": 0.75,
+        "BR": 0.7,
+        "CO": 0.65
+      },
+      "unverified_fields": [
+        "cost_usd_per_pull",
+        "p95_latency_ms",
+        "partial_rate"
+      ]
+    },
+    "prometeo": {
+      "class": "open_banking",
+      "partial_rate": 0.15,
+      "p95_latency_ms": 5000,
+      "cost_usd_per_pull": 0.0,
+      "countries": {
+        "EC": 0.6,
+        "MX": 0.65,
+        "CO": 0.6,
+        "PE": 0.6,
+        "CL": 0.6,
+        "AR": 0.6,
+        "BR": 0.55
+      },
+      "unverified_fields": [
+        "cost_usd_per_pull",
+        "p95_latency_ms",
+        "partial_rate"
+      ]
+    },
+    "finvero": {
+      "class": "open_banking",
+      "partial_rate": 0.18,
+      "p95_latency_ms": 5000,
+      "cost_usd_per_pull": 0.0,
+      "countries": {
+        "MX": 0.6
+      },
+      "unverified_fields": [
+        "cost_usd_per_pull",
+        "p95_latency_ms",
+        "partial_rate"
+      ]
+    },
+    "riskseal": {
+      "class": "alt_data",
+      "partial_rate": 0.1,
+      "p95_latency_ms": 1500,
+      "cost_usd_per_pull": 0.15,
+      "countries": {
+        "EC": 0.85,
+        "MX": 0.88,
+        "CO": 0.86,
+        "BR": 0.86,
+        "CL": 0.85,
+        "PE": 0.84,
+        "AR": 0.84
+      },
+      "unverified_fields": [
+        "cost_usd_per_pull",
+        "p95_latency_ms",
+        "partial_rate"
+      ]
+    },
+    "begini": {
+      "class": "alt_data",
+      "partial_rate": 0.2,
+      "p95_latency_ms": 2500,
+      "cost_usd_per_pull": 0.2,
+      "countries": {
+        "EC": 0.55,
+        "MX": 0.6,
+        "CO": 0.55
+      },
+      "unverified_fields": [
+        "cost_usd_per_pull",
+        "p95_latency_ms",
+        "partial_rate"
+      ]
+    },
+    "altscore": {
+      "class": "alt_data",
+      "partial_rate": 0.15,
+      "p95_latency_ms": 2000,
+      "cost_usd_per_pull": 0.25,
+      "countries": {
+        "EC": 0.7,
+        "MX": 0.65
+      },
+      "unverified_fields": [
+        "cost_usd_per_pull",
+        "p95_latency_ms",
+        "partial_rate"
+      ]
+    },
+    "abaco": {
+      "class": "alt_data",
+      "partial_rate": 0.2,
+      "p95_latency_ms": 3000,
+      "cost_usd_per_pull": 0.2,
+      "countries": {
+        "CO": 0.6
+      },
+      "unverified_fields": [
+        "cost_usd_per_pull",
+        "p95_latency_ms",
+        "partial_rate"
+      ]
+    },
+    "screening_vendor_tbd": {
+      "class": "screening",
+      "partial_rate": 0.03,
+      "p95_latency_ms": 1200,
+      "cost_usd_per_pull": 0.3,
+      "countries": {
+        "EC": 0.97,
+        "MX": 0.97,
+        "CO": 0.97,
+        "BR": 0.97,
+        "CL": 0.97,
+        "PE": 0.97,
+        "AR": 0.97
+      },
+      "unverified_fields": [
+        "cost_usd_per_pull",
+        "p95_latency_ms",
+        "partial_rate"
+      ]
+    }
+  },
+  "chains": {
+    "EC": {
+      "open_banking": [
+        "prometeo"
+      ],
+      "alt_data": [
+        "altscore",
+        "riskseal",
+        "begini"
+      ],
+      "screening": [
+        "screening_vendor_tbd"
+      ]
+    },
+    "MX": {
+      "open_banking": [
+        "belvo",
+        "prometeo",
+        "finvero"
+      ],
+      "alt_data": [
+        "riskseal",
+        "altscore",
+        "begini"
+      ],
+      "screening": [
+        "screening_vendor_tbd"
+      ]
+    },
+    "CO": {
+      "open_banking": [
+        "belvo",
+        "prometeo"
+      ],
+      "alt_data": [
+        "riskseal",
+        "abaco",
+        "begini"
+      ],
+      "screening": [
+        "screening_vendor_tbd"
+      ]
+    },
+    "BR": {
+      "open_banking": [
+        "belvo",
+        "prometeo"
+      ],
+      "alt_data": [
+        "riskseal"
+      ],
+      "screening": [
+        "screening_vendor_tbd"
+      ]
+    },
+    "CL": {
+      "open_banking": [
+        "prometeo"
+      ],
+      "alt_data": [
+        "riskseal"
+      ],
+      "screening": [
+        "screening_vendor_tbd"
+      ]
+    },
+    "PE": {
+      "open_banking": [
+        "prometeo"
+      ],
+      "alt_data": [
+        "riskseal"
+      ],
+      "screening": [
+        "screening_vendor_tbd"
+      ]
+    },
+    "AR": {
+      "open_banking": [
+        "prometeo"
+      ],
+      "alt_data": [
+        "riskseal"
+      ],
+      "screening": [
+        "screening_vendor_tbd"
+      ]
+    }
+  },
+  "budgets": {
+    "default": {
+      "max_cost_usd": 0.6,
+      "max_latency_ms": 12000
+    },
+    "micro": {
+      "max_cost_usd": 0.3,
+      "max_latency_ms": 8000
+    },
+    "large": {
+      "max_cost_usd": 1.5,
+      "max_latency_ms": 20000
+    }
+  }
+}
