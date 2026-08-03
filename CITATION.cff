@@ -11,16 +11,23 @@ url: "https://digitaleconomylab.org"
 abstract: >-
   Compliance-Aware Credit-agent Evaluation (CACE-Bench): a fully synthetic,
   reproducible benchmark and generator for evaluating and auto-evolving
-  LLM-agent credit pipelines under auditability constraints. Measures
+  LLM-agent credit pipelines under auditability constraints. Cases are drawn
+  per country and each source class is resolved against a provider registry, so
+  the benchmark measures what a pipeline does when the data it needs is not
+  obtainable — not only whether it reasons correctly when everything is present.
+  Reports silent-decision rate, provenance completeness, over-escalation rate,
   hallucination rate, recovery rate, compliance false-positive rate and
-  step-level correctness on ~23k labelled multi-agent traces.
-version: "0.1.0"
-date-released: "2026-07-16"
+  step-level correctness, with 95% Wilson intervals, on 23,000 synthetic cases.
+version: "0.3.0"
+date-released: "2026-08-03"
 doi: 10.5281/zenodo.21394049
 identifiers:
   - type: doi
     value: 10.5281/zenodo.21394049
     description: Concept DOI (all versions; resolves to the latest)
+  - type: doi
+    value: 10.5281/zenodo.21628447
+    description: DOI for version 0.2.0
   - type: doi
     value: 10.5281/zenodo.21394051
     description: DOI for version 0.1.0
@@ -33,3 +40,5 @@ keywords:
   - compliance
   - auditability
   - explainable AI
+  - data availability
+  - provenance
