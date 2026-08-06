@@ -1,0 +1,5 @@
+# raw datasets are downloaded, never committed
+raw/
+*.zip
+__pycache__/
+*.pyc
