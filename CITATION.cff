@@ -18,13 +18,16 @@ abstract: >-
   Reports silent-decision rate, provenance completeness, over-escalation rate,
   hallucination rate, recovery rate, compliance false-positive rate and
   step-level correctness, with 95% Wilson intervals, on 23,000 synthetic cases.
-version: "0.3.0"
-date-released: "2026-08-03"
+version: "0.4.0"
+date-released: "2026-08-06"
 doi: 10.5281/zenodo.21394049
 identifiers:
   - type: doi
     value: 10.5281/zenodo.21394049
     description: Concept DOI (all versions; resolves to the latest)
+  - type: doi
+    value: 10.5281/zenodo.21825136
+    description: DOI for version 0.4.0
   - type: doi
     value: 10.5281/zenodo.21775635
     description: DOI for version 0.3.0
