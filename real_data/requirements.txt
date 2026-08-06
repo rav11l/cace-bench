@@ -1,0 +1,8 @@
+# CACE-Bench · real-dataset module (optional)
+pandas>=2.0
+numpy>=1.24
+scikit-learn>=1.3
+ucimlrepo>=0.0.7      # UCI datasets (German Credit, Taiwan default, Australian, Japanese/crx)
+kaggle>=1.6          # Kaggle competitions/datasets (Home Credit, GiveMeSomeCredit, Lending Club)
+openpyxl>=3.1        # read .xls/.xlsx (Taiwan default)
+xlrd>=2.0
