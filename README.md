@@ -1,6 +1,8 @@
 # CACE-Bench
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21394049.svg)](https://doi.org/10.5281/zenodo.21394049)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-0.4.1-informational.svg)](CHANGELOG.md)
 
 **Compliance-Aware Credit-agent Evaluation** — *a synthetic agentic evaluation
 benchmark for LLM credit-pipeline agents.* A fully synthetic, reproducible benchmark
@@ -118,6 +120,36 @@ recovery 78.8%, step-level correctness 87.94% → 97.44%
 false-positive figure (22.51% → 4.96%) reproduces it within sampling noise on the new,
 harder population.
 
+## Results reported in the accompanying paper — that harness is not in this repository
+
+The paper *Compliance-Bounded Self-Evolution of LLM Agents in Regulated Credit Pipelines:
+A Dual-Loop Harness Architecture with Three-Level Quality Metrics* reports a **different
+experiment**: a simulated regulatory re-interpretation degrades the compliance beneficiary
+primitive at the 70% mark of the stream, and four conditions are compared — pre-shift
+healthy, post-shift degraded, a local-only ablation, and the full dual-loop architecture.
+There the compliance false-positive rate rises to 23.7% after the shift, the local loop
+recovers it to 13.5%, and the dual loop to 5.1% (−78% relative). That protocol counts
+~23,000 labelled **trace steps** over 3,000 applications.
+
+**That harness is not part of this repository yet.** The code here implements the
+two-condition auto-evolution ablation above and reproduces 22.51% → 4.96% on 23,000
+synthetic **cases**. The regulatory-shift harness and its four-condition protocol are
+planned for a later release, so that every number published here can be regenerated from
+the code beside it.
+
+When quoting **23.7% → 5.1%**, cite the paper. When quoting **22.51% → 4.96%**, cite this
+repository or its Zenodo record. Either way, state that the figure is measured on a
+synthetic benchmark: it is illustrative of the method, not of production performance.
+
+## Real-dataset baselines (optional, added in v0.4)
+
+For baseline comparison the generator can optionally read public credit datasets:
+German Credit, Taiwan default, Australian and Japanese credit, plus Home Credit,
+GiveMeSomeCredit and Lending Club. These are **not** required to run the benchmark and are
+**not** redistributed here — the [`real_data/`](real_data/) module reads locally provided
+copies only, through a common column schema. See
+[real_data/README.md](real_data/README.md).
+
 ## Repository structure
 
 ```
@@ -125,12 +157,18 @@ cace-bench/
 ├── README.md                     — this document (public compliance artifact)
 ├── METHODOLOGY.md                — full methodology (definitions, protocol, governance)
 ├── REPRODUCIBILITY.md            — environment, seeds and steps to reproduce
-├── CITATION.cff                  — how to cite
+├── CHANGELOG.md                  — version history
+├── CITATION.cff / CITATION.md    — how to cite (machine-readable + BibTeX and DOI guidance)
 ├── .zenodo.json                  — Zenodo archiving metadata (DOI)
 ├── LICENSE                       — MIT
 ├── configs/
 │   ├── default.json              — run config (n, seed, reference-agent parameters)
 │   └── providers.json            — provider registry: per-country chains and coverage
+├── real_data/                    — optional public-dataset integration (v0.4)
+│   ├── loaders.py                — readers for locally provided public credit datasets
+│   ├── schema.py                 — common column schema
+│   ├── download_data.py          — helper for fetching those datasets locally
+│   └── requirements.txt          — dependencies for this module only
 ├── tools/
 │   └── providers_yaml_to_json.py — regenerates configs/providers.json from the registry
 ├── cace_bench.py                 — single-file benchmark: generator + reference agent +

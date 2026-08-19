@@ -18,8 +18,11 @@ abstract: >-
   Reports silent-decision rate, provenance completeness, over-escalation rate,
   hallucination rate, recovery rate, compliance false-positive rate and
   step-level correctness, with 95% Wilson intervals, on 23,000 synthetic cases.
-version: "0.4.0"
-date-released: "2026-08-06"
+  Version 0.4 added an optional module integrating public credit datasets for
+  baseline comparison, which reads locally provided copies and redistributes
+  nothing. No real personal or production credit data is used.
+version: "0.4.1"
+date-released: "2026-08-19"
 doi: 10.5281/zenodo.21394049
 identifiers:
   - type: doi
