@@ -228,7 +228,7 @@ judge — is independent of whose agent produced the answer.
 
 To measure a real system, replace `first_pass` (and, if you have a verification or
 self-correction loop, `recover`) with an adapter that calls your pipeline. Both take a
-`Case` and return a `Narrative`; nothing else changes.
+`Case` and return a `Narrative`; nothing else changes. A ready-to-run adapter is in [`examples/benchmark_your_pipeline.py`](examples/benchmark_your_pipeline.py): change the two marked spots (`call_your_pipeline` and `OUTCOME_MAP`), sanity-check it with `--demo`, then point it at your system with `--endpoint`.
 
 **What your adapter receives.** A `Case` carries the synthetic applicant and, importantly,
 what was *obtainable* about them: `country`, `consent`, and `sources` — one `SourceState`
