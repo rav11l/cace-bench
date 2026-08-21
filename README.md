@@ -11,10 +11,12 @@ auditability constraints.
 
 > ✅ **Reference run included.** The generator, judge and ablation are implemented in a
 > single dependency-free file, [`cace_bench.py`](cace_bench.py); a signed, dated reference
-> run on 23,000 synthetic cases is in [results/](results/). The figures below are the
-> **actual output of that run** (seed 0), reproducible by anyone. They characterise a
-> reference agent + judge on the synthetic distribution — **not** a production LLM
-> pipeline; swap `first_pass`/`recover` for a live adapter to benchmark a real system.
+> run on 23,000 synthetic cases — 23,000 *cases*, a population size, not a step count — is
+> in [results/](results/). The figures below are the **actual output of that run** (seed 0),
+> reproducible by anyone. They characterise a reference agent + judge on the synthetic
+> distribution — **not** a production LLM pipeline. To measure a real system, substitute
+> your pipeline for `first_pass` / `recover`; the judge and every metric stay unchanged —
+> see [Benchmark your own pipeline](#benchmark-your-own-pipeline).
 
 ---
 
@@ -22,9 +24,10 @@ auditability constraints.
 
 CACE-Bench evaluates **LLM-agent credit pipelines** — systems that ingest a credit
 application, reason over it across stages (`intake → extraction → profiling →
-compliance → routing → dispatch`), and produce decisions — against **auditability
-constraints**: can each decision be explained, traced and reproduced, and are the
-agent's own statements checked before they reach a lender or a borrower?
+compliance`), and hand a verified result and its evidence to the lender that decides —
+against **auditability constraints**: can each decision be explained, traced and
+reproduced, and are the agent's own statements checked before they reach a lender or a
+borrower?
 
 It has two parts:
 
@@ -36,12 +39,30 @@ It has two parts:
   constraints) — shipped with an **auto-evolution ablation** on ~23k labelled
   multi-agent traces.
 
-**Why it exists.** Regulators and bank risk committees across LatAm are moving toward
-requiring explainable, auditable AI in credit. CACE-Bench is a common, open yardstick —
-evidence you can put in front of a risk committee or supervisor *before* requirements
-are formalised, rather than a vendor claim. It is the public, synthetic counterpart of
-the **CASE** LLM-as-a-judge compliance check that runs inside the Cauce pipeline, whose
-metrics map to regional frameworks (Bacen · BR, CNBV · MX, SFC · CO, SB · EC).
+**Why it exists.** Vendors in this category publish bare percentages — 95% accuracy, 88%
+auto-resolution, −78% false positives — with no case set, no protocol and no way for a
+third party to repeat them. A bank's risk committee eventually asks *compared to what*, and
+today there is no answer that is not the vendor's own word. CACE-Bench is an attempt at a
+common, open yardstick instead.
+
+The obligation behind that question is uneven across the region as of August 2026. Brazil
+is furthest along: Res. CMN 4.966 and Res. BCB 4.557 already require lenders to document
+model assumptions and limitations, validate independently and backtest, and LGPD art. 20
+gives the borrower the right to have an automated decision reviewed; PL 2.338/2023 would
+classify credit scoring as high-risk AI. In Ecuador, Resolución SPDP-SPD-2026-0009-R
+requires that the data subject be told AI took part in the processing, and recognises the
+right not to be subject to a decision based wholly *or partly* on automated processing.
+Elsewhere the requirement is not yet formalised — which is precisely when evidence is worth
+having, whether the reader is a supervisor or a client's vendor-risk team.
+
+CACE-Bench is the public, synthetic counterpart of the **CASE** LLM-as-a-judge compliance
+check that runs inside the Cauce pipeline, whose metrics map to regional frameworks
+(Bacen · BR, CNBV · MX, SFC · CO, SB / SEPS / UAFE · EC).
+
+**An open yardstick written by one vendor to measure itself is worth little.** If you run a
+credit or compliance pipeline and would rather the case set were defined jointly than handed
+down, that is the more useful version of this project — see
+[Benchmark your own pipeline](#benchmark-your-own-pipeline).
 
 ## New in v0.3 — data availability
 
@@ -81,10 +102,11 @@ v0.3 adds that axis:
 - **Step-level correctness** — quality of the decision measured step-by-step across the
   multi-agent trace, not only at the final answer.
 
-Every figure regenerates from the synthetic generator with fixed seeds; every decision
-retains a reasoning trace a human reviewer can check.
+All rates are reported with **95% Wilson confidence intervals**, computed from genuine
+counts. Every figure regenerates from the synthetic generator with fixed seeds; every
+decision retains a reasoning trace a human reviewer can check.
 
-## Headline results
+## Headline results — the reference run in this repository
 
 > Reproducible per [REPRODUCIBILITY.md](REPRODUCIBILITY.md):
 > `python cace_bench.py --n 23000 --seed 0 --providers configs/providers.json`.
@@ -100,7 +122,7 @@ compliance conclusion did not all respond — so `ESCALATE` is the correct outco
 | Metric | Baseline (evolution off) | With CACE (evolution on) | Δ | 95% CI (Δ, abs) | n |
 |---|---|---|---|---|---|
 | Silent-decision rate | 55.11% | 6.53% | **−88.1%** | [46.76, 50.39] pp | 3,582 |
-| Compliance false-positive rate | 22.51% | 4.96% | −77.9% | [16.79, 18.30] pp | 14,948 |
+| Compliance false-positive rate | **22.51%** | **4.96%** | **−77.9%** | [16.79, 18.30] pp | 14,948 |
 | Hallucination rate | 2.55% | 0.62% | −75.8% | [1.71, 2.16] pp | 23,000 |
 | Over-escalation rate | 3.60% | 0.53% | −85.4% | [2.79, 3.36] pp | 19,418 |
 | Provenance completeness *(higher is better)* | 93.40% | 99.33% | +5.93 pp | [5.59, 6.27] pp | 23,000 |
@@ -110,6 +132,10 @@ compliance conclusion did not all respond — so `ESCALATE` is the correct outco
 The undecidable share is a property of the **provider chain**, not of the agent: it is
 what the registry's coverage assumptions imply for that country. It is the number that
 explains why a pipeline escalates more in one market than in another.
+
+**Note on "23,000".** In this repository 23,000 is the number of **synthetic cases** the
+reference run generates (`--n 23000`) — a population size, not a step count. The figure
+carries a different meaning in the accompanying paper; see the next section.
 
 **v0.2.0** — archived under [DOI 10.5281/zenodo.21394049](https://doi.org/10.5281/zenodo.21394049)
 and reproducible at tag `v0.2.0` — measured the same ablation without the availability
@@ -194,10 +220,58 @@ python cace_bench.py --n 23000 --seed 0 --providers configs/providers.json --out
 file still runs standalone. Passing it explicitly is what makes a published figure
 traceable to a registry version.
 
+## Benchmark your own pipeline
+
+The reference agent is deliberately the smallest part of this repository. Everything that
+makes a figure comparable — the population, the provider chains, the ground truth and the
+judge — is independent of whose agent produced the answer.
+
+To measure a real system, replace `first_pass` (and, if you have a verification or
+self-correction loop, `recover`) with an adapter that calls your pipeline. Both take a
+`Case` and return a `Narrative`; nothing else changes.
+
+**What your adapter receives.** A `Case` carries the synthetic applicant and, importantly,
+what was *obtainable* about them: `country`, `consent`, and `sources` — one `SourceState`
+per source class (`open_banking`, `alt_data`, `screening`) recording whether the chain
+responded, which provider answered, whether the payload was partial, and which providers
+were tried in order. `truth` (`FLAG` / `CLEAR` / `ESCALATE`) and `decidable` are the ground
+truth; an adapter must not read them.
+
+**What your adapter returns.** A `Narrative` with the four fields the judge actually scores:
+
+| Field | Meaning |
+|---|---|
+| `outcome` | `FLAG`, `CLEAR` or `ESCALATE`. `ESCALATE` is the correct answer when the facts the decision needed were not obtainable |
+| `claims_kyc_verified` | whether the narrative asserts KYC was verified |
+| `cites_aml_basis` | whether an AML conclusion is given a stated basis |
+| `cited` | claim → provider name, or `None` for a claim asserted without a source |
+
+`judge()` is deterministic and unchanged: it compares the narrative against the case's
+ground truth and against the set of providers that actually responded. The `err_*` flags on
+`Narrative` are internal bookkeeping for the reference agent's two-arm ablation — an
+external adapter leaves them alone.
+
+**What you get.** Six of the seven metrics — silent-decision rate, compliance
+false-positive rate, hallucination rate, over-escalation rate, provenance completeness and
+step-level correctness — compute for any adapter, with Wilson intervals, per country and in
+aggregate. Recovery rate is the exception: it is defined by the off/on ablation and needs
+both arms, so it is meaningful only for a system whose verification loop can be switched
+off.
+
+**What it will not tell you.** Anything about production performance. The population is
+synthetic and the error rates are injected parameters; a result characterises how a pipeline
+behaves on this distribution, not on a portfolio. That limit belongs in any figure published
+from it.
+
+To run this against a live compliance pipeline, or to co-define the case set so the
+yardstick is not one vendor's, open an issue — that conversation is the point of publishing
+it.
+
 ## Scope and honesty
 
 - Data is **fully synthetic** by design: this maximises reproducibility and removes
-  privacy risk, but results are on synthetic populations. The reference run also uses a
+  privacy risk, but results are on synthetic populations. External validity is limited and
+  the headline numbers depend on the injected error rates. The reference run also uses a
   **reference agent + judge**, not a production LLM pipeline — state both plainly to any
   supervisor; swap in a live adapter to benchmark a real system.
 - **Provider coverage figures are working assumptions, not vendor-confirmed data.** Every
@@ -207,15 +281,24 @@ traceable to a registry version.
   say so.
 - Population base rates (P(sanctions)=0.05, P(PEP)=0.03, …) are documented parameters
   chosen to exercise the harness, **not** estimates of any real portfolio.
+- Agent-level metrics need large samples; sanctioned cases are rare, so the missed-check
+  metric has small support.
+- Fairness auditing requires an extended schema with protected attributes, which this
+  benchmark **deliberately omits**. That work is required before any deployment.
+- Validation on production data is the natural next step and has not been done.
 - CACE-Bench measures auditability and decision quality; it does **not** by itself
   certify regulatory compliance in any jurisdiction.
 - This is an evidence and methodology tool, not legal or regulatory advice.
+
+Any external communication reusing a headline figure must carry the synthetic-benchmark
+qualifier. Quoting it as a production result is a misstatement.
 
 ## How to cite
 
 Archived on Zenodo with a DOI. Cite **10.5281/zenodo.21394049** (concept DOI — always
 resolves to the latest version; v0.1.0 = 10.5281/zenodo.21394051). Machine-readable
-metadata in [CITATION.cff](CITATION.cff).
+metadata in [CITATION.cff](CITATION.cff); BibTeX and DOI guidance in
+[CITATION.md](CITATION.md).
 
 ## License
 
