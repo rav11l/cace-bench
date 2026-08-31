@@ -46,8 +46,8 @@ today there is no answer that is not the vendor's own word. CACE-Bench is an att
 common, open yardstick instead.
 
 The obligation behind that question is uneven across the region as of August 2026. Brazil
-is furthest along: Res. CMN 4.966 and Res. BCB 4.557 already require lenders to document
-model assumptions and limitations, validate independently and backtest, and LGPD art. 20
+is furthest along: Res. CMN 4.557/2017 (arts. 9 and 12) already requires lenders to
+document model assumptions and limitations, validate independently and backtest, and LGPD art. 20
 gives the borrower the right to have an automated decision reviewed; PL 2.338/2023 would
 classify credit scoring as high-risk AI. In Ecuador, Resolución SPDP-SPD-2026-0009-R
 requires that the data subject be told AI took part in the processing, and recognises the
