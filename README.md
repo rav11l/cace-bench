@@ -3,6 +3,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21394049.svg)](https://doi.org/10.5281/zenodo.21394049)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-0.4.1-informational.svg)](CHANGELOG.md)
+[![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20dataset-rav11l%2Fcace--bench-yellow.svg)](https://huggingface.co/datasets/rav11l/cace-bench)
 
 **Compliance-Aware Credit-agent Evaluation** — *a synthetic agentic evaluation
 benchmark for LLM credit-pipeline agents.* A fully synthetic, reproducible benchmark
@@ -219,6 +220,8 @@ python cace_bench.py --n 23000 --seed 0 --providers configs/providers.json --out
 `--providers` is optional: an equivalent registry is embedded in `cace_bench.py`, so the
 file still runs standalone. Passing it explicitly is what makes a published figure
 traceable to a registry version.
+
+Prefer to inspect the data without running code? The 23,000 reference cases (seed 0), with the reference agent's outputs and the judge's verdicts, are on Hugging Face: [rav11l/cace-bench](https://huggingface.co/datasets/rav11l/cace-bench) — `load_dataset("rav11l/cace-bench", split="test")`.
 
 ## Benchmark your own pipeline
 
