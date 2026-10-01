@@ -351,7 +351,12 @@ def h08(chain: str = "ethereum") -> dict:
     caps = []
     raw, c = rpc.call(chain, AAVE_ORACLE, "getSourceOfAsset", t0, rpc.enc_address(USDE)); caps.append(c)
     src = rpc.as_address(rpc.words(raw)[0])
-    desc = _symbol_like(chain, src, "description", t0)
+    # The label rests on this reading, so it gets its own capsule, with the decoded text.
+    raw, c = rpc.call(chain, src, "description", t0)
+    w = rpc.words(raw)
+    desc = bytes.fromhex("".join(w[2:]))[:int(w[1], 16)].decode(errors="replace")
+    c["decoded"] = desc
+    caps.append(c)
     raw, c = rpc.call(chain, AAVE_ORACLE, "getAssetPrice", t0, rpc.enc_address(USDE)); caps.append(c)
     price = rpc.as_uint(raw) / 1e8
     pegged = "USDT" in desc.upper()
