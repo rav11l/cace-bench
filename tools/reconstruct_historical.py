@@ -59,6 +59,13 @@ H10_CREATION_BLOCK = 379403243
 BORROWER_SHARE_MAX = 0.5          # one address holding more of a market's debt -> breach
 
 H11_ATTACK_TX = "0xd354a15b15cb73d30908f411aee3f795ec86737a4d080e9a818ac4d6d3014129"
+# H12 Moonwell (Base): a borrow by "Moonwell Exploiter 1" (Basescan label), block 50516532.
+H12_EXPLOIT_TX = "0xafb6f0fa257b115a5c813bf787b4c1535e63888b1d0dbeb1f3788f557f51798f"
+H12_T0 = "2026-08-26T00:00:00Z"
+MIN_COLLATERAL_FDV_USD = 50_000_000   # collateral whose whole supply is worth less is "thin"
+# H13 Edel (Ethereum): tx reported as the exploit (cryptotimes, 2026-07-01) — verify.
+H13_EXPLOIT_TX = "0xe2320086b2815d21b0927839bd0e306466c29a68d38d5361e99dd21ec5472612"
+H13_T0 = "2026-06-30T00:00:00Z"
 MIN_TIMELOCK_SECONDS = 2 * 24 * 3600
 
 
@@ -212,6 +219,89 @@ def h11(chain: str = "ethereum") -> dict:
             "derived": {"controls_safe": shortest >= MIN_TIMELOCK_SECONDS}}
 
 
+def _try(chain, to, fn, block, args=""):
+    try:
+        return rpc.call(chain, to, fn, block, args)
+    except rpc.RPCError:
+        return None, None
+
+
+def h12(chain: str = "base") -> dict:
+    """Moonwell MAMO: was a thin, spot-priced token accepted as collateral at T0?
+    Comptroller and oracle are discovered from the exploit tx; amounts read at T0."""
+    rc = rpc.receipt(chain, H12_EXPLOIT_TX)
+    b_exploit = rc["capsule"]["block"]
+    t0 = rpc.block_at(chain, H12_T0)
+    caps = [rc["capsule"]]
+    comp = None
+    for lg in rc["receipt"]["logs"]:
+        raw, c = _try(chain, lg["address"], "comptroller", t0)
+        if raw and len(raw) >= 66:
+            comp = rpc.as_address(rpc.words(raw)[0]); caps.append(c); break
+    if not comp:
+        raise rpc.RPCError("no mToken with comptroller() among the exploit tx logs")
+    raw, c = rpc.call(chain, comp, "oracle", t0); caps.append(c)
+    oracle = rpc.as_address(rpc.words(raw)[0])
+    raw, c = rpc.call(chain, comp, "getAllMarkets", t0); caps.append(c)
+    w = rpc.words(raw)
+    markets = [rpc.as_address(x) for x in w[2:2 + int(w[1], 16)]]
+    target = None
+    for m in markets:
+        if "MAMO" in _symbol(chain, m, t0).upper():
+            target = m; break
+    if not target:
+        raise rpc.RPCError(f"no MAMO market listed at block {t0}")
+    raw, c = rpc.call(chain, comp, "markets", t0, rpc.enc_address(target)); caps.append(c)
+    mw = rpc.words(raw)
+    listed, cf = rpc.as_uint(mw[0]) == 1, rpc.as_uint(mw[1]) / 1e18
+    raw, c = rpc.call(chain, target, "underlying", t0); caps.append(c)
+    mamo = rpc.as_address(rpc.words(raw)[0])
+    raw, c = rpc.call(chain, mamo, "decimals", t0); caps.append(c); dec = rpc.as_uint(raw)
+    raw, c = rpc.call(chain, mamo, "totalSupply", t0); caps.append(c); supply = rpc.as_uint(raw) / 10**dec
+    raw, c = rpc.call(chain, oracle, "getUnderlyingPrice", t0, rpc.enc_address(target)); caps.append(c)
+    p0 = rpc.as_uint(raw) / 10**(36 - dec)
+    raw, _ = rpc.call(chain, oracle, "getUnderlyingPrice", b_exploit - 1, rpc.enc_address(target))
+    p_pre = rpc.as_uint(raw) / 10**(36 - dec)
+    fdv = supply * p0
+    return {"t0_block": t0, "capsules": caps,
+            "observed": {"comptroller": comp, "oracle": oracle, "mMAMO": target, "MAMO": mamo,
+                         "listed": listed, "collateral_factor": cf, "price_t0": p0,
+                         "fdv_t0_usd": round(fdv), "post_t0_evidence":
+                         {"price_block_before_exploit_borrow": p_pre,
+                          "price_ratio": round(p_pre / p0, 2) if p0 else None}},
+            "derived": {"gate_fail": listed and cf > 0 and fdv < MIN_COLLATERAL_FDV_USD}}
+
+
+def h13(chain: str = "ethereum") -> dict:
+    """Edel: collateral valued through a wrapper exchange rate. Finds the ERC-4626-style
+    wrapper among the exploit tx logs and reads its supply and rate at T0."""
+    rc = rpc.receipt(chain, H13_EXPLOIT_TX)
+    b = rc["capsule"]["block"]
+    t0 = rpc.block_at(chain, H13_T0)
+    caps = [rc["capsule"]]
+    found = []
+    for a in sorted({lg["address"].lower() for lg in rc["receipt"]["logs"]}):
+        raw, c = _try(chain, a, "convertToAssets", t0, rpc.enc_uint(10**18))
+        if not raw or len(raw) < 66:
+            continue
+        sym = _symbol(chain, a, t0)
+        r0 = rpc.as_uint(raw)
+        sraw, sc = _try(chain, a, "totalSupply", t0)
+        raw_b, _ = _try(chain, a, "convertToAssets", b, rpc.enc_uint(10**18))
+        caps += [c] + ([sc] if sc else [])
+        found.append({"address": a, "symbol": sym, "rate_t0": r0 / 1e18,
+                      "total_supply_t0": rpc.as_uint(sraw) if sraw else None,
+                      "post_t0_evidence": {"rate_after_exploit_tx":
+                                           rpc.as_uint(raw_b) / 1e18 if raw_b else None}})
+    if not found:
+        raise rpc.RPCError("no ERC-4626-style wrapper among the exploit tx logs — check the tx hash")
+    g = [f for f in found if "GOOG" in f["symbol"].upper()] or found
+    w = g[0]
+    thin = w["total_supply_t0"] is not None and w["total_supply_t0"] < MIN_VAULT_SHARES
+    return {"t0_block": t0, "capsules": caps, "observed": {"wrappers": found},
+            "derived": {"gate_fail": thin}}
+
+
 def h10_vault(chain: str = "ethereum") -> dict:
     """Elixir vault: share of allocations by collateral token at T0."""
     t0 = rpc.block_at(chain, H10_T0)
@@ -249,7 +339,7 @@ def h10_vault(chain: str = "ethereum") -> dict:
             "derived": {"concentration_breach": top_share > CONCENTRATION_MAX}}
 
 
-RECON = {"H06": h06, "H07": h07, "H10": h10, "H11": h11}
+RECON = {"H06": h06, "H07": h07, "H10": h10, "H11": h11, "H12": h12, "H13": h13}
 
 
 def main() -> None:

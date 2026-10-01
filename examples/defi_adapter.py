@@ -40,11 +40,13 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import shlex
 import subprocess
 import sys
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from cace_bench import CLEAR, ESCALATE, FLAG, Narrative, aggregate, by_country, judge
 from defi_track import SOURCE_CLASSES, generate_defi, historical_to_case
 
@@ -111,7 +113,7 @@ def narrative_from_verdict(v: dict) -> Narrative:
 
 # -------------------------------------------------------------------- agents ----
 def call_cmd(cmd: str, payload: dict, timeout: float) -> dict:
-    p = subprocess.run(shlex.split(cmd), input=json.dumps(payload), capture_output=True,
+    p = subprocess.run(shlex.split(cmd, posix=os.name != "nt"), input=json.dumps(payload), capture_output=True,
                        text=True, timeout=timeout)
     if p.returncode != 0:
         raise RuntimeError(f"agent exited {p.returncode}: {p.stderr[-500:]}")

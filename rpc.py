@@ -48,6 +48,14 @@ SELECTORS = {
     "withdrawQueueLength": "0x33f91ebb",  # MetaMorpho v1
     "withdrawQueue": "0x62518ddf",        # MetaMorpho v1 (uint256)
     "txCooldown": "0xdcafac09",           # Zodiac Delay modifier
+    "comptroller": "0x5fe3b567",          # Compound-fork mToken
+    "oracle": "0x7dc0d1d0",               # comptroller.oracle()
+    "getAllMarkets": "0xb0772d0b",        # Compound-fork comptroller
+    "markets": "0x8e8f294b",              # comptroller.markets(address)
+    "getUnderlyingPrice": "0xfc57d4df",   # Compound-fork oracle (address)
+    "underlying": "0x6f307dc3",
+    "exchangeRateStored": "0x182df0f5",
+    "convertToAssets": "0x07a2d13a",      # ERC-4626 (uint256)
 }
 
 ARCHIVE_ERRORS = ("missing trie node", "header not found", "state not available",
