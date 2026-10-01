@@ -139,7 +139,8 @@
         "cross-venue reasoning"
       ],
       "scored": true,
-      "status": "draft"
+      "status": "draft",
+      "notes": "Solana: no reader in rpc.py yet (EVM only). Stays draft until a Solana account/AMM-snapshot reader exists; the label rests on oracle-vs-depth, which needs historical order-book or AMM state."
     },
     {
       "id": "H04",

@@ -61,6 +61,11 @@ SELECTORS = {
     "BASE_FEED_1": "0xf50a4718", "BASE_FEED_2": "0xdc53858c",   # MorphoChainlinkOracleV2
     "QUOTE_FEED_1": "0x56095e11", "QUOTE_FEED_2": "0xacfbd39e",
     "BASE_VAULT": "0xeaa2d7b4", "QUOTE_VAULT": "0x2e6f20a6",
+    "balances": "0x4903b0d1",             # Curve pool balances(uint256)
+    "balances_i128": "0x065a80d8",        # older Curve pools balances(int128)
+    "coins": "0xc6610657",                # Curve pool coins(uint256)
+    "get_dy": "0x5e0d443f",               # Curve get_dy(int128,int128,uint256)
+    "get_virtual_price": "0xbb7b8b80",
     "getAllMarkets": "0xb0772d0b",        # Compound-fork comptroller
     "markets": "0x8e8f294b",              # comptroller.markets(address)
     "getUnderlyingPrice": "0xfc57d4df",   # Compound-fork oracle (address)

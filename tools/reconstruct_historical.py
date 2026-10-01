@@ -78,6 +78,13 @@ H08_T0 = "2025-10-10T00:00:00Z"
 # H09 xUSD: the oracle of the Arbitrum USDC/xUSD market (same market as H10).
 H09_ORACLE = "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E"
 H09_T0 = "2025-10-27T00:00:00Z"
+# H01/H02/H04: exit depth through the deepest Curve pool at T0, for a fixed position size.
+EXIT_SIZE_USD = 1_000_000
+MAX_EXIT_DISCOUNT = 0.03          # losing more than 3% to exit at that size fails the gate
+CURVE_3POOL = "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7"      # DAI/USDC/USDT
+CURVE_STETH = "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022"      # ETH/stETH
+CURVE_UST_WH = "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269"     # UST(Wormhole)/3CRV
+H01_T0, H02_T0, H04_T0 = "2022-05-06T00:00:00Z", "2022-06-10T00:00:00Z", "2023-03-09T00:00:00Z"
 MIN_TIMELOCK_SECONDS = 2 * 24 * 3600
 
 
@@ -406,6 +413,83 @@ def _symbol_like(chain, to, fn, block) -> str:
         return ""
 
 
+def _curve_exit(chain, pool, i, j, dx, block, caps):
+    """Amount of coin j received for dx of coin i, plus pool balances, at a block."""
+    raw, c = rpc.call(chain, pool, "get_dy", block, rpc.enc_uint(i) + rpc.enc_uint(j) + rpc.enc_uint(dx))
+    caps.append(c)
+    out = rpc.as_uint(raw)
+    bals = []
+    for k in range(4):
+        r, c = _try(chain, pool, "balances", block, rpc.enc_uint(k))
+        if not r:
+            r, c = _try(chain, pool, "balances_i128", block, rpc.enc_uint(k))
+        if not r:
+            break
+        caps.append(c)
+        bals.append(rpc.as_uint(r))
+    return out, bals
+
+
+def _coin_meta(chain, pool, k, block, caps):
+    raw, c = rpc.call(chain, pool, "coins", block, rpc.enc_uint(k)); caps.append(c)
+    a = rpc.as_address(rpc.words(raw)[0])
+    if a.lower() == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
+        return a, "ETH", 18
+    raw, c = rpc.call(chain, a, "decimals", block); caps.append(c)
+    return a, _symbol(chain, a, block), rpc.as_uint(raw)
+
+
+def h04(chain: str = "ethereum") -> dict:
+    """USDC before SVB: exit depth for $1M USDC -> DAI through the Curve 3pool at T0."""
+    t0 = rpc.block_at(chain, H04_T0); caps = []
+    _, s_in, d_in = _coin_meta(chain, CURVE_3POOL, 1, t0, caps)
+    _, s_out, d_out = _coin_meta(chain, CURVE_3POOL, 0, t0, caps)
+    out, bals = _curve_exit(chain, CURVE_3POOL, 1, 0, EXIT_SIZE_USD * 10**d_in, t0, caps)
+    disc = 1 - (out / 10**d_out) / EXIT_SIZE_USD
+    norm = [bals[0] / 1e18, bals[1] / 1e6, bals[2] / 1e6] if len(bals) == 3 else []
+    return {"t0_block": t0, "capsules": caps,
+            "observed": {"pool": CURVE_3POOL, "exit": f"{EXIT_SIZE_USD:,} {s_in} -> {s_out}",
+                         "exit_discount": round(disc, 5),
+                         "pool_shares": [round(x / sum(norm), 4) for x in norm] if norm else None},
+            "derived": {"gate_fail": disc > MAX_EXIT_DISCOUNT}}
+
+
+def h02(chain: str = "ethereum") -> dict:
+    """stETH, June 2022: exit depth stETH -> ETH through Curve at T0, and pool imbalance."""
+    t0 = rpc.block_at(chain, H02_T0); caps = []
+    _, s_in, d_in = _coin_meta(chain, CURVE_STETH, 1, t0, caps)
+    # size in stETH: $1M at ~1,800 USD/ETH (June 2022) ≈ 550 stETH; recorded, not hidden
+    size = 550
+    out, bals = _curve_exit(chain, CURVE_STETH, 1, 0, size * 10**d_in, t0, caps)
+    disc = 1 - (out / 1e18) / size
+    share_steth = bals[1] / (bals[0] + bals[1]) if len(bals) >= 2 else None
+    return {"t0_block": t0, "capsules": caps,
+            "observed": {"pool": CURVE_STETH, "exit": f"{size} {s_in} -> ETH (≈ ${EXIT_SIZE_USD:,})",
+                         "exit_discount": round(disc, 5),
+                         "steth_share_of_pool": round(share_steth, 4) if share_steth else None},
+            "derived": {"gate_fail": disc > MAX_EXIT_DISCOUNT}}
+
+
+def h01(chain: str = "ethereum") -> dict:
+    """UST, May 2022: exit depth and imbalance of the Curve UST/3CRV metapool at T0.
+    Evidence only: the label rests on reflexive backing on Terra, not observable here."""
+    t0 = rpc.block_at(chain, H01_T0); caps = []
+    _, s_in, d_in = _coin_meta(chain, CURVE_UST_WH, 0, t0, caps)
+    if "UST" not in s_in.upper():
+        raise rpc.RPCError(f"coin 0 of {CURVE_UST_WH} is {s_in}, expected UST — check the pool address")
+    out, bals = _curve_exit(chain, CURVE_UST_WH, 0, 1, EXIT_SIZE_USD * 10**d_in, t0, caps)
+    raw, c = rpc.call(chain, CURVE_3POOL, "get_virtual_price", t0); caps.append(c)
+    vp = rpc.as_uint(raw) / 1e18
+    disc = 1 - (out / 1e18 * vp) / EXIT_SIZE_USD
+    share_ust = (bals[0] / 10**d_in) / (bals[0] / 10**d_in + bals[1] / 1e18 * vp) if len(bals) >= 2 else None
+    return {"t0_block": t0, "capsules": caps, "status_override": "evidence attached",
+            "observed": {"pool": CURVE_UST_WH, "exit": f"{EXIT_SIZE_USD:,} {s_in} -> 3CRV",
+                         "exit_discount": round(disc, 5),
+                         "ust_share_of_pool": round(share_ust, 4) if share_ust else None,
+                         "note": "label (reflexive backing) is not observable on Ethereum; exit depth is shown as evidence only"},
+            "derived": {}}
+
+
 def h10_vault(chain: str = "ethereum") -> dict:
     """Elixir vault: share of allocations by collateral token at T0."""
     t0 = rpc.block_at(chain, H10_T0)
@@ -443,7 +527,7 @@ def h10_vault(chain: str = "ethereum") -> dict:
             "derived": {"concentration_breach": top_share > CONCENTRATION_MAX}}
 
 
-RECON = {"H05": h05, "H06": h06, "H07": h07, "H08": h08, "H09": h09, "H10": h10,
+RECON = {"H01": h01, "H02": h02, "H04": h04, "H05": h05, "H06": h06, "H07": h07, "H08": h08, "H09": h09, "H10": h10,
          "H11": h11, "H12": h12, "H13": h13}
 
 
@@ -471,7 +555,7 @@ def main() -> None:
         print(f"     observed={json.dumps(r['observed'], default=str)[:400]}")
         if a.apply and all(agree.values()):
             cases[cid]["t0_block"] = r["t0_block"]
-            cases[cid]["status"] = "reconstructed"
+            cases[cid]["status"] = r.get("status_override", "reconstructed")
             cases[cid].setdefault("sources", {}).setdefault("onchain_state", {})["capsules"] = r["capsules"]
             changed = True
     if changed:
