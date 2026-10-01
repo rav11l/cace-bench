@@ -179,6 +179,8 @@ Use `examples/defi_adapter.py` (`--demo` for a dry run, `--cmd` to call your age
 ## 10. Open questions
 
 1. **False-negative cases.** H11 (Term Finance) is the first: the timelock was 7 days at T0, so the rules return GO, yet a public proposal queued for six days removed it and drained the vault. Proposed rule change for review: *a queued change that lowers a control below policy sets `controls_safe = False`*. At least two more such cases are needed.
+1a. **Issuer-reported price feeds (from H09).** The xUSD market was priced by an "xUSD/USD" feed that rose smoothly (1.248 → 1.262 over the 30 days before T0) and still read 1.266 a week after xUSD traded near $0.26. The rule "a hardcoded price is a control only with open par redemption and verifiable backing" should cover any price the issuer reports, not only constants. Until it is extended, H09 carries a manual label with the on-chain evidence attached.
+1b. **Concentration by address vs by owner (from H05).** In the LlamaLend CRV market the founder's public address held 0.67% of debt at T0; the reported concentration sat across several wallets and venues. Per-address rules miss it; entity-level rules need address clustering, which brings its own error rate. Open.
 2. **Thresholds.** Concentration, exit-depth and timelock thresholds are policy. Proposal: publish them as a versioned config next to the registry, never inside the generator.
 3. **Position size.** Exit gates depend on size. Proposal: each case carries size as a fraction of the pool (`size_to_depth`), so a GO at 1% and a NO-GO at 30% of depth are both labelled correctly.
 4. **Mandate.** Whether a speculative sleeve is allowed changes the right answer for incentive-only positions. Out of scope for v0.5; noted.

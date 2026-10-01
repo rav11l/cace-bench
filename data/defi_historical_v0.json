@@ -233,7 +233,8 @@
         "exit depth vs collateral"
       ],
       "scored": true,
-      "status": "draft"
+      "status": "draft",
+      "notes": "Reconstruction 2026-10-01: in the LlamaLend CRV market (total debt $51.2M at block 20057708) the public address 0x7a16…5428 held $0.34M (0.67%). Concentration is not visible per ADDRESS; reports attribute positions to several wallets and to Fraxlend/Inverse/UwU. Kept as draft: needs an entity-level (address clustering) rule, which is an open methodological question."
     },
     {
       "id": "H06",
@@ -502,7 +503,7 @@
       "name": "Stream Finance xUSD in curated lending vaults",
       "chain": "arbitrum",
       "t0": "2025-10-27",
-      "t0_block": null,
+      "t0_block": 393757551,
       "horizon_days": 30,
       "position": "USDC supplier (directly or via a curated vault) to the Morpho USDC/xUSD market on Arbitrum",
       "facts": {
@@ -510,13 +511,125 @@
         "gate_basis": "structural absence of backing evidence: off-chain book run by one external manager, no attestation; recursive looping inflated footprint",
         "concentration_breach": false,
         "controls_safe": false,
-        "controls_basis": "xUSD priced at a hardcoded $1 with no open par redemption to verify it",
+        "controls_basis": "xUSD priced by an 'xUSD/USD' feed (0xdc0e…ede9) reporting issuer-side value: 1.248 thirty days before T0, 1.262 at T0, still 1.266 on 2025-11-06 when xUSD traded near $0.26. Not a constant, but a price the issuer reports, with no open par redemption and no verifiable backing. The automatic rule (constant price) does not cover this; label set by hand on the recorded evidence — see METHODOLOGY-DeFi.md §10.",
         "anomaly_alert": false
       },
       "sources": {
         "onchain_state": {
           "responded": true,
-          "provider": "alchemy_archive"
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "BASE_FEED_1",
+              "calldata": "0xf50a4718",
+              "provider": "alchemy_archive",
+              "result_sha256": "b965ccb78dd74e3e7e93a349a8af31d732c6b15ac350e6e93b90012cb82e8fa5",
+              "retrieved_at": "2026-10-01T08:24:02+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "BASE_FEED_2",
+              "calldata": "0xdc53858c",
+              "provider": "alchemy_archive",
+              "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+              "retrieved_at": "2026-10-01T08:24:02+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "QUOTE_FEED_1",
+              "calldata": "0x56095e11",
+              "provider": "alchemy_archive",
+              "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+              "retrieved_at": "2026-10-01T08:24:02+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "QUOTE_FEED_2",
+              "calldata": "0xacfbd39e",
+              "provider": "alchemy_archive",
+              "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+              "retrieved_at": "2026-10-01T08:24:02+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "BASE_VAULT",
+              "calldata": "0xeaa2d7b4",
+              "provider": "alchemy_archive",
+              "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+              "retrieved_at": "2026-10-01T08:24:03+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "QUOTE_VAULT",
+              "calldata": "0x2e6f20a6",
+              "provider": "alchemy_archive",
+              "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+              "retrieved_at": "2026-10-01T08:24:03+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "price",
+              "calldata": "0xa035b1fe",
+              "provider": "alchemy_archive",
+              "result_sha256": "a237a27eb608f49614149a5bfafaffed160b085853f2716d5747acb373d57e1a",
+              "retrieved_at": "2026-10-01T08:24:03+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0xdc0e6a4372b899b47afcb7e15f4829a94abcede9",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "c669e82f0cd861e379a593f2322061b9fc478bbf562cfd9bc7671b56cb066909",
+              "retrieved_at": "2026-10-01T08:24:10+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0xdc0e6a4372b899b47afcb7e15f4829a94abcede9",
+              "fn": "latestRoundData",
+              "calldata": "0xfeaf968c",
+              "provider": "alchemy_archive",
+              "result_sha256": "87995f70c6a21f0a11fa7fc277d0988d6c42922934538fb64fd216d4db1a3fd0",
+              "retrieved_at": "2026-10-01T08:24:11+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 383376868,
+              "contract": "0xdc0e6a4372b899b47afcb7e15f4829a94abcede9",
+              "fn": "latestRoundData",
+              "calldata": "0xfeaf968c",
+              "provider": "alchemy_archive",
+              "result_sha256": "523840e47a99748eaaf55449b85048227add2de49112505c38baf0673061bcaa",
+              "retrieved_at": "2026-10-01T08:24:11+00:00"
+            }
+          ]
         },
         "contract_meta": {
           "responded": true,
@@ -546,8 +659,9 @@
         "PAIRED with H08"
       ],
       "scored": true,
-      "status": "draft",
-      "notes": "Re-scoped 2026-10-01 to the Arbitrum market (Ethereum xUSD markets were empty at T0). Same market as H10: H09 tests the oracle/backing rule, H10 the concentration rule."
+      "status": "reconstructed (manual label)",
+      "notes": "Re-scoped 2026-10-01 to the Arbitrum market (Ethereum xUSD markets were empty at T0). Same market as H10: H09 tests the oracle/backing rule, H10 the concentration rule.",
+      "label_source": "manual: automatic rule returned controls_safe=True (feed not constant)"
     },
     {
       "id": "H10",

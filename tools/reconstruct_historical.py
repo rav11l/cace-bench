@@ -362,10 +362,37 @@ def h09(chain: str = "arbitrum") -> dict:
         cfg[fn] = rpc.as_address(rpc.words(raw)[0])
     zero = "0x" + "0" * 40
     raw, c = rpc.call(chain, H09_ORACLE, "price", t0); caps.append(c)
-    constant = cfg["BASE_FEED_1"] == zero and cfg["BASE_FEED_2"] == zero and cfg["BASE_VAULT"] == zero
+    oracle_price = rpc.as_uint(raw)
+    feeds = [cfg[k] for k in ("BASE_FEED_1", "BASE_FEED_2") if cfg[k] != zero]
+    feed_info = []
+    constant = not feeds and cfg["BASE_VAULT"] == zero
+    if feeds:
+        # A feed that never moved over the 30 days before T0 and reports exactly 1.0 is a
+        # constant in disguise. Both readings are pre-T0, so this is observable at T0.
+        t_prev = rpc.block_at(chain, "2025-09-27T00:00:00Z")
+        all_flat = True
+        for f in feeds:
+            desc = _symbol_like(chain, f, "description", t0)
+            raw, c = rpc.call(chain, f, "decimals", t0); caps.append(c); dec = rpc.as_uint(raw)
+            raw, c = rpc.call(chain, f, "latestRoundData", t0); caps.append(c); w0 = rpc.words(raw)
+            pr, cp = _try(chain, f, "latestRoundData", t_prev)
+            w1 = rpc.words(pr) if pr else None
+            a0 = rpc.as_uint(w0[1]) / 10**dec
+            a1 = rpc.as_uint(w1[1]) / 10**dec if w1 else None
+            flat = a1 is not None and a0 == a1 == 1.0 and w0[0] == w1[0]
+            all_flat &= flat
+            if cp:
+                caps.append(cp)
+            post, _ = _try(chain, f, "latestRoundData", rpc.block_at(chain, "2025-11-06T00:00:00Z"))
+            feed_info.append({"feed": f, "description": desc, "answer_t0": a0,
+                              "answer_30d_before": a1, "round_id_unchanged": bool(w1) and w0[0] == w1[0],
+                              "updated_at_t0": rpc.as_uint(w0[3]),
+                              "post_t0_evidence": {"answer_2025_11_06":
+                                                   rpc.as_uint(rpc.words(post)[1]) / 10**dec if post else None}})
+        constant = all_flat
     return {"t0_block": t0, "capsules": caps,
-            "observed": {"oracle": H09_ORACLE, "config": cfg, "price_raw": str(rpc.as_uint(raw)),
-                         "xusd_priced_by_constant": constant},
+            "observed": {"oracle": H09_ORACLE, "config": cfg, "price_raw": str(oracle_price),
+                         "feeds": feed_info, "xusd_priced_by_constant": constant},
             "derived": {"controls_safe": not constant}}
 
 
