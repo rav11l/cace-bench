@@ -1560,8 +1560,8 @@
       "id": "P01",
       "name": "Prospective: a curated RLUSD vault on Morpho",
       "chain": "ethereum",
-      "t0": "2026-09-30",
-      "t0_block": null,
+      "t0": "2026-10-01",
+      "t0_block": 26097498,
       "horizon_days": 90,
       "position": "RLUSD depositor in a curated Morpho vault with BTC-wrapper and LRT collateral",
       "facts": null,
@@ -1569,12 +1569,13 @@
       "rule_truth": null,
       "realized": {
         "loss": null,
-        "summary": "Pending until T0 + 90d."
+        "summary": "Pending until 2026-12-30 (T0 + 90d)."
       },
       "stresses": [
         "pre-registration: the adapter's verdict and capsules are hashed at T0 and scored only after the horizon"
       ],
       "scored": false,
+      "prereg": {"ledger": "data/prospective/ledger.jsonl", "sha256": "f2ff19a2b9dbe8780b0291c0ee8e2726a07f007b84bdaa4211deb04936eeb041", "agent": "rules-baseline-v0.5 (ground_truth_defi, no language model)", "facts_tool": "tools/snapshot_p01.py", "note": "t0 moved from the designated 2026-09-30 to the block actually read, so that the commitment does not post-date t0"},
       "status": "prospective"
     }
   ]
