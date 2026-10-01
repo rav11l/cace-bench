@@ -58,9 +58,12 @@ class RPCError(Exception):
 
 
 def _endpoint(chain: str) -> tuple[str, str]:
-    url = os.environ.get(f"RPC_{chain.upper()}")
+    url = (os.environ.get(f"RPC_{chain.upper()}") or "").strip()
     if not url:
         raise RPCError(f"RPC_{chain.upper()} is not set")
+    if not url.isascii() or not url.startswith(("http://", "https://")) or "<" in url:
+        raise RPCError(f"RPC_{chain.upper()} does not look like a real endpoint URL "
+                       "(placeholder or non-ASCII characters?)")
     return url, os.environ.get(f"RPC_PROVIDER_{chain.upper()}", "unregistered_rpc")
 
 
@@ -71,7 +74,7 @@ def rpc(chain: str, method: str, params: list, timeout: float = 20.0):
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
             out = json.loads(r.read())
-    except (urllib.error.URLError, TimeoutError) as e:
+    except (urllib.error.URLError, TimeoutError, OSError, ValueError) as e:
         raise RPCError(f"transport: {e}") from e
     if "error" in out:
         raise RPCError(out["error"].get("message", str(out["error"])))
