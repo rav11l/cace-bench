@@ -399,6 +399,7 @@ def cmd_exit_curves(a):
                 print(f"  {rows[-1]['hours_from_t0']:+7.1f}h  "
                       + "  ".join(f"${s/1e6:.0f}M:{_fmt(r['exit_discount'])}" for s, r in
                                   zip(SIZES_USD, rows[-3:])))
+    rows, caps_all = _keep_other_cases(a.out, "exit_curves", rows, caps_all)
     _write(a.out, "exit_curves", rows, caps_all, {
         "sizes_usd": SIZES_USD, "step_hours": STEP_HOURS,
         "window_days": [-WINDOW_BEFORE_D, WINDOW_AFTER_D],
@@ -488,11 +489,30 @@ def _fmt(d):
     return "  n/a " if d is None else f"{d*100:6.2f}%"
 
 
+def _keep_other_cases(out_dir, name, rows, caps):
+    """Merge into an existing result file: rows and capsules of the cases computed in this
+    run replace their old ones; other cases already in the file are kept, so running one
+    case does not drop the rest."""
+    path = os.path.join(out_dir, f"{name}.json")
+    if not os.path.exists(path):
+        return rows, caps
+    old = json.load(open(path, encoding="utf-8"))
+    done = {r["case"] for r in rows}
+    kept = [r for r in old.get("rows", []) if r.get("case") not in done]
+    merged_caps = {k: v for k, v in (old.get("capsules") or {}).items() if k not in done}
+    merged_caps.update(caps)
+    if kept:
+        print(f"kept {len(kept)} rows of {sorted({r['case'] for r in kept})} already in {path}")
+    merged = sorted(kept + rows, key=lambda r: (r["case"], r.get("hours_from_t0", 0), r.get("size_usd", 0)))
+    return merged, merged_caps
+
+
 def _write(out_dir, name, rows, caps, meta):
     os.makedirs(out_dir, exist_ok=True)
     if rows:
         with open(os.path.join(out_dir, f"{name}.csv"), "w", newline="", encoding="utf-8") as f:
-            w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            fields = list(dict.fromkeys(k for r in rows for k in r))   # union, first-seen order
+            w = csv.DictWriter(f, fieldnames=fields)
             w.writeheader(); w.writerows(rows)
     with open(os.path.join(out_dir, f"{name}.json"), "w", encoding="utf-8") as f:
         json.dump({"generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
