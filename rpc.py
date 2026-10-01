@@ -50,6 +50,17 @@ SELECTORS = {
     "txCooldown": "0xdcafac09",           # Zodiac Delay modifier
     "comptroller": "0x5fe3b567",          # Compound-fork mToken
     "oracle": "0x7dc0d1d0",               # comptroller.oracle()
+    "getSourceOfAsset": "0x92bf2be0",     # AaveOracle (address)
+    "getAssetPrice": "0xb3596f07",        # AaveOracle (address)
+    "description": "0x7284e416",          # Chainlink aggregator / adapters
+    "market_count": "0xfd775c78",         # Curve OneWayLendingFactory
+    "controllers": "0xe94b0dd2",          # Curve OneWayLendingFactory (uint256)
+    "collateral_tokens": "0x49b89984",    # Curve OneWayLendingFactory (uint256)
+    "debt": "0x9b6c56ec",                 # Curve lending Controller (address)
+    "total_debt": "0x31dc3ca8",           # Curve lending Controller
+    "BASE_FEED_1": "0xf50a4718", "BASE_FEED_2": "0xdc53858c",   # MorphoChainlinkOracleV2
+    "QUOTE_FEED_1": "0x56095e11", "QUOTE_FEED_2": "0xacfbd39e",
+    "BASE_VAULT": "0xeaa2d7b4", "QUOTE_VAULT": "0x2e6f20a6",
     "getAllMarkets": "0xb0772d0b",        # Compound-fork comptroller
     "markets": "0x8e8f294b",              # comptroller.markets(address)
     "getUnderlyingPrice": "0xfc57d4df",   # Compound-fork oracle (address)

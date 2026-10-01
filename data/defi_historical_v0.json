@@ -500,11 +500,11 @@
     {
       "id": "H09",
       "name": "Stream Finance xUSD in curated lending vaults",
-      "chain": "ethereum",
-      "t0": "2025-11-02",
+      "chain": "arbitrum",
+      "t0": "2025-10-27",
       "t0_block": null,
       "horizon_days": 30,
-      "position": "USDC supplier to curated vaults allocating to xUSD-collateral markets (Morpho / Euler / Silo)",
+      "position": "USDC supplier (directly or via a curated vault) to the Morpho USDC/xUSD market on Arbitrum",
       "facts": {
         "gate_fail": true,
         "gate_basis": "structural absence of backing evidence: off-chain book run by one external manager, no attestation; recursive looping inflated footprint",
@@ -546,7 +546,8 @@
         "PAIRED with H08"
       ],
       "scored": true,
-      "status": "draft"
+      "status": "draft",
+      "notes": "Re-scoped 2026-10-01 to the Arbitrum market (Ethereum xUSD markets were empty at T0). Same market as H10: H09 tests the oracle/backing rule, H10 the concentration rule."
     },
     {
       "id": "H10",

@@ -66,6 +66,18 @@ MIN_COLLATERAL_FDV_USD = 50_000_000   # collateral whose whole supply is worth l
 # H13 Edel (Ethereum): tx reported as the exploit (cryptotimes, 2026-07-01) — verify.
 H13_EXPLOIT_TX = "0xe2320086b2815d21b0927839bd0e306466c29a68d38d5361e99dd21ec5472612"
 H13_T0 = "2026-06-30T00:00:00Z"
+# H05 CRV: LlamaLend factory (verify on docs.curve.finance) and Egorov's public address.
+LLAMALEND_FACTORY = "0xeA6876DDE9e3467564acBeE1Ed5bac88783205E0"
+CRV = "0xD533a949740bb3306d119CC777fa900bA034cd52"
+EGOROV = "0x7a16fF8270133F063aAb6C9977183D9e72835428"
+H05_T0 = "2024-06-10T00:00:00Z"
+# H08 USDe: Aave V3 oracle on Ethereum and the Chainlink USDT/USD aggregator proxy.
+AAVE_ORACLE = "0x54586bE62E3c3580375aE3723C145253060Ca0C2"
+USDE = "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3"
+H08_T0 = "2025-10-10T00:00:00Z"
+# H09 xUSD: the oracle of the Arbitrum USDC/xUSD market (same market as H10).
+H09_ORACLE = "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E"
+H09_T0 = "2025-10-27T00:00:00Z"
 MIN_TIMELOCK_SECONDS = 2 * 24 * 3600
 
 
@@ -302,6 +314,71 @@ def h13(chain: str = "ethereum") -> dict:
             "derived": {"gate_fail": thin}}
 
 
+def h05(chain: str = "ethereum") -> dict:
+    """CRV: one borrower's share of debt in LlamaLend CRV-collateral markets at T0."""
+    t0 = rpc.block_at(chain, H05_T0)
+    caps = []
+    raw, c = rpc.call(chain, LLAMALEND_FACTORY, "market_count", t0); caps.append(c)
+    rows = []
+    for i in range(rpc.as_uint(raw)):
+        raw, c = rpc.call(chain, LLAMALEND_FACTORY, "collateral_tokens", t0, rpc.enc_uint(i))
+        if rpc.as_address(rpc.words(raw)[0]).lower() != CRV.lower():
+            continue
+        caps.append(c)
+        raw, c = rpc.call(chain, LLAMALEND_FACTORY, "controllers", t0, rpc.enc_uint(i)); caps.append(c)
+        ctl = rpc.as_address(rpc.words(raw)[0])
+        raw, c = rpc.call(chain, ctl, "total_debt", t0); caps.append(c); tot = rpc.as_uint(raw)
+        raw, c = rpc.call(chain, ctl, "debt", t0, rpc.enc_address(EGOROV)); caps.append(c); mine = rpc.as_uint(raw)
+        rows.append({"controller": ctl, "total_debt": tot / 1e18, "borrower_debt": mine / 1e18,
+                     "borrower_share": round(mine / tot, 4) if tot else None})
+    if not rows:
+        raise rpc.RPCError("no CRV-collateral LlamaLend market found — check LLAMALEND_FACTORY")
+    top = max((r["borrower_share"] or 0) for r in rows)
+    return {"t0_block": t0, "capsules": caps, "observed": {"borrower": EGOROV, "markets": rows},
+            "derived": {"concentration_breach": top > BORROWER_SHARE_MAX}}
+
+
+def h08(chain: str = "ethereum") -> dict:
+    """USDe on Aave: is the collateral priced off the USDT feed (a peg control) at T0?"""
+    t0 = rpc.block_at(chain, H08_T0)
+    caps = []
+    raw, c = rpc.call(chain, AAVE_ORACLE, "getSourceOfAsset", t0, rpc.enc_address(USDE)); caps.append(c)
+    src = rpc.as_address(rpc.words(raw)[0])
+    desc = _symbol_like(chain, src, "description", t0)
+    raw, c = rpc.call(chain, AAVE_ORACLE, "getAssetPrice", t0, rpc.enc_address(USDE)); caps.append(c)
+    price = rpc.as_uint(raw) / 1e8
+    pegged = "USDT" in desc.upper()
+    return {"t0_block": t0, "capsules": caps,
+            "observed": {"source": src, "source_description": desc, "usde_price_usd": price},
+            "derived": {"controls_safe": pegged}}
+
+
+def h09(chain: str = "arbitrum") -> dict:
+    """xUSD: does the market oracle price xUSD from any feed or vault, or is it a constant?"""
+    t0 = rpc.block_at(chain, H09_T0)
+    caps, cfg = [], {}
+    for fn in ("BASE_FEED_1", "BASE_FEED_2", "QUOTE_FEED_1", "QUOTE_FEED_2", "BASE_VAULT", "QUOTE_VAULT"):
+        raw, c = rpc.call(chain, H09_ORACLE, fn, t0); caps.append(c)
+        cfg[fn] = rpc.as_address(rpc.words(raw)[0])
+    zero = "0x" + "0" * 40
+    raw, c = rpc.call(chain, H09_ORACLE, "price", t0); caps.append(c)
+    constant = cfg["BASE_FEED_1"] == zero and cfg["BASE_FEED_2"] == zero and cfg["BASE_VAULT"] == zero
+    return {"t0_block": t0, "capsules": caps,
+            "observed": {"oracle": H09_ORACLE, "config": cfg, "price_raw": str(rpc.as_uint(raw)),
+                         "xusd_priced_by_constant": constant},
+            "derived": {"controls_safe": not constant}}
+
+
+def _symbol_like(chain, to, fn, block) -> str:
+    try:
+        raw, _ = rpc.call(chain, to, fn, block)
+        w = rpc.words(raw)
+        n = int(w[1], 16)
+        return bytes.fromhex("".join(w[2:]))[:n].decode(errors="replace")
+    except Exception:  # noqa: BLE001
+        return ""
+
+
 def h10_vault(chain: str = "ethereum") -> dict:
     """Elixir vault: share of allocations by collateral token at T0."""
     t0 = rpc.block_at(chain, H10_T0)
@@ -339,7 +416,8 @@ def h10_vault(chain: str = "ethereum") -> dict:
             "derived": {"concentration_breach": top_share > CONCENTRATION_MAX}}
 
 
-RECON = {"H06": h06, "H07": h07, "H10": h10, "H11": h11, "H12": h12, "H13": h13}
+RECON = {"H05": h05, "H06": h06, "H07": h07, "H08": h08, "H09": h09, "H10": h10,
+         "H11": h11, "H12": h12, "H13": h13}
 
 
 def main() -> None:
