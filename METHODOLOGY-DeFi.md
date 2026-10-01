@@ -5,7 +5,7 @@
 
 ## TL;DR
 
-CACE-Bench measures whether an agent (a) reaches the right outcome, (b) escalates when the facts were unobtainable instead of guessing, and (c) cites only sources that actually answered. DeFi risk agents fail in exactly these ways. The DeFi track reuses **`judge()`, `aggregate()`, `wilson()`, `diff_ci()` and `_walk_chain()` unchanged**; only the generator, the source registry and `ground_truth_defi()` are new. A working draft reproduces the credit-track shape on 23,000 synthetic DeFi cases and adds a hand-labelled historical split of 10 incidents.
+CACE-Bench measures whether an agent (a) reaches the right outcome, (b) escalates when the facts were unobtainable instead of guessing, and (c) cites only sources that actually answered. DeFi risk agents fail in exactly these ways. The DeFi track reuses **`judge()`, `aggregate()`, `wilson()`, `diff_ci()` and `_walk_chain()` unchanged**; only the generator, the source registry and `ground_truth_defi()` are new. A working draft reproduces the credit-track shape on 23,000 synthetic DeFi cases and adds a historical split of 13 incidents, 11 of them read from chain state at the block before the event.
 
 The judge is the asset. Nothing in this proposal modifies `cace_bench.py` (verified by hash before and after the run below).
 
@@ -71,7 +71,7 @@ ground_truth_defi(gate_fail, concentration_breach, controls_safe, sources):
 Two rules are specific to DeFi and should be reviewed before anything else:
 
 1. **Outage vs structural absence.** A source that timed out makes the case undecidable → `ESCALATE`. An issuer that *publishes nothing* is not an outage: the absence is the risk → `gate_fail` → `FLAG`. Without this rule an opaque issuer would escalate forever instead of failing (H09).
-2. **A hardcoded price is a control, not a fact.** Pricing collateral at a fixed reference is safe only when par redemption to that reference is open and backing is verifiable. H08 (USDe valued at the USDT feed, redemption open → no bad debt) and H09 (xUSD at a hardcoded $1, no verifiable backing → losses) share the mechanism and have opposite outcomes; the pair is in the set on purpose.
+2. **A hardcoded price is a control, not a fact.** Pricing collateral at a fixed reference is safe only when par redemption to that reference is open and backing is verifiable. H08 (USDe valued at the USDT feed, redemption open → no bad debt) and H09 (xUSD priced by a feed reporting issuer-side value, no open redemption and no verifiable backing → losses) share the mechanism — a price that does not come from a market — and have opposite outcomes; the pair is in the set on purpose. See §10, 1a.
 
 ## 4. Metrics
 
@@ -99,7 +99,7 @@ Unchanged, read in DeFi terms:
 
 **Labelling protocol.** `rule_truth = ground_truth_defi(facts, sources)` at `t0_block`, with pre-registered rules. The realised outcome is recorded separately and used only to test whether the rules are right. This keeps the judge deterministic while anchoring the rules to what actually happened.
 
-**Hindsight is the main threat to validity.** In this draft the `facts` are read from post-mortems. Before any historical case is scored, each fact and each source state must be re-derived from chain state at `t0_block` via archive RPC, with one capsule per fact. Until then `status = draft`.
+**Hindsight is the main threat to validity.** Draft `facts` are read from post-mortems. Before a historical case is scored, each fact behind its label is re-derived from chain state at `t0_block` via archive RPC, with one capsule per fact (`tools/reconstruct_historical.py`); a case whose reconstruction disagrees with the draft is reviewed, never overwritten. Cases that cannot be reconstructed keep `status = draft` and are not cited. Reconstruction changed three draft labels' reasons (§7).
 
 ### 5a. Model knowledge leakage
 
@@ -123,35 +123,35 @@ Same structure as `configs/providers.json`, so `_walk_chain` is reused; `countri
 - `issuer_attestation` coverage is low by design; *structural* absence is modelled as a gate failure, not as coverage.
 - `curve_api` gauge fields can return null; the reader must treat that as partial.
 
-## 7. Historical cases — first ten (draft)
+## 7. Historical cases
 
-| ID | Incident | T0 | Chain | Rule | Realised | Stresses |
+| ID | Incident | T0 | Chain | Rule | Realised | On chain at `t0_block` |
 |---|---|---|---|---|---|---|
-| H01 | UST / Anchor | 2022-05-06 | ethereum (Curve UST/3CRV) | NO-GO | loss | structural gate: reflexive backing |
-| H02 | stETH discount, Celsius/3AC | 2022-06-10 | ethereum | GO | no loss (365d) | panic false positive; imbalance with basis |
-| H03 | Mango Markets | 2022-10-10 | solana | NO-GO | loss | oracle manipulable vs depth |
-| H04 | USDC / SVB | 2023-03-09 | ethereum | GO | no loss (30d) | false positive; issuer vs market price |
-| H05 | CRV single-borrower concentration | 2024-06-10 | ethereum | NO-GO | **to verify** | concentration + exit depth |
-| H06 | Morpho PAXG/USDC oracle decimals | 2024-10-13 | ethereum | NO-GO | loss | controls check; hallucination |
-| H07 | Resupply fresh ERC-4626 market | 2025-06-26 | ethereum | NO-GO | loss | exchange-rate oracle on empty vault; 2h window |
-| H08 | USDe single-CEX dislocation | 2025-10-10 | ethereum | GO | no loss | off-venue anomaly; pair with H09 |
-| H09 | Stream Finance xUSD in curated vaults | 2025-11-02 | ethereum | NO-GO | loss | structural absence; hardcode without redemption |
-| H10 | Single-borrower xUSD market on Morpho (re-scoped, see below) | 2025-11-02 | arbitrum | NO-GO | loss | single-borrower concentration |
-| H11 | Term Finance: removable timelock | 2026-08-23 | ethereum | **GO** | **loss** | **false negative of the rules** |
-| H12 | Moonwell MAMO spot-priced collateral | 2026-08-26 | base | NO-GO | loss | oracle vs depth on an L2 |
-| H13 | Edel Finance wrapper exchange rate | 2026-06-30 | ethereum | NO-GO | loss (absorbed) | exchange-rate gate, tokenized equity |
+| H01 | UST / Anchor | 2022-05-06 | ethereum (Curve UST/3CRV) | NO-GO | loss | evidence only — pool balanced (UST 52%), $1M exit 0.09%; the label rests on reflexive backing on Terra, not observable here |
+| H02 | stETH discount, Celsius/3AC | 2022-06-10 | ethereum | GO | no loss (365d) | confirmed — $1M exit 2.85% vs 3% threshold; stETH 73% of pool |
+| H03 | Mango Markets | 2022-10-10 | solana | NO-GO | loss | draft — no Solana reader |
+| H04 | USDC / SVB | 2023-03-09 | ethereum | GO | no loss (30d) | confirmed — 3pool 34/32/34, $1M exit 0.007% |
+| H05 | CRV concentration | 2024-06-10 | ethereum | NO-GO | to verify | draft — founder's public address held 0.67% of LlamaLend CRV debt (§10, 1b) |
+| H06 | Morpho PAXG/USDC oracle decimals | 2024-10-13 | ethereum | NO-GO | loss | confirmed — oracle 10¹² off Chainlink XAU/USD |
+| H07 | Resupply fresh ERC-4626 market | 2025-06-26 | ethereum | NO-GO | loss | confirmed — collateral vault: zero supply, 472 blocks old |
+| H08 | USDe single-CEX dislocation | 2025-10-10 | ethereum | GO | no loss | confirmed — Aave priced USDe off "Capped USDT/USD" |
+| H09 | xUSD market oracle (re-scoped) | 2025-10-27 | arbitrum | NO-GO | loss | manual label — "xUSD/USD" feed reported issuer-side value 1.248 → 1.262; still 1.266 after the collapse (§10, 1a) |
+| H10 | xUSD market concentration (re-scoped) | 2025-10-27 | arbitrum | NO-GO | loss | confirmed — one address 89.1% of debt (not today's sole borrower) |
+| H11 | Term Finance removable timelock | 2026-08-23 | ethereum | **GO** | **loss** | confirmed — `txCooldown` = 608,400 s; **false negative of the rules** |
+| H12 | Moonwell MAMO spot-priced collateral | 2026-08-26 | base | NO-GO | loss | confirmed — CF 0.5 on a token with $9.2M FDV; oracle ×9.5 before the exploit borrow |
+| H13 | Edel wGOOGLx wrapper exchange rate | 2026-06-30 | ethereum | NO-GO | loss (absorbed) | confirmed — 0.12 wrapper shares outstanding; open: rate already 6.0 at T0 |
 
-H11–H13 have `t0` after 2026-06-30 and are therefore eligible under the §5a cutoff gate for models with a mid-2026 training cutoff.
+Plus two **unscored controls** (C01 Euler v1, C02 Balancer v2): code-level exploits outside the observable risk surface, listed so readers see what the track cannot catch. And one **prospective** slot (P01), not yet committed.
 
-**Reconstruction status (2026-10-01).** H06 and H07 are reconstructed at `t0_block` with capsules (archive RPC): the PAXG/USDC oracle implied ~2.66×10¹⁵ USD/oz against 2,656.78 on Chainlink XAU/USD (a 10¹² error), and the Resupply collateral vault had zero supply and zero assets 472 blocks after deployment. Both agree with the draft facts.
+**Cutoff gate (§5a).** H11 and H12 have `t0` after 2026-06-30 and are eligible for models with a mid-2026 training cutoff. H13's `t0` (2026-06-30) sits on that boundary: eligible only for models whose cutoff is earlier. Everything before is reported for mid-2026 models only as a contamination measurement.
+
+**Reconstruction status.** 11 of 13 cases were read from chain state at the block before the event, each fact with a capsule (contract, function, block, SHA-256 of the response): 9 labels confirmed by the automatic rules, H09 labelled by hand on recorded evidence, H01 evidence only. H03 and H05 remain drafts. Three draft labels were corrected by reconstruction (H05, H09, H10), and one case (H11) shows the rules failing.
 
 **Worked example of a silent decision — H10.** The first reconstruction of H10 targeted the public "Elixir USDC" vault and returned `OK`: the reconstructor counted the vault's *idle* balance as a collateral and reported 100% concentration. The vault was in fact 100% idle at T0, i.e. not the lending channel at all. The reconstructor now refuses idle-only vaults, the artefact was removed, and H10 was re-scoped to the Arbitrum USDC/xUSD market found through the Morpho API (one borrower holding ~100% of debt; ~$136.9M bad debt reported). A confident verdict on the wrong object, with every number internally consistent, is exactly the failure this benchmark scores — it happened to the benchmark's own tooling first.
 
 The re-scoped H10 then hit a second trap. Today the market has a single borrower holding ~100% of its debt, and the draft label was written from that. Read on chain at T0 (2025-10-27, block 393757551), the market held $26.2M supply / $23.1M debt, and today's sole borrower held only ~3%; a *different* address held 89.1% and closed its position before the collapse. The label survived (concentration was real at T0), but for a reason the draft had wrong. Rule adopted: **API data may supply candidate addresses, never amounts; every amount behind a label is read on chain at `t0_block`.**
 
-Plus two **unscored controls** (C01 Euler v1, C02 Balancer v2): code-level exploits outside the observable risk surface, listed so readers see what the track cannot catch. And one **prospective** slot (P01: a curated RLUSD vault on Morpho, T0 = 2026-09-30, horizon 90d).
 
-Figures marked *to verify* in the JSON (H05 bad debt by venue, H06 recovery status, C02 loss) must be sourced before scoring.
 
 ## 8. Draft results (smoke test, not a finding)
 
@@ -170,7 +170,7 @@ Figures marked *to verify* in the JSON (H05 bad debt by venue, H06 recovery stat
 
 These numbers are **injected-parameter outputs of a reference agent on an unverified registry**. They show that the pipeline runs end-to-end on the unchanged judge; they say nothing about any real agent.
 
-`python defi_track.py --check-historical data/defi_historical_v0.json` confirms every `rule_truth` is derivable from the recorded facts. Calibration on the draft: (NO-GO, loss) 6 · (GO, no loss) 3 · (NO-GO, unknown) 1. **Perfect separation on a hand-labelled draft is expected and proves nothing** — see §5 on hindsight and §10 on missing false-negative cases.
+`python defi_track.py --check-historical data/defi_historical_v0.json` confirms every `rule_truth` is derivable from the recorded facts. Rule calibration (rule verdict × realised outcome): (NO-GO, loss) 8 · (GO, no loss) 3 · **(GO, loss) 1** · (NO-GO, unknown) 1. The separation is no longer perfect: H11 is a loss the rules call GO. That cell is what makes the table informative — a split on which the rules separated perfectly would prove nothing (§5, §10).
 
 ## 9. Benchmark your own DeFi agent
 
@@ -190,12 +190,12 @@ Use `examples/defi_adapter.py` (`--demo` for a dry run, `--cmd` to call your age
 
 - [ ] Review the two DeFi-specific rules in §3 (structural absence; hardcode as control)
 - [ ] Freeze field mapping and outcome mapping
-- [ ] Reconstruct H01–H10 at `t0_block` via archive RPC with capsules; fill `t0_block`
+- [x] Reconstruct at `t0_block` via archive RPC with capsules — 11/13 done (H03: no Solana reader; H05: address vs owner)
 - [ ] Verify H05 bad debt, H06 recovery, C02 loss figure
-- [ ] Add ≥ 3 false-negative historical cases
+- [ ] Add ≥ 3 false-negative historical cases (1 so far: H11)
 - [ ] Verify registry coverage for the providers actually used; flip `verified` per field
 - [ ] Thresholds config (`configs/defi_thresholds.json`)
-- [ ] Recall probe + cutoff gate implemented in the adapter run (§5a)
+- [x] Recall probe, cutoff gate and anonymisation (names, tx hashes, dates, block offsets) in the adapter (§5a)
 - [ ] First external adapter run; results under `results/defi/`
 - [ ] Hugging Face config `defi` alongside the credit split; Zenodo version bump
 

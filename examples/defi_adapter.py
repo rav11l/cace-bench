@@ -62,8 +62,21 @@ KNOWN_NAMES = [
     "Egorov", "Morpho", "PAXG", "Resupply", "ERC-4626", "USDe", "sUSDe", "Ethena", "Aave",
     "Binance", "Stream", "xUSD", "Elixir", "deUSD", "Euler", "Silo", "Balancer", "RLUSD",
     "Sentora", "kBTC", "Kraken", "weETH", "USDT", "DAI", "DOLA",
+    # added for H11-H13 and the re-scoped H09/H10
+    "Term Finance", "Term", "Moonwell", "MAMO", "mMAMO", "Edel", "GOOGLx", "wGOOGLx",
+    "MSTRx", "wMSTRx", "xStocks", "cbBTC", "Zodiac", "Stream Finance", "Elixir USDC",
+    "MEV Capital", "Steakhouse", "Gauntlet", "Wormhole", "Ripple", "Coinbase",
 ]
-_ADDR = re.compile(r"0x[0-9a-fA-F]{40}")
+_HEX64 = re.compile(r"0x[0-9a-fA-F]{64}(?![0-9a-fA-F])")   # tx hashes, market ids
+_ADDR = re.compile(r"0x[0-9a-fA-F]{40}(?![0-9a-fA-F])")
+_MONTHS = r"(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?"
+_DATES = [
+    re.compile(r"\b\d{4}-\d{2}-\d{2}(?:[T ][0-9:.]+(?:Z|[+-]\d{2}:?\d{2})?)?"),  # ISO
+    re.compile(r"\b\d{1,2}\s+" + _MONTHS + r"\s+\d{4}\b"),                     # 10 Oct 2025
+    re.compile(r"\b" + _MONTHS + r"[\s-]+\d{1,2}(?:st|nd|rd|th)?,?[\s-]+\d{4}\b"),  # Aug 27, 2026
+    re.compile(r"\b" + _MONTHS + r"\s+\d{4}\b"),                                  # May 2022
+    re.compile(r"\b(?:19|20)\d{2}\b"),                                             # bare years
+]
 
 
 def _alias(name: str) -> str:
@@ -71,15 +84,30 @@ def _alias(name: str) -> str:
 
 
 def anonymize(text: str) -> str:
-    """Stable pseudonyms for names, hashes for addresses. Numbers are kept on purpose:
-    they are the evidence. Recall through distinctive numbers is what the probe and the
-    cutoff gate are for."""
+    """Stable pseudonyms for names; hashes for addresses, tx hashes and market ids; dates
+    and years replaced. State numbers are kept on purpose: they are the evidence. Recall
+    through distinctive numbers is what the probe and the cutoff gate are for."""
     if not text:
         return text
-    out = _ADDR.sub(lambda m: "addr_" + hashlib.sha256(m.group().lower().encode()).hexdigest()[:10], text)
+    out = _HEX64.sub(lambda m: "h_" + hashlib.sha256(m.group().lower().encode()).hexdigest()[:10], text)
+    out = _ADDR.sub(lambda m: "addr_" + hashlib.sha256(m.group().lower().encode()).hexdigest()[:10], out)
+    for rx in _DATES:
+        out = rx.sub("[date]", out)
     for n in sorted(KNOWN_NAMES, key=len, reverse=True):
         out = re.sub(rf"(?<![A-Za-z0-9_]){re.escape(n)}(?![A-Za-z0-9_])", _alias(n), out)
     return out
+
+
+def _capsule_view(c: dict, t0_block) -> dict:
+    """Evidence as the agent may see it: absolute block numbers become offsets from T0,
+    retrieval timestamps are dropped, everything else goes through anonymize()."""
+    c = dict(c)
+    c.pop("retrieved_at", None)
+    if isinstance(c.get("block"), int):
+        b = c.pop("block")
+        if isinstance(t0_block, int):
+            c["block_offset_from_t0"] = b - t0_block
+    return json.loads(anonymize(json.dumps(c, ensure_ascii=False)))
 
 
 # ------------------------------------------------------------------ requests ----
@@ -97,7 +125,7 @@ def request_from_case(case, hist: dict | None = None) -> dict:
         caps = []
         for cls in SOURCE_CLASSES:
             for c in (hist.get("sources") or {}).get(cls, {}).get("capsules", []):
-                caps.append(json.loads(anonymize(json.dumps(c))))
+                caps.append(_capsule_view(c, hist.get("t0_block")))
         req["evidence"] = caps
     return req
 
