@@ -1,0 +1,70 @@
+{
+  "t0_block": 22785460,
+  "capsules": [
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "fn": "eth_getTransactionReceipt",
+      "tx": "0xffbbd492e0605a8bb6d490c3cd879e87ff60862b0684160d08fd5711e7a872d3",
+      "block": 22785461,
+      "provider": "alchemy_archive",
+      "result_sha256": "b20029e046f173dcea709f0f728485583200c9d777ab0e3cecb7ad5e22fd1423",
+      "retrieved_at": "2026-10-01T07:41:35+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 22785460,
+      "contract": "0x6e90c85a495d54c6d7e1f3400fef1f6e59f86bd6",
+      "fn": "collateral",
+      "calldata": "0xd8dfeb45",
+      "provider": "alchemy_archive",
+      "result_sha256": "3720b313799907159245fa30b0a8d67482c0b65d47089e0a7a7265fcf7220301",
+      "retrieved_at": "2026-10-01T07:41:35+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 22785460,
+      "contract": "0x01144442fba7adccb5c9dc9cf33dd009d50a9e1d",
+      "fn": "totalSupply",
+      "calldata": "0x18160ddd",
+      "provider": "alchemy_archive",
+      "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+      "retrieved_at": "2026-10-01T07:41:35+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 22785460,
+      "contract": "0x01144442fba7adccb5c9dc9cf33dd009d50a9e1d",
+      "fn": "totalAssets",
+      "calldata": "0x01e1d114",
+      "provider": "alchemy_archive",
+      "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+      "retrieved_at": "2026-10-01T07:41:36+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "fn": "eth_getTransactionReceipt",
+      "tx": "0x852eca15a9fd352817346915f7bc8817d46de349bd7a8fc6ee73c7b66ec9ab41",
+      "block": 22784988,
+      "provider": "alchemy_archive",
+      "result_sha256": "7f22b30afe83526ea68b141928e2820e5db31640c6eefc424696455941f73ec6",
+      "retrieved_at": "2026-10-01T07:41:36+00:00"
+    }
+  ],
+  "observed": {
+    "vault": "0x01144442fba7adccb5c9dc9cf33dd009d50a9e1d",
+    "total_supply": 0,
+    "total_assets": 0,
+    "age_blocks": 472
+  },
+  "derived": {
+    "gate_fail": true
+  },
+  "agrees_with_draft": {
+    "gate_fail": true
+  }
+}

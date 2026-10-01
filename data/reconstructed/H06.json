@@ -1,0 +1,85 @@
+{
+  "t0_block": 20956051,
+  "capsules": [
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "fn": "eth_getTransactionReceipt",
+      "tx": "0x256979ae169abb7fbbbbc14188742f4b9debf48b48ad5b5207cadcc99ccb493b",
+      "block": 20956052,
+      "provider": "alchemy_archive",
+      "result_sha256": "36d04cf6ea6b43e7cac1cfc22bd7e9523e7f8f5af3ac9551dad06e27c9638305",
+      "retrieved_at": "2026-10-01T07:41:32+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 20956051,
+      "contract": "0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "fn": "idToMarketParams",
+      "calldata": "0x2c3c91578eaf7b29f02ba8d8c1d7aeb587403dcb16e2e943e4e2f5f94b0963c2386406c9",
+      "provider": "alchemy_archive",
+      "result_sha256": "b5a0484712c677469bd26148d3a6bf45ed8a47e9a6d846b58ac2365961e06adf",
+      "retrieved_at": "2026-10-01T07:41:33+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 20956051,
+      "contract": "0xdd1778f71a4a1c6a0efebd8ae9f8848634ce1101",
+      "fn": "price",
+      "calldata": "0xa035b1fe",
+      "provider": "alchemy_archive",
+      "result_sha256": "5631507003223d7dd0ade2095064e73f982e2863bcfb9e9646f22bcad35fd891",
+      "retrieved_at": "2026-10-01T07:41:33+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 20956051,
+      "contract": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "fn": "decimals",
+      "calldata": "0x313ce567",
+      "provider": "alchemy_archive",
+      "result_sha256": "1b20faab6bd4f0a28e6dccc40387fbb6bc37cf249914e73abb87378079425035",
+      "retrieved_at": "2026-10-01T07:41:34+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 20956051,
+      "contract": "0x45804880de22913dafe09f4980848ece6ecbaf78",
+      "fn": "decimals",
+      "calldata": "0x313ce567",
+      "provider": "alchemy_archive",
+      "result_sha256": "5aae0566f3b11c8113a5f6c6e256f8f98c3c539a0dc89698edf830d735de5268",
+      "retrieved_at": "2026-10-01T07:41:34+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 20956051,
+      "contract": "0x214eD9Da11D2fbe465a6fc601a91E62EbEc1a0D6",
+      "fn": "latestRoundData",
+      "calldata": "0xfeaf968c",
+      "provider": "alchemy_archive",
+      "result_sha256": "1d3597fb215282643d284f60f6efa40a54786b71026d9a07d39f4408af9c2054",
+      "retrieved_at": "2026-10-01T07:41:35+00:00"
+    }
+  ],
+  "observed": {
+    "market_id": "0x8eaf7b29f02ba8d8c1d7aeb587403dcb16e2e943e4e2f5f94b0963c2386406c9",
+    "oracle": "0xdd1778f71a4a1c6a0efebd8ae9f8848634ce1101",
+    "loan_decimals": 6,
+    "collateral_decimals": 18,
+    "implied_price": 2664827614865778.0,
+    "reference_xau_usd": 2656.779816,
+    "deviation": 1003029155376.2395
+  },
+  "derived": {
+    "controls_safe": false
+  },
+  "agrees_with_draft": {
+    "controls_safe": true
+  }
+}

@@ -43,7 +43,9 @@ H06_ATTACK_TX = "0x256979ae169abb7fbbbbc14188742f4b9debf48b48ad5b5207cadcc99ccb4
 H07_ATTACK_TX = "0xffbbd492e0605a8bb6d490c3cd879e87ff60862b0684160d08fd5711e7a872d3"
 H07_PAIR = "0x6e90c85a495d54c6d7e1f3400fef1f6e59f86bd6"
 H07_VAULT_DEPLOY_TX = "0x852eca15a9fd352817346915f7bc8817d46de349bd7a8fc6ee73c7b66ec9ab41"
-H10_VAULT = "0x0404fD1a77756EB029F06b5CDea88B2B2ddC2fEE"  # "Elixir USDC" on Morpho — confirm it is the Stream-lending vault
+# Public "Elixir USDC" vault. Checked 2026-10-01: 100% idle at T0 -> NOT the Stream-lending
+# channel (Elixir lent through private vaults). Replace with the private vault address.
+H10_VAULT = "0x0404fD1a77756EB029F06b5CDea88B2B2ddC2fEE"
 H10_T0 = "2025-11-02T00:00:00Z"
 
 
@@ -125,13 +127,19 @@ def h10(chain: str = "ethereum") -> dict:
         tsa, tss = rpc.as_uint(m[0]), rpc.as_uint(m[1])
         assets = shares * tsa // tss if tss else 0
         by_coll[coll] = by_coll.get(coll, 0) + assets
-    total = sum(by_coll.values()) or 1
-    shares = sorted(((a / total, coll) for coll, a in by_coll.items()), reverse=True)
-    top_share, top_coll = shares[0] if shares else (0.0, None)
+    zero = "0x" + "0" * 40
+    idle = by_coll.pop(zero, 0)  # MetaMorpho idle market: not a collateral exposure
+    deployed = sum(by_coll.values())
+    if deployed == 0:
+        raise rpc.RPCError(f"vault {H10_VAULT} had no deployed allocations at block {t0} "
+                           f"(idle only) — wrong vault for this case; find the lending vault")
+    shares = sorted(((a / deployed, coll) for coll, a in by_coll.items()), reverse=True)
+    top_share, top_coll = shares[0]
     return {"t0_block": t0, "capsules": caps,
             "observed": {"vault": H10_VAULT, "markets": n,
+                         "idle_share_of_total": round(idle / (idle + deployed), 4),
                          "allocation": [{"collateral": col, "symbol": _symbol(chain, col, t0)
-                                         if col != "0x" + "0" * 40 else "idle", "share": round(s, 4)}
+                                         , "share_of_deployed": round(s, 4)}
                                         for s, col in shares]},
             "derived": {"concentration_breach": top_share > CONCENTRATION_MAX}}
 
