@@ -7,7 +7,7 @@
       "name": "UST / Anchor collapse",
       "chain": "ethereum",
       "t0": "2022-05-06",
-      "t0_block": null,
+      "t0_block": 14720258,
       "horizon_days": 30,
       "position": "UST exposure via the Curve UST/3CRV metapool on Ethereum (Anchor as the yield source on Terra)",
       "facts": {
@@ -21,7 +21,75 @@
       "sources": {
         "onchain_state": {
           "responded": true,
-          "provider": "alchemy_archive"
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14720258,
+              "contract": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+              "fn": "coins",
+              "calldata": "0xc66106570000000000000000000000000000000000000000000000000000000000000000",
+              "provider": "alchemy_archive",
+              "result_sha256": "7d8f1a4b390d77ca00e372ac4e17441042d7c7127e7e92f1aea7c6da24c8fc45",
+              "retrieved_at": "2026-10-01T08:37:47+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14720258,
+              "contract": "0xa693b19d2931d498c5b318df961919bb4aee87a5",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "1b20faab6bd4f0a28e6dccc40387fbb6bc37cf249914e73abb87378079425035",
+              "retrieved_at": "2026-10-01T08:37:47+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14720258,
+              "contract": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+              "fn": "get_dy",
+              "calldata": "0x5e0d443f00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000e8d4a51000",
+              "provider": "alchemy_archive",
+              "result_sha256": "c9a03c40adfae38eba8cb1898b43a6fd9a5b03fcafdfd27ce859eb411bbe10f6",
+              "retrieved_at": "2026-10-01T08:37:48+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14720258,
+              "contract": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000000",
+              "provider": "alchemy_archive",
+              "result_sha256": "f40f63a2572df32ba42fbc6899a5ef7014bb599164d8e0d1e4938b9cb3f2a2c4",
+              "retrieved_at": "2026-10-01T08:37:48+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14720258,
+              "contract": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000001",
+              "provider": "alchemy_archive",
+              "result_sha256": "0779e6bc268637746947a73566432a993ad67ada4acb5c29704e23214d309bce",
+              "retrieved_at": "2026-10-01T08:37:48+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14720258,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "get_virtual_price",
+              "calldata": "0xbb7b8b80",
+              "provider": "alchemy_archive",
+              "result_sha256": "079e7a5de0e879a06c705cdf56fc89b161c0a175141a47f854674b47d6582b7a",
+              "retrieved_at": "2026-10-01T08:37:49+00:00"
+            }
+          ]
         },
         "contract_meta": {
           "responded": true,
@@ -47,14 +115,14 @@
         "false negative under a long clean history"
       ],
       "scored": true,
-      "status": "draft"
+      "status": "evidence attached"
     },
     {
       "id": "H02",
       "name": "stETH discount during Celsius / 3AC deleveraging",
       "chain": "ethereum",
       "t0": "2022-06-10",
-      "t0_block": null,
+      "t0_block": 14935368,
       "horizon_days": 365,
       "position": "Unlevered stETH, small size relative to Curve stETH/ETH depth",
       "facts": {
@@ -67,7 +135,64 @@
       "sources": {
         "onchain_state": {
           "responded": true,
-          "provider": "alchemy_archive"
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14935368,
+              "contract": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+              "fn": "coins",
+              "calldata": "0xc66106570000000000000000000000000000000000000000000000000000000000000001",
+              "provider": "alchemy_archive",
+              "result_sha256": "3b77ec90356636463df0f57501a787417e6c5da52eebb5fbddf3c4bc6fdcb3b0",
+              "retrieved_at": "2026-10-01T08:37:57+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14935368,
+              "contract": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "5aae0566f3b11c8113a5f6c6e256f8f98c3c539a0dc89698edf830d735de5268",
+              "retrieved_at": "2026-10-01T08:37:57+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14935368,
+              "contract": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+              "fn": "get_dy",
+              "calldata": "0x5e0d443f0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001dd0c885f9a0d80000",
+              "provider": "alchemy_archive",
+              "result_sha256": "94127e75485ca903bcbb1f561090bd6bcb4064b409c031fc18801ade30122371",
+              "retrieved_at": "2026-10-01T08:37:58+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14935368,
+              "contract": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000000",
+              "provider": "alchemy_archive",
+              "result_sha256": "a3b2431e16870b671c94c852a36af53789ff5419210952ce49ae611e47735816",
+              "retrieved_at": "2026-10-01T08:37:58+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14935368,
+              "contract": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000001",
+              "provider": "alchemy_archive",
+              "result_sha256": "0a0935efa909adcfbcf0dec24dfa58e2376c00e1872ab6ba62a85a98f51c5aac",
+              "retrieved_at": "2026-10-01T08:37:58+00:00"
+            }
+          ]
         },
         "contract_meta": {
           "responded": true,
@@ -93,7 +218,7 @@
         "horizon dependence"
       ],
       "scored": true,
-      "status": "draft"
+      "status": "reconstructed"
     },
     {
       "id": "H03",
@@ -147,7 +272,7 @@
       "name": "USDC depeg on SVB exposure",
       "chain": "ethereum",
       "t0": "2023-03-09",
-      "t0_block": null,
+      "t0_block": 16786948,
       "horizon_days": 30,
       "position": "USDC held or supplied to a blue-chip lending market",
       "facts": {
@@ -160,7 +285,97 @@
       "sources": {
         "onchain_state": {
           "responded": true,
-          "provider": "alchemy_archive"
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "coins",
+              "calldata": "0xc66106570000000000000000000000000000000000000000000000000000000000000001",
+              "provider": "alchemy_archive",
+              "result_sha256": "1ed63c1fae86f287455a4c19ad595f7c778c67e3d0145cf688da250f6cc345ce",
+              "retrieved_at": "2026-10-01T08:38:06+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "1b20faab6bd4f0a28e6dccc40387fbb6bc37cf249914e73abb87378079425035",
+              "retrieved_at": "2026-10-01T08:38:06+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "coins",
+              "calldata": "0xc66106570000000000000000000000000000000000000000000000000000000000000000",
+              "provider": "alchemy_archive",
+              "result_sha256": "020e9b1a39093b98a6e13ebddf5f243777819f4e9ee0168f1ffacecdbf85e140",
+              "retrieved_at": "2026-10-01T08:38:07+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0x6b175474e89094c44da98b954eedeac495271d0f",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "5aae0566f3b11c8113a5f6c6e256f8f98c3c539a0dc89698edf830d735de5268",
+              "retrieved_at": "2026-10-01T08:38:07+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "get_dy",
+              "calldata": "0x5e0d443f00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e8d4a51000",
+              "provider": "alchemy_archive",
+              "result_sha256": "c2b8ae78d37f4e87f647a353550bdaa088bd470fe27a6944e4107d0a6725e6d2",
+              "retrieved_at": "2026-10-01T08:38:07+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000000",
+              "provider": "alchemy_archive",
+              "result_sha256": "170813cad0d362ad0ab6af6f4f07e188c09d2d270fa319b4bedce18fef9d810c",
+              "retrieved_at": "2026-10-01T08:38:08+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000001",
+              "provider": "alchemy_archive",
+              "result_sha256": "c2dff919b03adb884b0768989aa1636635f40c87571c3a13fcb2afc831395a8c",
+              "retrieved_at": "2026-10-01T08:38:08+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000002",
+              "provider": "alchemy_archive",
+              "result_sha256": "2b3264452586adbdcccfd6299b108673096334984549bc1d5f43f91b425a4a73",
+              "retrieved_at": "2026-10-01T08:38:08+00:00"
+            }
+          ]
         },
         "contract_meta": {
           "responded": true,
@@ -187,7 +402,7 @@
         "issuer vs market price"
       ],
       "scored": true,
-      "status": "draft"
+      "status": "reconstructed"
     },
     {
       "id": "H05",

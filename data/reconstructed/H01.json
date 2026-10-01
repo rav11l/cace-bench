@@ -1,0 +1,81 @@
+{
+  "t0_block": 14720258,
+  "capsules": [
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 14720258,
+      "contract": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+      "fn": "coins",
+      "calldata": "0xc66106570000000000000000000000000000000000000000000000000000000000000000",
+      "provider": "alchemy_archive",
+      "result_sha256": "7d8f1a4b390d77ca00e372ac4e17441042d7c7127e7e92f1aea7c6da24c8fc45",
+      "retrieved_at": "2026-10-01T08:37:47+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 14720258,
+      "contract": "0xa693b19d2931d498c5b318df961919bb4aee87a5",
+      "fn": "decimals",
+      "calldata": "0x313ce567",
+      "provider": "alchemy_archive",
+      "result_sha256": "1b20faab6bd4f0a28e6dccc40387fbb6bc37cf249914e73abb87378079425035",
+      "retrieved_at": "2026-10-01T08:37:47+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 14720258,
+      "contract": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+      "fn": "get_dy",
+      "calldata": "0x5e0d443f00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000e8d4a51000",
+      "provider": "alchemy_archive",
+      "result_sha256": "c9a03c40adfae38eba8cb1898b43a6fd9a5b03fcafdfd27ce859eb411bbe10f6",
+      "retrieved_at": "2026-10-01T08:37:48+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 14720258,
+      "contract": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+      "fn": "balances",
+      "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000000",
+      "provider": "alchemy_archive",
+      "result_sha256": "f40f63a2572df32ba42fbc6899a5ef7014bb599164d8e0d1e4938b9cb3f2a2c4",
+      "retrieved_at": "2026-10-01T08:37:48+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 14720258,
+      "contract": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+      "fn": "balances",
+      "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000001",
+      "provider": "alchemy_archive",
+      "result_sha256": "0779e6bc268637746947a73566432a993ad67ada4acb5c29704e23214d309bce",
+      "retrieved_at": "2026-10-01T08:37:48+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 14720258,
+      "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+      "fn": "get_virtual_price",
+      "calldata": "0xbb7b8b80",
+      "provider": "alchemy_archive",
+      "result_sha256": "079e7a5de0e879a06c705cdf56fc89b161c0a175141a47f854674b47d6582b7a",
+      "retrieved_at": "2026-10-01T08:37:49+00:00"
+    }
+  ],
+  "status_override": "evidence attached",
+  "observed": {
+    "pool": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+    "exit": "1,000,000 UST -> 3CRV",
+    "exit_discount": 0.00089,
+    "ust_share_of_pool": 0.5242,
+    "note": "label (reflexive backing) is not observable on Ethereum; exit depth is shown as evidence only"
+  },
+  "derived": {},
+  "agrees_with_draft": {}
+}
