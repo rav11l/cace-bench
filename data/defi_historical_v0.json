@@ -4,6 +4,7 @@
   "cases": [
     {
       "id": "H01",
+      "display": { "read_on_chain": "Exiting 1,000,000 UST to 3CRV cost 0.089% at T0, UST being 52.4% of the pool; the backing label is not observable on Ethereum." },
       "name": "UST / Anchor collapse",
       "chain": "ethereum",
       "t0": "2022-05-06",
@@ -119,6 +120,7 @@
     },
     {
       "id": "H02",
+      "display": { "read_on_chain": "Exiting 550 stETH (~$1M) to ETH cost 2.85% at T0, with stETH at 73% of the pool." },
       "name": "stETH discount during Celsius / 3AC deleveraging",
       "chain": "ethereum",
       "t0": "2022-06-10",
@@ -269,6 +271,7 @@
     },
     {
       "id": "H04",
+      "display": { "read_on_chain": "Exiting 1,000,000 USDC to DAI cost 0.007% at T0; the pool sat at 34.1 / 31.9 / 34.0 percent across its three assets." },
       "name": "USDC depeg on SVB exposure",
       "chain": "ethereum",
       "t0": "2023-03-09",
