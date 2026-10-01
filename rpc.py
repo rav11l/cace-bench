@@ -71,10 +71,14 @@ def _endpoint(chain: str) -> tuple[str, str]:
 def rpc(chain: str, method: str, params: list, timeout: float = 20.0):
     url, _ = _endpoint(chain)
     body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode()
-    req = urllib.request.Request(url, body, {"Content-Type": "application/json"})
+    req = urllib.request.Request(url, body, {"Content-Type": "application/json",
+                                             "User-Agent": "cace-bench-rpc/0.5"})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
             out = json.loads(r.read())
+    except urllib.error.HTTPError as e:
+        detail = e.read()[:300].decode(errors="replace")
+        raise RPCError(f"transport: HTTP {e.code} on {method}: {detail}") from e
     except (urllib.error.URLError, TimeoutError, OSError, ValueError) as e:
         raise RPCError(f"transport: {e}") from e
     if "error" in out:
@@ -162,6 +166,25 @@ def enc_bytes32(h: str) -> str:
 
 def enc_address(a: str) -> str:
     return a.lower().replace("0x", "").rjust(64, "0")
+
+
+def get_logs(chain: str, address: str, topics: list, from_block: int, to_block: int,
+             step: int = 2_000_000, min_step: int = 1_000) -> list[dict]:
+    """eth_getLogs over a block range in adaptive chunks: on a range/size error the
+    chunk is halved, on success it grows back. Providers cap ranges differently."""
+    out, start = [], from_block
+    while start <= to_block:
+        end = min(start + step - 1, to_block)
+        try:
+            out += rpc(chain, "eth_getLogs", [{"address": address, "topics": topics,
+                                               "fromBlock": hex(start), "toBlock": hex(end)}])
+            start = end + 1
+            step = min(step * 2, 20_000_000)
+        except RPCError:
+            if step <= min_step:
+                raise
+            step //= 2
+    return out
 
 
 def receipt(chain: str, tx: str) -> dict:

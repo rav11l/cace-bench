@@ -18,9 +18,12 @@ Thresholds are policy and sit at the top of this file; changing one changes labe
 from __future__ import annotations
 
 import argparse
+import datetime as _dt
+import hashlib
 import json
 import os
 import sys
+import urllib.request
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import rpc  # noqa: E402
@@ -46,12 +49,13 @@ H07_VAULT_DEPLOY_TX = "0x852eca15a9fd352817346915f7bc8817d46de349bd7a8fc6ee73c7b
 # Public "Elixir USDC" vault. Checked 2026-10-01: 100% idle at T0 -> NOT the Stream-lending
 # channel. Kept for h10_vault(); the H10 case now targets the Arbitrum xUSD market below.
 H10_VAULT = "0x0404fD1a77756EB029F06b5CDea88B2B2ddC2fEE"
-H10_T0 = "2025-11-02T00:00:00Z"
+H10_T0 = "2025-10-27T00:00:00Z"  # before the first public on-chain analyses (28 Oct)
 # Morpho Blue on Arbitrum; USDC/xUSD market found via api.morpho.org on 2026-10-01
 # (bad debt reported there: ~$136.9M). Borrower = top borrow position in that API.
 ARB_MORPHO_BLUE = "0x6c247b1F6182318877311737BaC0844bAa518F5e"
 H10_MARKET = "0x9e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709"
-H10_BORROWER = "0x2D9C7Df48725B94A9DE6b2F3174fA4337Fd5551c"
+H10_BORROWER = "0x2D9C7Df48725B94A9DE6b2F3174fA4337Fd5551c"  # top borrower TODAY; held ~3% at T0
+H10_CREATION_BLOCK = 379403243
 BORROWER_SHARE_MAX = 0.5          # one address holding more of a market's debt -> breach
 
 H11_ATTACK_TX = "0xd354a15b15cb73d30908f411aee3f795ec86737a4d080e9a818ac4d6d3014129"
@@ -123,19 +127,62 @@ def h10(chain: str = "arbitrum") -> dict:
     raw, c = rpc.call(chain, ARB_MORPHO_BLUE, "market", t0, rpc.enc_bytes32(H10_MARKET)); caps.append(c)
     m = rpc.words(raw)
     tsa, tss, tba, tbs = (rpc.as_uint(m[i]) for i in range(4))
-    raw, c = rpc.call(chain, ARB_MORPHO_BLUE, "position", t0,
-                      rpc.enc_bytes32(H10_MARKET) + rpc.enc_address(H10_BORROWER)); caps.append(c)
-    p = rpc.words(raw)
-    bshares = rpc.as_uint(p[1])
     if tbs == 0:
         raise rpc.RPCError(f"market had no borrows at block {t0}")
-    share = bshares / tbs
+    # Candidate addresses = everyone who ever held a position in this market (Morpho API,
+    # includes closed positions). Only the ADDRESS SET comes from today's API; every
+    # amount below is read on chain AT T0, so no present-day state leaks into the label.
+    borrowers, api_cap = morpho_api_position_holders(H10_MARKET, 42161)
+    caps.append(api_cap)
+    logs = []
+    rows = []
+    for b in borrowers:
+        raw, c = rpc.call(chain, ARB_MORPHO_BLUE, "position", t0,
+                          rpc.enc_bytes32(H10_MARKET) + rpc.enc_address(b))
+        bs = rpc.as_uint(rpc.words(raw)[1])
+        if bs:
+            caps.append(c)
+            rows.append((bs / tbs, b))
+    rows.sort(reverse=True)
+    top_share = rows[0][0] if rows else 0.0
     return {"t0_block": t0, "capsules": caps,
-            "observed": {"market": H10_MARKET, "borrower": H10_BORROWER,
+            "observed": {"market": H10_MARKET,
                          "total_supply_usdc": tsa / 1e6, "total_borrow_usdc": tba / 1e6,
-                         "borrower_debt_usdc": round(bshares / tbs * tba / 1e6, 2),
-                         "borrower_share": round(share, 6), "utilization": round(tba / tsa, 4) if tsa else None},
-            "derived": {"concentration_breach": share > BORROWER_SHARE_MAX}}
+                         "utilization": round(tba / tsa, 4) if tsa else None,
+                         "candidate_addresses": len(borrowers), "borrowers_at_t0": len(rows),
+                         "top_borrowers": [{"address": b, "share": round(sh, 6),
+                                            "debt_usdc": round(sh * tba / 1e6, 2)} for sh, b in rows[:5]]},
+            "derived": {"concentration_breach": top_share > BORROWER_SHARE_MAX}}
+
+
+MORPHO_API = "https://api.morpho.org/graphql"
+
+
+def morpho_api_position_holders(market_id: str, chain_id: int) -> tuple[list[str], dict]:
+    q = ('query($skip:Int){ marketPositions(first: 1000, skip: $skip, where: '
+         '{ marketUniqueKey_in: ["%s"], chainId_in: [%d] }) { items { user { address } } '
+         'pageInfo { countTotal } } }') % (market_id, chain_id)
+    addrs, skip, pages = set(), 0, []
+    while True:
+        body = json.dumps({"query": q, "variables": {"skip": skip}}).encode()
+        req = urllib.request.Request(MORPHO_API, body, {"Content-Type": "application/json",
+                                                        "User-Agent": "cace-bench-rpc/0.5"})
+        with urllib.request.urlopen(req, timeout=60) as r:
+            raw = r.read()
+        pages.append(hashlib.sha256(raw).hexdigest())
+        data = json.loads(raw)
+        if "errors" in data:
+            raise rpc.RPCError(f"morpho api: {data['errors'][0].get('message')}")
+        mp = data["data"]["marketPositions"]
+        addrs |= {i["user"]["address"].lower() for i in mp["items"]}
+        skip += 1000
+        if skip >= mp["pageInfo"]["countTotal"] or not mp["items"]:
+            break
+    cap = {"kind": "api", "provider": "morpho_api", "url": MORPHO_API, "query": q,
+           "pages_sha256": pages, "addresses": len(addrs),
+           "retrieved_at": _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"),
+           "note": "address set only; all amounts read on chain at t0_block"}
+    return sorted(addrs), cap
 
 
 def h11(chain: str = "ethereum") -> dict:
