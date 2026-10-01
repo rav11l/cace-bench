@@ -406,6 +406,8 @@
     },
     {
       "id": "H05",
+      "display": { "read_on_chain": "The address checked held 343,932.87 of 51,195,166.58 of the market's debt — a 0.67% share." },
+      "corrected_draft": true,
       "name": "CRV collateral concentration (single borrower)",
       "chain": "ethereum",
       "t0": "2024-06-10",
@@ -454,6 +456,7 @@
     },
     {
       "id": "H06",
+      "display": { "read_on_chain": "The oracle implied ~2.66e15 USD/oz against a reference XAU/USD of 2,656.78; loan and collateral decimals were 6 and 18." },
       "name": "Morpho PAXG/USDC market oracle misconfiguration",
       "chain": "ethereum",
       "t0": "2024-10-13",
@@ -566,6 +569,7 @@
     },
     {
       "id": "H07",
+      "display": { "read_on_chain": "The ERC-4626 collateral vault was 472 blocks old with totalSupply 0 and totalAssets 0." },
       "name": "Resupply: exchange-rate oracle on a fresh ERC-4626 market",
       "chain": "ethereum",
       "t0": "2025-06-26",
@@ -669,6 +673,7 @@
     },
     {
       "id": "H08",
+      "display": { "read_on_chain": "USDe was priced off a source described as \"Capped USDT/USD\", reporting 1.00005282." },
       "name": "USDe dislocation on a single CEX (10 Oct 2025)",
       "chain": "ethereum",
       "t0": "2025-10-10",
@@ -740,6 +745,8 @@
     },
     {
       "id": "H09",
+      "display": { "read_on_chain": "A feed described as \"xUSD/USD\" reported 1.26239173, up from 1.24779892 thirty days earlier; no quote feed was configured." },
+      "corrected_draft": true,
       "name": "Stream Finance xUSD in curated lending vaults",
       "chain": "arbitrum",
       "t0": "2025-10-27",
@@ -905,6 +912,8 @@
     },
     {
       "id": "H10",
+      "display": { "read_on_chain": "Ten borrowers held the debt at T0: the largest at 89.1% ($20.58M), the next at 3.0%; utilisation 0.8817." },
+      "corrected_draft": true,
       "name": "Single-borrower xUSD market on Morpho (Arbitrum)",
       "chain": "arbitrum",
       "t0": "2025-10-27",
@@ -1088,6 +1097,7 @@
     },
     {
       "id": "H11",
+      "display": { "read_on_chain": "The delay module reported txCooldown = 608,400 s at the block before the attack." },
       "name": "Term Finance: timelock removable by a self-approved proposal",
       "chain": "ethereum",
       "t0": "2026-08-23",
@@ -1157,6 +1167,7 @@
     },
     {
       "id": "H12",
+      "display": { "read_on_chain": "MAMO was listed with a 0.5 collateral factor at a spot price of 0.00924306 and an FDV of ~$9.24M." },
       "name": "Moonwell MAMO market: spot-priced thin collateral",
       "chain": "base",
       "t0": "2026-08-26",
@@ -1302,6 +1313,7 @@
     },
     {
       "id": "H13",
+      "display": { "read_on_chain": "Of the wrappers only wGOOGLx carried a rate of 6.0 at T0; wMSTRx, wTSLAx and wNVDAx stood at ~1.0." },
       "name": "Edel Finance: wrapper exchange-rate inflation (wGOOGLx)",
       "chain": "ethereum",
       "t0": "2026-06-30",
