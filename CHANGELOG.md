@@ -8,6 +8,33 @@ resolves to the latest version.
 
 ---
 
+## [Unreleased] — 0.5.0 DeFi track (draft)
+
+**No changes to `cace_bench.py`, the credit-track generator, the reference agent, the judge
+or the published data.** The DeFi track imports the judge and metrics unchanged.
+
+### Added
+- `METHODOLOGY-DeFi.md` — field and outcome mapping (`FLAG`/`CLEAR`/`ESCALATE` read as
+  NO-GO / GO / INSUFFICIENT_DATA), DeFi ground-truth rules, splits, labelling protocol,
+  model-knowledge-leakage rules (§5a), open questions.
+- `defi_track.py` — DeFi generator, `ground_truth_defi`, reference DeFi agent,
+  `--check-historical`.
+- `configs/defi_sources.json` — source registry: 16 sources, 4 classes, 5 chains; every
+  coverage figure unverified.
+- `data/defi_historical_v0.json` — 10 historical cases (draft), 2 unscored controls,
+  1 prospective slot.
+- `rpc.py` — point-in-time reads with citation capsules; archive gaps reported as partial.
+- `tools/reconstruct_historical.py` — re-derives H06, H07, H10 facts at `t0_block`.
+- `examples/defi_adapter.py` — subprocess adapter for external agents, anonymisation,
+  recall probe and model-cutoff gate.
+- `prereg.py`, `data/prospective/` — commit-reveal pre-registration of verdicts.
+
+### Known gaps
+- Historical facts are draft (read from post-mortems) until reconstructed at `t0_block`.
+- No false-negative historical cases yet; thresholds not yet in a versioned config.
+
+---
+
 ## [0.4.1] — 2026-08-19
 
 Documentation and metadata release. **No changes to the benchmark, the generator, the

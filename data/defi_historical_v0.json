@@ -1,0 +1,148 @@
+{
+  "version": "historical-v0-draft-2026-09-30",
+  "labelling_protocol": "rule_truth = ground_truth_defi(facts, sources) at T0 (point-in-time, pre-registered rules). realized = what happened by T0 + horizon_days; used only for rule calibration, never by the judge. IMPORTANT: 'facts' in this draft are read from post-mortems and therefore carry hindsight. Before any case is scored, facts and source states must be re-derived from chain state at t0_block via archive RPC, with a capsule per fact; until then status stays 'draft'.",
+  "cases": [
+    {
+      "id": "H01", "name": "UST / Anchor collapse", "chain": "ethereum",
+      "t0": "2022-05-06", "t0_block": null, "horizon_days": 30,
+      "position": "UST exposure via the Curve UST/3CRV metapool on Ethereum (Anchor as the yield source on Terra)",
+      "facts": {"gate_fail": true, "gate_basis": "reflexive backing: peg defended by minting the collateral token (LUNA); no exogenous reserve", "concentration_breach": false, "controls_safe": true, "anomaly_alert": true, "anomaly_basis": "Anchor yield reserve being drawn down to subsidise ~20% deposit rate"},
+      "sources": {"onchain_state": {"responded": true, "provider": "alchemy_archive"}, "contract_meta": {"responded": true, "provider": "etherscan_v2"}, "offchain_meta": {"responded": true, "provider": "defillama_api"}, "market_depth": {"responded": true, "provider": "archive_pool_reserves"}},
+      "rule_truth": "flag",
+      "realized": {"loss": true, "summary": "UST lost its peg from ~7 May 2022 and did not recover; Terra halted."},
+      "stresses": ["structural gate", "anomaly basis", "false negative under a long clean history"],
+      "scored": true, "status": "draft"
+    },
+    {
+      "id": "H02", "name": "stETH discount during Celsius / 3AC deleveraging", "chain": "ethereum",
+      "t0": "2022-06-10", "t0_block": null, "horizon_days": 365,
+      "position": "Unlevered stETH, small size relative to Curve stETH/ETH depth",
+      "facts": {"gate_fail": false, "concentration_breach": false, "controls_safe": true, "anomaly_alert": true, "anomaly_basis": "Curve stETH/ETH pool heavily imbalanced toward stETH; secondary discount of several percent; withdrawals not yet enabled"},
+      "sources": {"onchain_state": {"responded": true, "provider": "alchemy_archive"}, "contract_meta": {"responded": true, "provider": "etherscan_v2"}, "offchain_meta": {"responded": true, "provider": "defillama_api"}, "market_depth": {"responded": true, "provider": "archive_pool_reserves"}},
+      "rule_truth": "clear",
+      "realized": {"loss": false, "summary": "Mark-to-market drawdown only; discount closed once withdrawals were enabled (2023). A leveraged stETH loop at high LTV is a different case and would be labelled FLAG."},
+      "stresses": ["false positive (panic NO-GO)", "imbalance trigger with basis", "horizon dependence"],
+      "scored": true, "status": "draft"
+    },
+    {
+      "id": "H03", "name": "Mango Markets oracle manipulation", "chain": "solana",
+      "t0": "2022-10-10", "t0_block": null, "horizon_days": 30,
+      "position": "USDC deposit on Mango Markets v3",
+      "facts": {"gate_fail": true, "gate_basis": "collateral (MNGO) priced from thin spot markets: oracle manipulable at a cost below the borrowable amount", "concentration_breach": false, "controls_safe": true, "anomaly_alert": false},
+      "sources": {"onchain_state": {"responded": true, "provider": "alchemy_archive"}, "contract_meta": {"responded": true, "provider": "solana_account_inspect"}, "offchain_meta": {"responded": true, "provider": "defillama_api"}, "market_depth": {"responded": true, "provider": "jupiter_quote", "note": "historical depth for Solana must come from archived order-book/AMM snapshots; jupiter_quote is a placeholder"}},
+      "rule_truth": "flag",
+      "realized": {"loss": true, "summary": "~$110M+ drained on 11 Oct 2022 via MNGO price manipulation; partial settlement with the attacker later."},
+      "stresses": ["oracle vs depth gate", "cross-venue reasoning"],
+      "scored": true, "status": "draft"
+    },
+    {
+      "id": "H04", "name": "USDC depeg on SVB exposure", "chain": "ethereum",
+      "t0": "2023-03-09", "t0_block": null, "horizon_days": 30,
+      "position": "USDC held or supplied to a blue-chip lending market",
+      "facts": {"gate_fail": false, "concentration_breach": false, "controls_safe": true, "anomaly_alert": true, "anomaly_basis": "bank-run news on a reserve bank; issuer's per-bank breakdown not public at T0"},
+      "sources": {"onchain_state": {"responded": true, "provider": "alchemy_archive"}, "contract_meta": {"responded": true, "provider": "etherscan_v2"}, "offchain_meta": {"responded": true, "provider": "issuer_attestation", "partial": false}, "market_depth": {"responded": true, "provider": "archive_pool_reserves"}},
+      "rule_truth": "clear",
+      "realized": {"loss": false, "summary": "USDC traded near $0.87 on 11 Mar 2023 and re-pegged by 13 Mar after the backstop; holders who did not sell lost nothing."},
+      "stresses": ["false positive", "anomaly basis", "issuer vs market price"],
+      "scored": true, "status": "draft"
+    },
+    {
+      "id": "H05", "name": "CRV collateral concentration (single borrower)", "chain": "ethereum",
+      "t0": "2024-06-10", "t0_block": null, "horizon_days": 30,
+      "position": "Stablecoin supplier to CRV-collateral lending markets (LlamaLend, Inverse, Fraxlend, UwU Lend)",
+      "facts": {"gate_fail": true, "gate_basis": "collateral size far above DEX exit depth for CRV", "concentration_breach": true, "concentration_basis": "one borrower dominates CRV-collateral markets across venues; health factor near 1 on at least one venue; borrow rates extreme", "controls_safe": true, "anomaly_alert": true, "anomaly_basis": "borrow APR on LlamaLend reported around 120%"},
+      "sources": {"onchain_state": {"responded": true, "provider": "alchemy_archive"}, "contract_meta": {"responded": true, "provider": "etherscan_v2"}, "offchain_meta": {"responded": true, "provider": "curve_api"}, "market_depth": {"responded": true, "provider": "archive_pool_reserves"}},
+      "rule_truth": "flag",
+      "realized": {"loss": null, "summary": "CRV fell ~25% on 13 Jun 2024 and ~$140M of the positions were liquidated across four venues. Bad debt by venue: TO VERIFY before scoring."},
+      "stresses": ["concentration (the kBTC/RLUSD pattern)", "exit depth vs collateral"],
+      "scored": true, "status": "draft"
+    },
+    {
+      "id": "H06", "name": "Morpho PAXG/USDC market oracle misconfiguration", "chain": "ethereum",
+      "t0": "2024-10-13", "t0_block": null, "horizon_days": 7,
+      "position": "USDC supplier into the permissionless PAXG/USDC market",
+      "facts": {"gate_fail": false, "concentration_breach": false, "controls_safe": false, "controls_basis": "oracle decimals for PAXG vs USDC misconfigured at market creation — detectable by a price() sanity check against a reference feed", "anomaly_alert": false},
+      "sources": {"onchain_state": {"responded": true, "provider": "alchemy_archive"}, "contract_meta": {"responded": true, "provider": "rpc_view_calls"}, "offchain_meta": {"responded": true, "provider": "morpho_api"}, "market_depth": {"responded": true, "provider": "archive_pool_reserves"}},
+      "rule_truth": "flag",
+      "realized": {"loss": true, "summary": "~$230K drained on 14 Oct 2024 against ~$350 of PAXG. Recovery status: TO VERIFY."},
+      "stresses": ["controls verification", "hallucination (claiming oracle verified)"],
+      "scored": true, "status": "draft"
+    },
+    {
+      "id": "H07", "name": "Resupply: exchange-rate oracle on a fresh ERC-4626 market", "chain": "ethereum",
+      "t0": "2025-06-26", "t0_block": null, "horizon_days": 1,
+      "position": "Lender exposure to a Resupply market deployed ~2 hours before the exploit",
+      "facts": {"gate_fail": true, "gate_basis": "exchange-rate priced collateral on an ERC-4626 vault with negligible supply (donation / share-inflation manipulable)", "concentration_breach": false, "controls_safe": false, "anomaly_alert": false},
+      "sources": {"onchain_state": {"responded": true, "provider": "alchemy_archive"}, "contract_meta": {"responded": true, "provider": "rpc_view_calls"}, "offchain_meta": {"responded": false, "provider": null, "attempts": ["defillama_api"]}, "market_depth": {"responded": true, "provider": "archive_pool_reserves"}},
+      "rule_truth": "flag",
+      "realized": {"loss": true, "summary": "~$9.5–9.8M lost on 26 Jun 2025 (figures differ by source)."},
+      "stresses": ["exchange-rate oracle gate (same class as syrupUSDC in the Sentora case)", "monitoring latency: 2h window"],
+      "scored": true, "status": "draft"
+    },
+    {
+      "id": "H08", "name": "USDe dislocation on a single CEX (10 Oct 2025)", "chain": "ethereum",
+      "t0": "2025-10-10", "t0_block": null, "horizon_days": 30,
+      "position": "Supplier to an Aave market where USDe/sUSDe are collateral",
+      "facts": {"gate_fail": false, "concentration_breach": false, "controls_safe": true, "controls_basis": "USDe valued at the USDT feed; primary redemption open; on-chain venues near $1", "anomaly_alert": true, "anomaly_basis": "off-venue price (~$0.60–0.65 on one exchange) not reflected on-chain"},
+      "sources": {"onchain_state": {"responded": true, "provider": "alchemy_archive"}, "contract_meta": {"responded": true, "provider": "rpc_view_calls"}, "offchain_meta": {"responded": true, "provider": "defillama_api"}, "market_depth": {"responded": true, "provider": "archive_pool_reserves"}},
+      "rule_truth": "clear",
+      "realized": {"loss": false, "summary": "Blue-chip DeFi protocols reported no bad debt; the dislocation was venue-specific."},
+      "stresses": ["false positive", "anomaly basis", "PAIRED with H09: same hardcode mechanism, opposite outcome"],
+      "scored": true, "status": "draft"
+    },
+    {
+      "id": "H09", "name": "Stream Finance xUSD in curated lending vaults", "chain": "ethereum",
+      "t0": "2025-11-02", "t0_block": null, "horizon_days": 30,
+      "position": "USDC supplier to curated vaults allocating to xUSD-collateral markets (Morpho / Euler / Silo)",
+      "facts": {"gate_fail": true, "gate_basis": "structural absence of backing evidence: off-chain book run by one external manager, no attestation; recursive looping inflated footprint", "concentration_breach": false, "controls_safe": false, "controls_basis": "xUSD priced at a hardcoded $1 with no open par redemption to verify it", "anomaly_alert": false},
+      "sources": {"onchain_state": {"responded": true, "provider": "alchemy_archive"}, "contract_meta": {"responded": true, "provider": "rpc_view_calls"}, "offchain_meta": {"responded": false, "provider": null, "attempts": ["issuer_attestation"], "note": "structural absence, encoded as gate_fail"}, "market_depth": {"responded": true, "provider": "archive_pool_reserves"}},
+      "rule_truth": "flag",
+      "realized": {"loss": true, "summary": "Loss disclosed 4 Nov 2025 (~$93M); xUSD fell ~77% to ~$0.26; ~$285M of related exposure mapped; pools frozen."},
+      "stresses": ["structural-absence rule", "oracle hardcode without redemption", "PAIRED with H08"],
+      "scored": true, "status": "draft"
+    },
+    {
+      "id": "H10", "name": "Elixir deUSD backing concentrated in one borrower", "chain": "ethereum",
+      "t0": "2025-11-02", "t0_block": null, "horizon_days": 30,
+      "position": "deUSD holder / supplier to deUSD markets",
+      "facts": {"gate_fail": true, "gate_basis": "backing lent into an opaque counterparty (H09)", "concentration_breach": true, "concentration_basis": "~65% of backing (~$68M) lent to a single counterparty via private Morpho vaults — visible on-chain as vault positions", "controls_safe": true, "anomaly_alert": false},
+      "sources": {"onchain_state": {"responded": true, "provider": "alchemy_archive"}, "contract_meta": {"responded": true, "provider": "rpc_view_calls"}, "offchain_meta": {"responded": true, "provider": "morpho_api"}, "market_depth": {"responded": true, "provider": "archive_pool_reserves"}},
+      "rule_truth": "flag",
+      "realized": {"loss": true, "summary": "deUSD collapsed ~98% and was wound down in November 2025."},
+      "stresses": ["depositor<->borrower concentration (the $139M pattern)", "contagion chain"],
+      "scored": true, "status": "draft"
+    },
+    {
+      "id": "C01", "name": "Euler Finance v1 exploit (control)", "chain": "ethereum",
+      "t0": "2023-03-12", "t0_block": null, "horizon_days": 30,
+      "position": "Supplier on Euler v1",
+      "facts": {"gate_fail": false, "concentration_breach": false, "controls_safe": true, "anomaly_alert": false},
+      "sources": {},
+      "rule_truth": null,
+      "realized": {"loss": true, "summary": "~$197M drained on 13 Mar 2023 via a code-level bug; funds later returned."},
+      "stresses": ["UNOBSERVABLE class: code bugs outside the risk-state surface. Not scored — reported so readers see what the track cannot catch."],
+      "scored": false, "status": "control"
+    },
+    {
+      "id": "C02", "name": "Balancer v2 composable-stable exploit (control)", "chain": "ethereum",
+      "t0": "2025-11-02", "t0_block": null, "horizon_days": 30,
+      "position": "LP in Balancer v2 composable stable pools",
+      "facts": {"gate_fail": false, "concentration_breach": false, "controls_safe": true, "anomaly_alert": false},
+      "sources": {},
+      "rule_truth": null,
+      "realized": {"loss": true, "summary": "Exploit in early November 2025; loss figure TO VERIFY."},
+      "stresses": ["UNOBSERVABLE class — not scored"],
+      "scored": false, "status": "control"
+    },
+    {
+      "id": "P01", "name": "Prospective: a curated RLUSD vault on Morpho", "chain": "ethereum",
+      "t0": "2026-09-30", "t0_block": null, "horizon_days": 90,
+      "position": "RLUSD depositor in a curated Morpho vault with BTC-wrapper and LRT collateral",
+      "facts": null, "sources": null,
+      "rule_truth": null,
+      "realized": {"loss": null, "summary": "Pending until T0 + 90d."},
+      "stresses": ["pre-registration: the adapter's verdict and capsules are hashed at T0 and scored only after the horizon"],
+      "scored": false, "status": "prospective"
+    }
+  ]
+}
