@@ -44,9 +44,18 @@ H07_ATTACK_TX = "0xffbbd492e0605a8bb6d490c3cd879e87ff60862b0684160d08fd5711e7a87
 H07_PAIR = "0x6e90c85a495d54c6d7e1f3400fef1f6e59f86bd6"
 H07_VAULT_DEPLOY_TX = "0x852eca15a9fd352817346915f7bc8817d46de349bd7a8fc6ee73c7b66ec9ab41"
 # Public "Elixir USDC" vault. Checked 2026-10-01: 100% idle at T0 -> NOT the Stream-lending
-# channel (Elixir lent through private vaults). Replace with the private vault address.
+# channel. Kept for h10_vault(); the H10 case now targets the Arbitrum xUSD market below.
 H10_VAULT = "0x0404fD1a77756EB029F06b5CDea88B2B2ddC2fEE"
 H10_T0 = "2025-11-02T00:00:00Z"
+# Morpho Blue on Arbitrum; USDC/xUSD market found via api.morpho.org on 2026-10-01
+# (bad debt reported there: ~$136.9M). Borrower = top borrow position in that API.
+ARB_MORPHO_BLUE = "0x6c247b1F6182318877311737BaC0844bAa518F5e"
+H10_MARKET = "0x9e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709"
+H10_BORROWER = "0x2D9C7Df48725B94A9DE6b2F3174fA4337Fd5551c"
+BORROWER_SHARE_MAX = 0.5          # one address holding more of a market's debt -> breach
+
+H11_ATTACK_TX = "0xd354a15b15cb73d30908f411aee3f795ec86737a4d080e9a818ac4d6d3014129"
+MIN_TIMELOCK_SECONDS = 2 * 24 * 3600
 
 
 def _symbol(chain: str, token: str, block: int) -> str:
@@ -107,7 +116,56 @@ def h07(chain: str = "ethereum") -> dict:
             "derived": {"gate_fail": gate}}
 
 
-def h10(chain: str = "ethereum") -> dict:
+def h10(chain: str = "arbitrum") -> dict:
+    """Arbitrum USDC/xUSD market: one borrower's share of total debt at T0."""
+    t0 = rpc.block_at(chain, H10_T0)
+    caps = []
+    raw, c = rpc.call(chain, ARB_MORPHO_BLUE, "market", t0, rpc.enc_bytes32(H10_MARKET)); caps.append(c)
+    m = rpc.words(raw)
+    tsa, tss, tba, tbs = (rpc.as_uint(m[i]) for i in range(4))
+    raw, c = rpc.call(chain, ARB_MORPHO_BLUE, "position", t0,
+                      rpc.enc_bytes32(H10_MARKET) + rpc.enc_address(H10_BORROWER)); caps.append(c)
+    p = rpc.words(raw)
+    bshares = rpc.as_uint(p[1])
+    if tbs == 0:
+        raise rpc.RPCError(f"market had no borrows at block {t0}")
+    share = bshares / tbs
+    return {"t0_block": t0, "capsules": caps,
+            "observed": {"market": H10_MARKET, "borrower": H10_BORROWER,
+                         "total_supply_usdc": tsa / 1e6, "total_borrow_usdc": tba / 1e6,
+                         "borrower_debt_usdc": round(bshares / tbs * tba / 1e6, 2),
+                         "borrower_share": round(share, 6), "utilization": round(tba / tsa, 4) if tsa else None},
+            "derived": {"concentration_breach": share > BORROWER_SHARE_MAX}}
+
+
+def h11(chain: str = "ethereum") -> dict:
+    """Term Finance: the timelock (Zodiac Delay txCooldown) as it stood one block before
+    execution. Found by probing every contract that emitted a log in the attack tx."""
+    rc = rpc.receipt(chain, H11_ATTACK_TX)
+    t0 = rc["capsule"]["block"] - 1
+    caps = [rc["capsule"]]
+    seen, delays = set(), []
+    for lg in rc["receipt"]["logs"]:
+        a = lg["address"].lower()
+        if a in seen:
+            continue
+        seen.add(a)
+        try:
+            raw, c = rpc.call(chain, a, "txCooldown", t0)
+        except rpc.RPCError:
+            continue
+        if raw and raw != "0x" and len(raw) >= 66:
+            caps.append(c)
+            delays.append((a, rpc.as_uint(raw)))
+    if not delays:
+        raise rpc.RPCError("no contract in the attack tx exposes txCooldown()")
+    shortest = min(d for _, d in delays)
+    return {"t0_block": t0, "capsules": caps,
+            "observed": {"delay_modules": [{"address": a, "txCooldown_s": d} for a, d in delays]},
+            "derived": {"controls_safe": shortest >= MIN_TIMELOCK_SECONDS}}
+
+
+def h10_vault(chain: str = "ethereum") -> dict:
     """Elixir vault: share of allocations by collateral token at T0."""
     t0 = rpc.block_at(chain, H10_T0)
     caps = []
@@ -144,7 +202,7 @@ def h10(chain: str = "ethereum") -> dict:
             "derived": {"concentration_breach": top_share > CONCENTRATION_MAX}}
 
 
-RECON = {"H06": h06, "H07": h07, "H10": h10}
+RECON = {"H06": h06, "H07": h07, "H10": h10, "H11": h11}
 
 
 def main() -> None:

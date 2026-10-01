@@ -550,18 +550,19 @@
     },
     {
       "id": "H10",
-      "name": "Elixir deUSD backing concentrated in one borrower",
-      "chain": "ethereum",
+      "name": "Single-borrower xUSD market on Morpho (Arbitrum)",
+      "chain": "arbitrum",
       "t0": "2025-11-02",
       "t0_block": null,
       "horizon_days": 30,
-      "position": "deUSD holder / supplier to deUSD markets",
+      "position": "USDC supplier to the Morpho USDC/xUSD market on Arbitrum (LLTV 91.5%), mostly funded by one curated vault",
       "facts": {
         "gate_fail": true,
-        "gate_basis": "backing lent into an opaque counterparty (H09)",
+        "gate_basis": "collateral with no verifiable backing (see H09)",
         "concentration_breach": true,
-        "concentration_basis": "~65% of backing (~$68M) lent to a single counterparty via private Morpho vaults — visible on-chain as vault positions",
-        "controls_safe": true,
+        "concentration_basis": "one address holds ~100% of the market's debt (API 2026-10-01: 0x2D9C…551c, $138.09M of $138.09M); to be confirmed at t0_block via position()/market()",
+        "controls_safe": false,
+        "controls_basis": "xUSD valued by a fixed-ratio oracle without open par redemption",
         "anomaly_alert": false
       },
       "sources": {
@@ -585,11 +586,148 @@
       "rule_truth": "flag",
       "realized": {
         "loss": true,
-        "summary": "deUSD collapsed ~98% and was wound down in November 2025."
+        "summary": "Morpho API reports ~$136.9M bad debt on this market (queried 2026-10-01)."
       },
       "stresses": [
-        "depositor<->borrower concentration (the $139M pattern)",
-        "contagion chain"
+        "single-borrower concentration (the kBTC/RLUSD and $139M patterns)",
+        "curated vault → opaque collateral"
+      ],
+      "scored": true,
+      "status": "draft",
+      "notes": "Re-scoped 2026-10-01. The original H10 (Elixir deUSD backing) could not be tied to an on-chain market: the public 'Elixir USDC' vault was 100% idle at T0 and no Ethereum xUSD market had supply. A reconstructor run on that vault first returned a false 'OK' (idle counted as a collateral) — kept in METHODOLOGY as a worked example of a silent decision."
+    },
+    {
+      "id": "H11",
+      "name": "Term Finance: timelock removable by a self-approved proposal",
+      "chain": "ethereum",
+      "t0": "2026-08-23",
+      "t0_block": null,
+      "horizon_days": 7,
+      "position": "Depositor in a governed meta-vault protected by a 7-day Zodiac Delay timelock",
+      "facts": {
+        "gate_fail": false,
+        "concentration_breach": false,
+        "controls_safe": true,
+        "controls_basis": "txCooldown ≈ 608,400 s (~7 days) at the block before execution — passes the timelock check",
+        "anomaly_alert": true,
+        "anomaly_basis": "pending proposal, public for ~6 days, whose first action sets txCooldown to 0 and whose payload names the payout contract; opt-out veto with zero votes cast"
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive"
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "rpc_view_calls"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "defillama_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "clear",
+      "realized": {
+        "loss": true,
+        "summary": "~$8.5M drained on 23 Aug 2026 (2,841.74 WETH + ~1.68M USDC)."
+      },
+      "stresses": [
+        "FALSE NEGATIVE of the v0.5 rules: a pending change that removes a control is only an anomaly, so the rules return GO",
+        "proposed fix: a queued change that lowers a control below policy sets controls_safe = False"
+      ],
+      "scored": true,
+      "status": "draft"
+    },
+    {
+      "id": "H12",
+      "name": "Moonwell MAMO market: spot-priced thin collateral",
+      "chain": "base",
+      "t0": "2026-08-26",
+      "t0_block": null,
+      "horizon_days": 7,
+      "position": "Supplier of cbBTC/USDC/wstETH to Moonwell on Base, where MAMO is accepted as collateral",
+      "facts": {
+        "gate_fail": true,
+        "gate_basis": "collateral priced from spot with no TWAP or liquidity-based cap; thin market (MAMO ~$0.01)",
+        "concentration_breach": false,
+        "controls_safe": true,
+        "anomaly_alert": false
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive"
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "rpc_view_calls"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "defillama_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "flag",
+      "realized": {
+        "loss": true,
+        "summary": "~$8.7M drained on 27 Aug 2026 after MAMO was pumped; addresses TO VERIFY."
+      },
+      "stresses": [
+        "oracle vs depth gate (H03 class) on an L2",
+        "post-cutoff case for mid-2026 models"
+      ],
+      "scored": true,
+      "status": "draft"
+    },
+    {
+      "id": "H13",
+      "name": "Edel Finance: wrapper exchange-rate inflation (wGOOGLx)",
+      "chain": "ethereum",
+      "t0": "2026-06-30",
+      "t0_block": null,
+      "horizon_days": 7,
+      "position": "Lender on Edel Lending v1 where wGOOGLx (wrapped tokenized equity) is collateral",
+      "facts": {
+        "gate_fail": true,
+        "gate_basis": "collateral value = Chainlink spot × an internal GOOGLx↔wGOOGLx rate that can be moved within one transaction (same class as H07)",
+        "concentration_breach": false,
+        "controls_safe": true,
+        "anomaly_alert": false
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive"
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "rpc_view_calls"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "defillama_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "flag",
+      "realized": {
+        "loss": true,
+        "summary": "~$403K bad debt on 1 Jul 2026, absorbed by the team (depositors made whole). Chain and addresses TO VERIFY."
+      },
+      "stresses": [
+        "exchange-rate gate on tokenized equities",
+        "loss absorbed by operator: realized loss for the protocol, not the depositor — labelling question"
       ],
       "scored": true,
       "status": "draft"

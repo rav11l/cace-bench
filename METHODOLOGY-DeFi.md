@@ -136,7 +136,16 @@ Same structure as `configs/providers.json`, so `_walk_chain` is reused; `countri
 | H07 | Resupply fresh ERC-4626 market | 2025-06-26 | ethereum | NO-GO | loss | exchange-rate oracle on empty vault; 2h window |
 | H08 | USDe single-CEX dislocation | 2025-10-10 | ethereum | GO | no loss | off-venue anomaly; pair with H09 |
 | H09 | Stream Finance xUSD in curated vaults | 2025-11-02 | ethereum | NO-GO | loss | structural absence; hardcode without redemption |
-| H10 | Elixir deUSD backing concentration | 2025-11-02 | ethereum | NO-GO | loss | depositor↔borrower concentration |
+| H10 | Single-borrower xUSD market on Morpho (re-scoped, see below) | 2025-11-02 | arbitrum | NO-GO | loss | single-borrower concentration |
+| H11 | Term Finance: removable timelock | 2026-08-23 | ethereum | **GO** | **loss** | **false negative of the rules** |
+| H12 | Moonwell MAMO spot-priced collateral | 2026-08-26 | base | NO-GO | loss | oracle vs depth on an L2 |
+| H13 | Edel Finance wrapper exchange rate | 2026-06-30 | ethereum | NO-GO | loss (absorbed) | exchange-rate gate, tokenized equity |
+
+H11–H13 have `t0` after 2026-06-30 and are therefore eligible under the §5a cutoff gate for models with a mid-2026 training cutoff.
+
+**Reconstruction status (2026-10-01).** H06 and H07 are reconstructed at `t0_block` with capsules (archive RPC): the PAXG/USDC oracle implied ~2.66×10¹⁵ USD/oz against 2,656.78 on Chainlink XAU/USD (a 10¹² error), and the Resupply collateral vault had zero supply and zero assets 472 blocks after deployment. Both agree with the draft facts.
+
+**Worked example of a silent decision — H10.** The first reconstruction of H10 targeted the public "Elixir USDC" vault and returned `OK`: the reconstructor counted the vault's *idle* balance as a collateral and reported 100% concentration. The vault was in fact 100% idle at T0, i.e. not the lending channel at all. The reconstructor now refuses idle-only vaults, the artefact was removed, and H10 was re-scoped to the Arbitrum USDC/xUSD market found through the Morpho API (one borrower holding ~100% of debt; ~$136.9M bad debt reported). A confident verdict on the wrong object, with every number internally consistent, is exactly the failure this benchmark scores — it happened to the benchmark's own tooling first.
 
 Plus two **unscored controls** (C01 Euler v1, C02 Balancer v2): code-level exploits outside the observable risk surface, listed so readers see what the track cannot catch. And one **prospective** slot (P01: a curated RLUSD vault on Morpho, T0 = 2026-09-30, horizon 90d).
 
@@ -167,7 +176,7 @@ Use `examples/defi_adapter.py` (`--demo` for a dry run, `--cmd` to call your age
 
 ## 10. Open questions
 
-1. **False-negative cases.** The set needs incidents where the rules say GO and a loss followed from an *observable* cause. Without them the calibration table cannot show the rules failing. Candidates welcome.
+1. **False-negative cases.** H11 (Term Finance) is the first: the timelock was 7 days at T0, so the rules return GO, yet a public proposal queued for six days removed it and drained the vault. Proposed rule change for review: *a queued change that lowers a control below policy sets `controls_safe = False`*. At least two more such cases are needed.
 2. **Thresholds.** Concentration, exit-depth and timelock thresholds are policy. Proposal: publish them as a versioned config next to the registry, never inside the generator.
 3. **Position size.** Exit gates depend on size. Proposal: each case carries size as a fraction of the pool (`size_to_depth`), so a GO at 1% and a NO-GO at 30% of depth are both labelled correctly.
 4. **Mandate.** Whether a speculative sleeve is allowed changes the right answer for incentive-only positions. Out of scope for v0.5; noted.

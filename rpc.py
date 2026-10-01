@@ -47,6 +47,7 @@ SELECTORS = {
     "position": "0x93c52062",        # Morpho Blue (bytes32,address)
     "withdrawQueueLength": "0x33f91ebb",  # MetaMorpho v1
     "withdrawQueue": "0x62518ddf",        # MetaMorpho v1 (uint256)
+    "txCooldown": "0xdcafac09",           # Zodiac Delay modifier
 }
 
 ARCHIVE_ERRORS = ("missing trie node", "header not found", "state not available",
