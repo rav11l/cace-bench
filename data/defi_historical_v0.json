@@ -4,7 +4,9 @@
   "cases": [
     {
       "id": "H01",
-      "display": { "read_on_chain": "Exiting 1,000,000 UST to 3CRV cost 0.089% at T0, UST being 52.4% of the pool; the backing label is not observable on Ethereum." },
+      "display": {
+        "read_on_chain": "Exiting 1,000,000 UST to 3CRV cost 0.089% at T0, UST being 52.4% of the pool; the backing label is not observable on Ethereum."
+      },
       "name": "UST / Anchor collapse",
       "chain": "ethereum",
       "t0": "2022-05-06",
@@ -120,7 +122,9 @@
     },
     {
       "id": "H02",
-      "display": { "read_on_chain": "Exiting 550 stETH (~$1M) to ETH cost 2.85% at T0, with stETH at 73% of the pool." },
+      "display": {
+        "read_on_chain": "Exiting 550 stETH (~$1M) to ETH cost 2.85% at T0, with stETH at 73% of the pool."
+      },
       "name": "stETH discount during Celsius / 3AC deleveraging",
       "chain": "ethereum",
       "t0": "2022-06-10",
@@ -271,7 +275,9 @@
     },
     {
       "id": "H04",
-      "display": { "read_on_chain": "Exiting 1,000,000 USDC to DAI cost 0.007% at T0; the pool sat at 34.1 / 31.9 / 34.0 percent across its three assets." },
+      "display": {
+        "read_on_chain": "Exiting 1,000,000 USDC to DAI cost 0.007% at T0; the pool sat at 34.1 / 31.9 / 34.0 percent across its three assets."
+      },
       "name": "USDC depeg on SVB exposure",
       "chain": "ethereum",
       "t0": "2023-03-09",
@@ -409,7 +415,9 @@
     },
     {
       "id": "H05",
-      "display": { "read_on_chain": "The address checked held 343,932.87 of 51,195,166.58 of the market's debt — a 0.67% share." },
+      "display": {
+        "read_on_chain": "The address checked held 343,932.87 of 51,195,166.58 of the market's debt — a 0.67% share."
+      },
       "corrected_draft": true,
       "name": "CRV collateral concentration (single borrower)",
       "chain": "ethereum",
@@ -459,7 +467,9 @@
     },
     {
       "id": "H06",
-      "display": { "read_on_chain": "The oracle implied ~2.66e15 USD/oz against a reference XAU/USD of 2,656.78; loan and collateral decimals were 6 and 18." },
+      "display": {
+        "read_on_chain": "The oracle implied ~2.66e15 USD/oz against a reference XAU/USD of 2,656.78; loan and collateral decimals were 6 and 18."
+      },
       "name": "Morpho PAXG/USDC market oracle misconfiguration",
       "chain": "ethereum",
       "t0": "2024-10-13",
@@ -572,7 +582,9 @@
     },
     {
       "id": "H07",
-      "display": { "read_on_chain": "The ERC-4626 collateral vault was 472 blocks old with totalSupply 0 and totalAssets 0." },
+      "display": {
+        "read_on_chain": "The ERC-4626 collateral vault was 472 blocks old with totalSupply 0 and totalAssets 0."
+      },
       "name": "Resupply: exchange-rate oracle on a fresh ERC-4626 market",
       "chain": "ethereum",
       "t0": "2025-06-26",
@@ -676,7 +688,9 @@
     },
     {
       "id": "H08",
-      "display": { "read_on_chain": "USDe was priced off a source described as \"Capped USDT/USD\", reporting 1.00005282." },
+      "display": {
+        "read_on_chain": "USDe was priced off a source described as \"Capped USDT/USD\", reporting 1.00005282."
+      },
       "name": "USDe dislocation on a single CEX (10 Oct 2025)",
       "chain": "ethereum",
       "t0": "2025-10-10",
@@ -705,7 +719,19 @@
               "calldata": "0x92bf2be00000000000000000000000004c9edd5852cd905f086c759e8383e09bff1e68b3",
               "provider": "alchemy_archive",
               "result_sha256": "0abed320f4b4af7223a15848477ece65a315056280407e55cc911e7146b5f85c",
-              "retrieved_at": "2026-10-01T08:25:47+00:00"
+              "retrieved_at": "2026-10-01T13:01:17+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 23543615,
+              "contract": "0xc26d4a1c46d884cff6de9800b6ae7a8cf48b4ff8",
+              "fn": "description",
+              "calldata": "0x7284e416",
+              "provider": "alchemy_archive",
+              "result_sha256": "54fb7560f8f7ecc9a2e7bb484302673efbe7e83a68a6c5b276cfed72eb1d5087",
+              "retrieved_at": "2026-10-01T13:01:17+00:00",
+              "decoded": "Capped USDT/USD"
             },
             {
               "kind": "rpc",
@@ -716,7 +742,7 @@
               "calldata": "0xb3596f070000000000000000000000004c9edd5852cd905f086c759e8383e09bff1e68b3",
               "provider": "alchemy_archive",
               "result_sha256": "97b6dabf53175366ff9af2558eaa7ce882cf3e0a0e815eb68c163bb0fda78760",
-              "retrieved_at": "2026-10-01T08:25:47+00:00"
+              "retrieved_at": "2026-10-01T13:01:17+00:00"
             }
           ]
         },
@@ -748,7 +774,9 @@
     },
     {
       "id": "H09",
-      "display": { "read_on_chain": "A feed described as \"xUSD/USD\" reported 1.26239173, up from 1.24779892 thirty days earlier; no quote feed was configured." },
+      "display": {
+        "read_on_chain": "A feed described as \"xUSD/USD\" reported 1.26239173, up from 1.24779892 thirty days earlier; no quote feed was configured."
+      },
       "corrected_draft": true,
       "name": "Stream Finance xUSD in curated lending vaults",
       "chain": "arbitrum",
@@ -915,7 +943,9 @@
     },
     {
       "id": "H10",
-      "display": { "read_on_chain": "Ten borrowers held the debt at T0: the largest at 89.1% ($20.58M), the next at 3.0%; utilisation 0.8817." },
+      "display": {
+        "read_on_chain": "Ten borrowers held the debt at T0: the largest at 89.1% ($20.58M), the next at 3.0%; utilisation 0.8817."
+      },
       "corrected_draft": true,
       "name": "Single-borrower xUSD market on Morpho (Arbitrum)",
       "chain": "arbitrum",
@@ -1100,7 +1130,9 @@
     },
     {
       "id": "H11",
-      "display": { "read_on_chain": "The delay module reported txCooldown = 608,400 s at the block before the attack." },
+      "display": {
+        "read_on_chain": "The delay module reported txCooldown = 608,400 s at the block before the attack."
+      },
       "name": "Term Finance: timelock removable by a self-approved proposal",
       "chain": "ethereum",
       "t0": "2026-08-23",
@@ -1170,7 +1202,9 @@
     },
     {
       "id": "H12",
-      "display": { "read_on_chain": "MAMO was listed with a 0.5 collateral factor at a spot price of 0.00924306 and an FDV of ~$9.24M." },
+      "display": {
+        "read_on_chain": "MAMO was listed with a 0.5 collateral factor at a spot price of 0.00924306 and an FDV of ~$9.24M."
+      },
       "name": "Moonwell MAMO market: spot-priced thin collateral",
       "chain": "base",
       "t0": "2026-08-26",
@@ -1316,7 +1350,9 @@
     },
     {
       "id": "H13",
-      "display": { "read_on_chain": "Of the wrappers only wGOOGLx carried a rate of 6.0 at T0; wMSTRx, wTSLAx and wNVDAx stood at ~1.0." },
+      "display": {
+        "read_on_chain": "Of the wrappers only wGOOGLx carried a rate of 6.0 at T0; wMSTRx, wTSLAx and wNVDAx stood at ~1.0."
+      },
       "name": "Edel Finance: wrapper exchange-rate inflation (wGOOGLx)",
       "chain": "ethereum",
       "t0": "2026-06-30",
@@ -1575,7 +1611,13 @@
         "pre-registration: the adapter's verdict and capsules are hashed at T0 and scored only after the horizon"
       ],
       "scored": false,
-      "prereg": {"ledger": "data/prospective/ledger.jsonl", "sha256": "f2ff19a2b9dbe8780b0291c0ee8e2726a07f007b84bdaa4211deb04936eeb041", "agent": "rules-baseline-v0.5 (ground_truth_defi, no language model)", "facts_tool": "tools/snapshot_p01.py", "note": "t0 moved from the designated 2026-09-30 to the block actually read, so that the commitment does not post-date t0"},
+      "prereg": {
+        "ledger": "data/prospective/ledger.jsonl",
+        "sha256": "f2ff19a2b9dbe8780b0291c0ee8e2726a07f007b84bdaa4211deb04936eeb041",
+        "agent": "rules-baseline-v0.5 (ground_truth_defi, no language model)",
+        "facts_tool": "tools/snapshot_p01.py",
+        "note": "t0 moved from the designated 2026-09-30 to the block actually read, so that the commitment does not post-date t0"
+      },
       "status": "prospective"
     }
   ]

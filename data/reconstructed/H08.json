@@ -10,7 +10,19 @@
       "calldata": "0x92bf2be00000000000000000000000004c9edd5852cd905f086c759e8383e09bff1e68b3",
       "provider": "alchemy_archive",
       "result_sha256": "0abed320f4b4af7223a15848477ece65a315056280407e55cc911e7146b5f85c",
-      "retrieved_at": "2026-10-01T08:25:47+00:00"
+      "retrieved_at": "2026-10-01T13:01:17+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 23543615,
+      "contract": "0xc26d4a1c46d884cff6de9800b6ae7a8cf48b4ff8",
+      "fn": "description",
+      "calldata": "0x7284e416",
+      "provider": "alchemy_archive",
+      "result_sha256": "54fb7560f8f7ecc9a2e7bb484302673efbe7e83a68a6c5b276cfed72eb1d5087",
+      "retrieved_at": "2026-10-01T13:01:17+00:00",
+      "decoded": "Capped USDT/USD"
     },
     {
       "kind": "rpc",
@@ -21,7 +33,7 @@
       "calldata": "0xb3596f070000000000000000000000004c9edd5852cd905f086c759e8383e09bff1e68b3",
       "provider": "alchemy_archive",
       "result_sha256": "97b6dabf53175366ff9af2558eaa7ce882cf3e0a0e815eb68c163bb0fda78760",
-      "retrieved_at": "2026-10-01T08:25:47+00:00"
+      "retrieved_at": "2026-10-01T13:01:17+00:00"
     }
   ],
   "observed": {
