@@ -805,7 +805,7 @@
       "name": "Moonwell MAMO market: spot-priced thin collateral",
       "chain": "base",
       "t0": "2026-08-26",
-      "t0_block": null,
+      "t0_block": 50456526,
       "horizon_days": 7,
       "position": "Supplier of cbBTC/USDC/wstETH to Moonwell on Base, where MAMO is accepted as collateral",
       "facts": {
@@ -818,7 +818,107 @@
       "sources": {
         "onchain_state": {
           "responded": true,
-          "provider": "alchemy_archive"
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "fn": "eth_getTransactionReceipt",
+              "tx": "0xafb6f0fa257b115a5c813bf787b4c1535e63888b1d0dbeb1f3788f557f51798f",
+              "block": 50516532,
+              "provider": "alchemy_archive",
+              "result_sha256": "24cae786eefc5b7b684f515299fd0079a3bcad4d1c7396510793ea82f19ab8ec",
+              "retrieved_at": "2026-10-01T08:17:52+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0xf877acafa28c19b96727966690b2f44d35ad5976",
+              "fn": "comptroller",
+              "calldata": "0x5fe3b567",
+              "provider": "alchemy_archive",
+              "result_sha256": "2b9e27cf5169527bdba8e630b8d4e492b5468283d7dba6cb15327fc95fb37ea4",
+              "retrieved_at": "2026-10-01T08:18:00+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
+              "fn": "oracle",
+              "calldata": "0x7dc0d1d0",
+              "provider": "alchemy_archive",
+              "result_sha256": "71abbc14850729a7e86d59a2317eae284572461d956bfe1fc1c24729abf246ed",
+              "retrieved_at": "2026-10-01T08:18:00+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
+              "fn": "getAllMarkets",
+              "calldata": "0xb0772d0b",
+              "provider": "alchemy_archive",
+              "result_sha256": "2a6f790a193d4155a06b889a44f1e3db12d927904e1acb118051a001db8c6788",
+              "retrieved_at": "2026-10-01T08:18:01+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
+              "fn": "markets",
+              "calldata": "0x8e8f294b0000000000000000000000002f90bb22eb3979f5ffad31ea6c3f0792ca66da32",
+              "provider": "alchemy_archive",
+              "result_sha256": "f257eb414c13cd03398857ab7284e6e52d610077f225114121632c11cb5eea24",
+              "retrieved_at": "2026-10-01T08:18:05+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0x2f90bb22eb3979f5ffad31ea6c3f0792ca66da32",
+              "fn": "underlying",
+              "calldata": "0x6f307dc3",
+              "provider": "alchemy_archive",
+              "result_sha256": "e4c16deea713562ae194ce3000777d417d3f509d4b0320f93143d6e622e1ed7e",
+              "retrieved_at": "2026-10-01T08:18:05+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0x7300b37dfdfab110d83290a29dfb31b1740219fe",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "5aae0566f3b11c8113a5f6c6e256f8f98c3c539a0dc89698edf830d735de5268",
+              "retrieved_at": "2026-10-01T08:18:06+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0x7300b37dfdfab110d83290a29dfb31b1740219fe",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "b9553c80fe543ecc77d48997e74cf2c1eefb01111fa10aab0c3088580fd5aa41",
+              "retrieved_at": "2026-10-01T08:18:06+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0xec942be8a8114bfd0396a5052c36027f2ca6a9d0",
+              "fn": "getUnderlyingPrice",
+              "calldata": "0xfc57d4df0000000000000000000000002f90bb22eb3979f5ffad31ea6c3f0792ca66da32",
+              "provider": "alchemy_archive",
+              "result_sha256": "e4b9e04da1d211574773687256d41f461c9ca1eb41130841795c4b2d120d5a70",
+              "retrieved_at": "2026-10-01T08:18:06+00:00"
+            }
+          ]
         },
         "contract_meta": {
           "responded": true,
@@ -843,14 +943,14 @@
         "post-cutoff case for mid-2026 models"
       ],
       "scored": true,
-      "status": "draft"
+      "status": "reconstructed"
     },
     {
       "id": "H13",
       "name": "Edel Finance: wrapper exchange-rate inflation (wGOOGLx)",
       "chain": "ethereum",
       "t0": "2026-06-30",
-      "t0_block": null,
+      "t0_block": 25426766,
       "horizon_days": 7,
       "position": "Lender on Edel Lending v1 where wGOOGLx (wrapped tokenized equity) is collateral",
       "facts": {
@@ -863,7 +963,151 @@
       "sources": {
         "onchain_state": {
           "responded": true,
-          "provider": "alchemy_archive"
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "fn": "eth_getTransactionReceipt",
+              "tx": "0xe2320086b2815d21b0927839bd0e306466c29a68d38d5361e99dd21ec5472612",
+              "block": 25434062,
+              "provider": "alchemy_archive",
+              "result_sha256": "403bbe63a0fb9f6a8271b237ecdf6dcf127ce4d61e2df49ee692302c5ef3d18b",
+              "retrieved_at": "2026-10-01T08:18:07+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x1630f08370917e79df0b7572395a5e907508bbbc",
+              "fn": "convertToAssets",
+              "calldata": "0x07a2d13a0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+              "provider": "alchemy_archive",
+              "result_sha256": "0a1992d654e5b695e4df07f474e79a12098e51f59ccaf7c173fc5eca7bc2a9d5",
+              "retrieved_at": "2026-10-01T08:18:15+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x1630f08370917e79df0b7572395a5e907508bbbc",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "65648e4f0ab52e4c0e4b1d59cb1db2d9ae33dbefbc607f1cd30653ea4e49d681",
+              "retrieved_at": "2026-10-01T08:18:15+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x266e5923f6118f8b340ca5a23ae7f71897361476",
+              "fn": "convertToAssets",
+              "calldata": "0x07a2d13a0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+              "provider": "alchemy_archive",
+              "result_sha256": "6871fcd8dd2a2a6d66743e19558b2252c46ec3ef02ae1a5a142fcfe83e511f5a",
+              "retrieved_at": "2026-10-01T08:18:16+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x266e5923f6118f8b340ca5a23ae7f71897361476",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "bab9cd0ed79e2c54600ac29db1ada36f13329f1206f0d2f057883c3c3c4a259b",
+              "retrieved_at": "2026-10-01T08:18:16+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x43680abf18cf54898be84c6ef78237cfbd441883",
+              "fn": "convertToAssets",
+              "calldata": "0x07a2d13a0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+              "provider": "alchemy_archive",
+              "result_sha256": "6871fcd8dd2a2a6d66743e19558b2252c46ec3ef02ae1a5a142fcfe83e511f5a",
+              "retrieved_at": "2026-10-01T08:18:18+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x43680abf18cf54898be84c6ef78237cfbd441883",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "6f288ad247f0568a2fa92ca051330742f0e93ee0df60c94eb72fb2c889b9b936",
+              "retrieved_at": "2026-10-01T08:18:18+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x93e62845c1dd5822ebc807ab71a5fb750decd15a",
+              "fn": "convertToAssets",
+              "calldata": "0x07a2d13a0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+              "provider": "alchemy_archive",
+              "result_sha256": "5ee37f1e0432d3256ae8c34b334e8e03589af43742b12bf25a0478b5e9a3c0fd",
+              "retrieved_at": "2026-10-01T08:18:19+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x93e62845c1dd5822ebc807ab71a5fb750decd15a",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "c979d16f3402688f46f040e8a98863dbddf8dfea029b7c6a8dbbe67def8280b1",
+              "retrieved_at": "2026-10-01T08:18:19+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0xc88fcd8b874fdb3256e8b55b3decb8c24eab4c02",
+              "fn": "convertToAssets",
+              "calldata": "0x07a2d13a0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+              "provider": "alchemy_archive",
+              "result_sha256": "1d7bf9e3da75ef746324cb546d46620881144e26ce916b0723432c14f35c3796",
+              "retrieved_at": "2026-10-01T08:18:20+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0xc88fcd8b874fdb3256e8b55b3decb8c24eab4c02",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "a2c52e13fc94b4a047a4e977f22871aaf4eb6fa25dd03769ff63e5b9cb958dcb",
+              "retrieved_at": "2026-10-01T08:18:21+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0xdbd9232fee15351068fe02f0683146e16d9f2cea",
+              "fn": "convertToAssets",
+              "calldata": "0x07a2d13a0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+              "provider": "alchemy_archive",
+              "result_sha256": "912ae7e1e6d5a695c37ed5c819061dcf679af2bec0d653500d308ae54bcced7b",
+              "retrieved_at": "2026-10-01T08:18:21+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0xdbd9232fee15351068fe02f0683146e16d9f2cea",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "a000c96918f035b0addaab3333971d13d3174cc0862962edbc50fbb62b4d9a53",
+              "retrieved_at": "2026-10-01T08:18:22+00:00"
+            }
+          ]
         },
         "contract_meta": {
           "responded": true,
@@ -888,7 +1132,7 @@
         "loss absorbed by operator: realized loss for the protocol, not the depositor — labelling question"
       ],
       "scored": true,
-      "status": "draft"
+      "status": "reconstructed"
     },
     {
       "id": "C01",
