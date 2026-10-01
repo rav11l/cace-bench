@@ -456,7 +456,7 @@
       "name": "USDe dislocation on a single CEX (10 Oct 2025)",
       "chain": "ethereum",
       "t0": "2025-10-10",
-      "t0_block": null,
+      "t0_block": 23543615,
       "horizon_days": 30,
       "position": "Supplier to an Aave market where USDe/sUSDe are collateral",
       "facts": {
@@ -470,7 +470,31 @@
       "sources": {
         "onchain_state": {
           "responded": true,
-          "provider": "alchemy_archive"
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 23543615,
+              "contract": "0x54586bE62E3c3580375aE3723C145253060Ca0C2",
+              "fn": "getSourceOfAsset",
+              "calldata": "0x92bf2be00000000000000000000000004c9edd5852cd905f086c759e8383e09bff1e68b3",
+              "provider": "alchemy_archive",
+              "result_sha256": "0abed320f4b4af7223a15848477ece65a315056280407e55cc911e7146b5f85c",
+              "retrieved_at": "2026-10-01T08:25:47+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 23543615,
+              "contract": "0x54586bE62E3c3580375aE3723C145253060Ca0C2",
+              "fn": "getAssetPrice",
+              "calldata": "0xb3596f070000000000000000000000004c9edd5852cd905f086c759e8383e09bff1e68b3",
+              "provider": "alchemy_archive",
+              "result_sha256": "97b6dabf53175366ff9af2558eaa7ce882cf3e0a0e815eb68c163bb0fda78760",
+              "retrieved_at": "2026-10-01T08:25:47+00:00"
+            }
+          ]
         },
         "contract_meta": {
           "responded": true,
@@ -496,7 +520,7 @@
         "PAIRED with H09: same hardcode mechanism, opposite outcome"
       ],
       "scored": true,
-      "status": "draft"
+      "status": "reconstructed"
     },
     {
       "id": "H09",

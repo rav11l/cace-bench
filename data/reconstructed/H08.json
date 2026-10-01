@@ -10,7 +10,7 @@
       "calldata": "0x92bf2be00000000000000000000000004c9edd5852cd905f086c759e8383e09bff1e68b3",
       "provider": "alchemy_archive",
       "result_sha256": "0abed320f4b4af7223a15848477ece65a315056280407e55cc911e7146b5f85c",
-      "retrieved_at": "2026-10-01T08:22:14+00:00"
+      "retrieved_at": "2026-10-01T08:25:47+00:00"
     },
     {
       "kind": "rpc",
@@ -21,7 +21,7 @@
       "calldata": "0xb3596f070000000000000000000000004c9edd5852cd905f086c759e8383e09bff1e68b3",
       "provider": "alchemy_archive",
       "result_sha256": "97b6dabf53175366ff9af2558eaa7ce882cf3e0a0e815eb68c163bb0fda78760",
-      "retrieved_at": "2026-10-01T08:22:15+00:00"
+      "retrieved_at": "2026-10-01T08:25:47+00:00"
     }
   ],
   "observed": {
