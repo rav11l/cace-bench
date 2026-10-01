@@ -601,7 +601,7 @@
       "name": "Term Finance: timelock removable by a self-approved proposal",
       "chain": "ethereum",
       "t0": "2026-08-23",
-      "t0_block": null,
+      "t0_block": 25816048,
       "horizon_days": 7,
       "position": "Depositor in a governed meta-vault protected by a 7-day Zodiac Delay timelock",
       "facts": {
@@ -615,7 +615,30 @@
       "sources": {
         "onchain_state": {
           "responded": true,
-          "provider": "alchemy_archive"
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "fn": "eth_getTransactionReceipt",
+              "tx": "0xd354a15b15cb73d30908f411aee3f795ec86737a4d080e9a818ac4d6d3014129",
+              "block": 25816049,
+              "provider": "alchemy_archive",
+              "result_sha256": "6e71ff591a08016bff05105bf93e209c8374187ed55a3899004c4491737191f3",
+              "retrieved_at": "2026-10-01T07:55:50+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25816048,
+              "contract": "0x35c99cf4a5df2d9bcd822bee32676d9590229e33",
+              "fn": "txCooldown",
+              "calldata": "0xdcafac09",
+              "provider": "alchemy_archive",
+              "result_sha256": "0bab81506f9410afe2cef1d21fb447770d15dc45176011e0827a27332ca82ca8",
+              "retrieved_at": "2026-10-01T07:55:50+00:00"
+            }
+          ]
         },
         "contract_meta": {
           "responded": true,
@@ -640,7 +663,7 @@
         "proposed fix: a queued change that lowers a control below policy sets controls_safe = False"
       ],
       "scored": true,
-      "status": "draft"
+      "status": "reconstructed"
     },
     {
       "id": "H12",
