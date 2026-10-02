@@ -38,10 +38,12 @@ availability-blind pass; ON = judge + recovery loop) through the deterministic
 ground-truth judge, aggregates the metrics with 95% Wilson intervals, and writes:
 
 - `results/run-seed0.json` — machine-readable counts, rates and CIs;
-- `results/REPORT-<date>.md` — the signed, dated report.
+- `results/REPORT-<date>.md` — the dated report.
 
 Determinism: re-running with the same `--seed` and the same registry yields a
-byte-identical `run-seed*.json` (verified). Change `--seed` to obtain independent
+byte-identical `run-seed*.json` (from v0.6.0 the only float sum uses `math.fsum`, which is exactly rounded;
+verified identical on Python 3.11 and 3.13. Before v0.6.0, `step_correct` in the committed
+file differed in the 15th digit from a run on Python 3.13). Change `--seed` to obtain independent
 replications.
 
 `--providers` may be omitted: an equivalent registry is embedded in `cace_bench.py` under
@@ -73,7 +75,7 @@ Reproducible at tag `v0.2.0`, where the harness had no availability axis:
 ## Provenance
 
 Each `run-*.json` records the benchmark version, seed, n, the registry version and the
-full parameter set. The signed report additionally records the run date. The figures
+full parameter set. The dated report additionally records the run date. The figures
 characterise the **reference agent + judge** on the synthetic distribution; to benchmark a
 production pipeline, replace the `first_pass` / `recover` functions in `cace_bench.py`
 with a live adapter exposing the same interface and re-run.
@@ -81,3 +83,20 @@ with a live adapter exposing the same interface and re-run.
 Coverage numbers in the registry are working assumptions until the provider confirms them
 (`verified: false` on the product side). They are not measurements, and a report published
 from an unverified registry must say so.
+
+## Regulatory-shift track (v0.6)
+
+```bash
+python evolve.py --seeds 10 --out results/shift
+python evolve.py --seeds 10 --families struct --eps 0.01 --out results/shift-eps010
+python tools/shift_tables.py results/shift
+python tools/paper_numbers.py results/shift results/shift-eps010 results paper/generated
+cd paper && latexmk -pdf main.tex
+```
+
+Standard library only; the full grid takes about seven minutes on one CPU core. Each
+`results/shift/cell-<family>-<severity>-seed<k>.json.gz` (gzipped JSON) holds every arm's held-out confusion
+counts, the final harness and its SHA-256 digest, gate counts, the per-window error series,
+and — for the dual, no-gate and global-only arms — the complete hash-chained gate log.
+`evolve.AuditLog.verify()` recomputes the chain. Every constant is at the top of
+`evolve.py` and is copied into `results/shift/summary.json`.

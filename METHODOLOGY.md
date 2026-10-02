@@ -1,8 +1,9 @@
 # CACE-Bench — Methodology
 
 > Compliance-Aware Credit-agent Evaluation. The definitions, metrics and protocol below
-> are real and match the published v0.1.0 metadata; figures marked `‹FILL: …›` are
-> placeholders pending a signed, dated run.
+> are those of the reference run in `cace_bench.py`; the regulatory-shift track is
+> specified in `evolve.py` and the accompanying paper. Every figure cited here is an output
+> of a dated run in `results/`.
 
 ## 1. Purpose
 
@@ -48,14 +49,22 @@ in a live adapter to benchmark a production pipeline.
 
 - **Source:** fully synthetic. A generator produces credit cases, populations and
   **~23k labelled multi-agent traces** that reflect real credit distributions — no real
-  personal or company data. `‹FILL: describe how the generator's distributions are
-  calibrated / validated›`
-- **Size:** ~23,000 labelled multi-agent traces (v0.1.0).
-- **Splits:** `‹FILL: generation / control / test, with seeds›`
+  personal or company data. The distributions are **not calibrated** to any portfolio: base rates,
+  provider coverage and injected first-pass error rates are documented parameters chosen
+  to exercise the pipeline (see `configs/` and DATASHEET.md). Only contrasts between arms
+  are informative; absolute levels are set by the parameters.
+- **Size:** 23,000 synthetic cases per reference run; 23,000 screening alerts per run in
+  the regulatory-shift track (90 runs).
+- **Splits:** reference run — one population per seed (seeds 0–4 published), both arms
+  scored on the same cases. Regulatory-shift track — pre-shift pool split by case index
+  into a gate half (even) and an audit half (odd, never seen by the gate); adaptation on
+  [70%, 85%) of the stream; held-out evaluation on [85%, 100%]; seeds 0–9 per cell.
 - **Access & licensing:** synthetic data is shareable; released under MIT.
 - **Known biases / limits:** results are on synthetic populations by design — be explicit
-  about where the generator may diverge from LatAm reality. `‹FILL — regulators trust
-  honesty about limits›`
+  about where the generator may diverge from LatAm reality. Known divergences: provider
+  coverage is assumed, not vendor-confirmed; sanctions and PEP base rates are illustrative;
+  ownership chains in the shift track are drawn from simple parametric distributions; no
+  protected attributes, so no fairness analysis is possible.
 
 ## 5. Protocol
 
@@ -65,7 +74,7 @@ in a live adapter to benchmark a production pipeline.
    every `Decision`, `case_verdict` and step.
 4. Compute hallucination rate, recovery rate, compliance false-positive rate and
    step-level correctness with 95% confidence intervals and sample sizes.
-5. Produce a signed, dated report (see [results/REPORT_TEMPLATE.md](results/REPORT_TEMPLATE.md)).
+5. Produce a dated report (see [results/REPORT_TEMPLATE.md](results/REPORT_TEMPLATE.md)).
 
 ## 6. Governance & auditability
 
@@ -82,4 +91,6 @@ in a live adapter to benchmark a production pipeline.
 CACE-Bench measures auditability and decision quality on **synthetic** data; it does not
 certify regulatory compliance in any jurisdiction, does not replace human judgement on
 individual credit decisions, and its regional mapping is an aid to audits, not a legal
-opinion. `‹FILL: add any jurisdiction-specific caveats surfaced during the published run.›`
+opinion. Jurisdiction-specific caveat: the undecidable share per country (10.8–23.1% on
+  seed 0) is driven entirely by assumed provider coverage and must be re-estimated before
+  it is quoted for any market.

@@ -1,8 +1,8 @@
 {
   "title": "CACE-Bench: A Synthetic Agentic Evaluation Benchmark for LLM Credit-Pipeline Agents",
-  "version": "0.4.1",
+  "version": "0.6.0",
   "upload_type": "software",
-  "description": "Compliance-Aware Credit-agent Evaluation (CACE-Bench): a fully synthetic, reproducible benchmark and generator for evaluating and auto-evolving LLM-agent credit pipelines under auditability constraints. No real personal or production credit data is used anywhere in this benchmark.\n\nWhat is archived here. The generator, a reference agent, a deterministic ground-truth judge, the auto-evolution ablation, the metric collectors and the command-line interface are implemented in a single dependency-free Python file. The archive also ships the provider registry, the run configuration, the methodology and reproducibility notes, and dated reference runs, so every published figure can be regenerated from the code beside it.\n\nData-availability axis. Cases are drawn per country and each of three source classes (open banking, alternative data, sanctions and PEP screening) is resolved by walking that country's provider fallback chain. Only the structure of the registry is used; no provider data enters the benchmark. Consent is a separate gate, and ESCALATE is a first-class ground-truth outcome: the correct answer when the facts a decision needed were not obtainable, which makes a pipeline that never escalates measurably wrong. Every claim carries the provider it came from, so citing a source that did not respond is a separately reported error class.\n\nMetrics. Silent-decision rate, provenance completeness, over-escalation rate, hallucination rate, recovery rate, compliance false-positive rate and step-level correctness, all with 95 percent Wilson confidence intervals computed from genuine counts.\n\nReference run (seed 0, N = 23,000 synthetic cases, registry 2026-08-03). 3,582 cases (15.57 percent) are undecidable. Baseline with self-evolution off versus self-evolution on: silent-decision rate 55.11 to 6.53 percent; compliance false-positive rate 22.51 to 4.96 percent (-77.9 percent relative); hallucination rate 2.55 to 0.62 percent; over-escalation 3.60 to 0.53 percent; provenance completeness 93.40 to 99.33 percent; recovery rate 81.81 percent; step-level correctness 86.98 to 97.70 percent.\n\nScope. These figures characterise a reference agent and judge on a synthetic distribution, not a production LLM pipeline, and are illustrative of the method rather than of production performance. Provider-coverage figures are working assumptions, not vendor-confirmed data. Protected attributes are deliberately omitted, so fairness auditing is out of scope and flagged as required future work. Validation on production data has not been done.\n\nRelation to the accompanying paper. The paper reports a different experiment: a simulated regulatory re-interpretation at the 70 percent mark of the stream, compared across four conditions, in which the compliance false-positive rate recovers from 23.7 to 5.1 percent, counted over approximately 23,000 labelled trace steps for 3,000 applications. That harness is not part of this release and is planned for a later version; the figure should be cited to the paper, not to this record.\n\nVersion 0.4.1 is a documentation and metadata release. It adds a changelog and citation guidance, documents the optional real_data module for public credit datasets added in 0.4.0, separates this repository's reproducible reference run from the results reported in the paper, and rewrites this description, which previously opened by describing the preceding version. The benchmark, generator and data are unchanged from 0.4.0.",
+  "description": "Compliance-Aware Credit-agent Evaluation (CACE-Bench): a fully synthetic, reproducible benchmark and generator for evaluating LLM-agent credit pipelines, and the self-evolution of such pipelines, under auditability constraints. No real personal or production credit data is used.\n\nVersion 0.6.0 adds the regulatory-shift track (evolve.py): a supervisory re-interpretation at 70 percent of a stream of screening alerts, three families of re-interpretation (threshold, scope, structural) at three severities, a dual-loop engine that may change only the runtime harness, and an admission gate whose every decision is written to a hash-chained log before deployment. Ten arms per cell, including no gate, gate on pre-shift labels, oracle, manual update and compute-matched local-only; 10 seeds per cell. Over 90 runs the gated dual loop admitted 144 of 7449 candidate changes with 0 admissions that increased error on a held-out half of the retrospective pool; the same loops without the gate admitted 309 such changes and ended with a missed-flag rate above 10 percent in 49 of 90 runs. The proposer in this track is a seeded search over a stated edit space, not a language model.\n\nThe reference run (cace_bench.py, seed 0, N = 23,000, registry 2026-08-03) is unchanged and now reports the missed-flag rate beside the false-positive rate and is replicated on seeds 0-4: silent-decision rate 55.11 to 6.53 percent; compliance false-positive rate 22.51 to 4.96 percent; missed-flag rate 15.30 to 3.47 percent; hallucination 2.55 to 0.62 percent; provenance completeness 93.40 to 99.33 percent. The recovery arm is a documented parametric model.\n\nScope. All figures characterise reference components on a synthetic distribution and are illustrative of the method, not of production performance. Provider-coverage figures are working assumptions. Protected attributes are omitted, so fairness auditing is out of scope. Every number in the accompanying paper is generated from the result files in this archive.",
   "creators": [
     {
       "name": "Akhtyamov, Ravil",
@@ -12,15 +12,18 @@
   "license": "MIT",
   "access_right": "open",
   "keywords": [
+    "EU AI Act",
     "LLM agents",
     "agentic evaluation",
-    "benchmark",
-    "credit pipeline",
-    "compliance",
+    "audit gate",
     "auditability",
-    "explainable AI",
+    "benchmark",
+    "compliance",
+    "credit pipeline",
     "data availability",
-    "provenance"
-  ],
-  "publication_date": "2026-08-19"
+    "explainable AI",
+    "provenance",
+    "regulatory shift",
+    "self-evolving agents"
+  ]
 }

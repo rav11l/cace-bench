@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21394049.svg)](https://doi.org/10.5281/zenodo.21394049)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.4.1-informational.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.6.0--unreleased-informational.svg)](CHANGELOG.md)
 [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20dataset-rav11l%2Fcace--bench-yellow.svg)](https://huggingface.co/datasets/rav11l/cace-bench)
 
 **Compliance-Aware Credit-agent Evaluation** — *a synthetic agentic evaluation
@@ -11,7 +11,7 @@ and generator for evaluating and auto-evolving LLM-agent credit pipelines under
 auditability constraints.
 
 > ✅ **Reference run included.** The generator, judge and ablation are implemented in a
-> single dependency-free file, [`cace_bench.py`](cace_bench.py); a signed, dated reference
+> single dependency-free file, [`cace_bench.py`](cace_bench.py); a dated reference
 > run on 23,000 synthetic cases — 23,000 *cases*, a population size, not a step count — is
 > in [results/](results/). The figures below are the **actual output of that run** (seed 0),
 > reproducible by anyone. They characterise a reference agent + judge on the synthetic
@@ -115,7 +115,7 @@ decision retains a reasoning trace a human reviewer can check.
 > The auto-evolution ablation defines the baseline (self-evolution **off**) vs. CACE
 > (self-evolution **on**).
 
-**Reference run — v0.3.0, seed 0, N = 23,000 synthetic cases, registry `2026-08-03`:**
+**Reference run — v0.6.0, seed 0, N = 23,000 synthetic cases, registry `2026-08-03`** (the generator and agent are unchanged since v0.3.0; v0.6.0 adds the missed-flag rate and replication on seeds 0–4, [results/run-seed0.json](results/run-seed0.json) … [run-seed4.json](results/run-seed4.json)):
 
 Of 23,000 cases, **3,582 (15.57%) are undecidable** — the consented sources needed for the
 compliance conclusion did not all respond — so `ESCALATE` is the correct outcome for them.
@@ -124,6 +124,7 @@ compliance conclusion did not all respond — so `ESCALATE` is the correct outco
 |---|---|---|---|---|---|
 | Silent-decision rate | 55.11% | 6.53% | **−88.1%** | [46.76, 50.39] pp | 3,582 |
 | Compliance false-positive rate | **22.51%** | **4.96%** | **−77.9%** | [16.79, 18.30] pp | 14,948 |
+| Compliance missed-flag rate (truly flaggable, cleared) | 15.30% | 3.47% | −77.3% | [10.65, 13.02] pp | 4,470 |
 | Hallucination rate | 2.55% | 0.62% | −75.8% | [1.71, 2.16] pp | 23,000 |
 | Over-escalation rate | 3.60% | 0.53% | −85.4% | [2.79, 3.36] pp | 19,418 |
 | Provenance completeness *(higher is better)* | 93.40% | 99.33% | +5.93 pp | [5.59, 6.27] pp | 23,000 |
@@ -147,26 +148,51 @@ recovery 78.8%, step-level correctness 87.94% → 97.44%
 false-positive figure (22.51% → 4.96%) reproduces it within sampling noise on the new,
 harder population.
 
-## Results reported in the accompanying paper — that harness is not in this repository
+## The false-positive reduction is not bought by flagging less
 
-The paper *Compliance-Bounded Self-Evolution of LLM Agents in Regulated Credit Pipelines:
-A Dual-Loop Harness Architecture with Three-Level Quality Metrics* reports a **different
-experiment**: a simulated regulatory re-interpretation degrades the compliance beneficiary
-primitive at the 70% mark of the stream, and four conditions are compared — pre-shift
-healthy, post-shift degraded, a local-only ablation, and the full dual-loop architecture.
-There the compliance false-positive rate rises to 23.7% after the shift, the local loop
-recovers it to 13.5%, and the dual loop to 5.1% (−78% relative). That protocol counts
-~23,000 labelled **trace steps** over 3,000 applications.
+Every false-positive figure above now has its miss rate beside it. On seed 0 the missed-flag
+rate falls with the false-positive rate (15.30% → 3.47%), and the same holds on seeds 1–4
+(false positives 22.19–22.71% → 4.85–5.08%; missed flags 14.62–15.34% → 3.08–3.47%). The
+recovery layer is still a documented parametric model (detection 0.85, correction 0.92), so
+these figures locate the failure, they do not measure any particular judge.
 
-**That harness is not part of this repository yet.** The code here implements the
-two-condition auto-evolution ablation above and reproduces 22.51% → 4.96% on 23,000
-synthetic **cases**. The regulatory-shift harness and its four-condition protocol are
-planned for a later release, so that every number published here can be regenerated from
-the code beside it.
+## Regulatory-shift track (v0.6) — the gate, measured
 
-When quoting **23.7% → 5.1%**, cite the paper. When quoting **22.51% → 4.96%**, cite this
-repository or its Zenodo record. Either way, state that the figure is measured on a
-synthetic benchmark: it is illustrative of the method, not of production performance.
+[`evolve.py`](evolve.py) runs the experiment the accompanying paper describes: a supervisory
+re-interpretation at 70% of the stream, a dual-loop engine that may change only the runtime
+harness, and an admission gate whose every decision is written to a hash-chained log
+before deployment. Three families of re-interpretation (threshold, scope, structural) at
+three severities, 10 seeds each, ten arms — including **no gate**, **gate on stale labels**,
+**oracle**, **manual update** and **compute-matched local-only**.
+
+```bash
+python evolve.py --seeds 10 --out results/shift            # ~7 min, standard library only
+python evolve.py --seeds 10 --families struct --eps 0.01 --out results/shift-eps010
+python tools/shift_tables.py results/shift                 # results/shift/tables.md
+```
+
+Over all 90 runs ([results/shift/tables.md](results/shift/tables.md)):
+
+| Arm | Proposed | Admitted | Harmful admissions (held-out pool) | Runs with missed flags > 10% |
+|---|---|---|---|---|
+| Dual loop, gated | 7,449 | 144 | 0 | 0 |
+| Same loops, no gate (admit if fewer errors visible in the latest window) | 5,353 | 550 | 309 | 49 |
+| Gate on pre-shift labels | 8,490 | 0 | 0 | 0 |
+
+Without the gate, false positives fall because the screen is loosened. With labels from
+before the re-interpretation, the gate refuses every correct change — so after a shift the
+retrospective pool is **relabelled by applying the new rule to the stored facts**; the
+adaptation is supervised at the level of the rule and autonomous at the level of the
+harness. Known failure: at the highest structural severity the fixed non-regression
+tolerance (ε = 0.005) rejects the correct primitive replacement in 5 of 10 seeds;
+ε = 0.010 recovers all 10 with no harmful admission.
+
+**The proposer is a seeded search over a stated edit space, not a language model**, and the
+typed library contains the correct primitive by construction. The track measures the bound
+and the gate, not proposal quality.
+
+The figures in the earlier conference submission (compliance FP 23.7% → 13.5% → 5.1%) were
+not produced by code in this repository and are superseded by this track; do not cite them.
 
 ## Real-dataset baselines (optional, added in v0.4)
 
@@ -218,6 +244,9 @@ been scored yet.
 cace-bench/
 ├── README.md                     — this document (public compliance artifact)
 ├── METHODOLOGY.md                — full methodology (definitions, protocol, governance)
+├── DATASHEET.md                  — datasheet for the synthetic data (both credit tracks)
+├── evolve.py                     — regulatory-shift track: dual loop, gate, hash-chained log (v0.6)
+├── paper/                        — LaTeX source of the accompanying paper; numbers generated from results/
 ├── REPRODUCIBILITY.md            — environment, seeds and steps to reproduce
 ├── CHANGELOG.md                  — version history
 ├── CITATION.cff / CITATION.md    — how to cite (machine-readable + BibTeX and DOI guidance)
@@ -233,6 +262,8 @@ cace-bench/
 │   ├── download_data.py          — helper for fetching those datasets locally
 │   └── requirements.txt          — dependencies for this module only
 ├── tools/
+│   ├── shift_tables.py           — tables for the regulatory-shift track
+│   ├── paper_numbers.py          — writes paper/generated/*.tex from the result files
 │   ├── providers_yaml_to_json.py — regenerates configs/providers.json from the registry
 │   ├── reconstruct_historical.py — DeFi: re-derives each historical label at its t0 block
 │   ├── microstructure.py         — DeFi: exit-cost curves, oracle-manipulation economics
@@ -254,9 +285,12 @@ cace-bench/
 │   └── prospective/ledger.jsonl  — public commitments (hashes only)
 ├── cace_bench.py                 — single-file benchmark: generator + reference agent +
 │                                   deterministic ground-truth judge + ablation + metrics + CLI
-└── results/                      — signed, dated result reports
+└── results/                      — dated result reports
+    ├── REPORT-2026-10-02.md      — v0.6 reference run (seed 0, N=23,000), with missed-flag rate
+    ├── run-seed0..4.json         — machine-readable results (v0.6), seeds 0–4
+    ├── shift/                    — regulatory-shift track: 90 cells, gate logs, tables.md
+    ├── shift-eps010/             — tolerance sensitivity (structural family, ε = 0.010)
     ├── REPORT-2026-08-03.md      — v0.3 reference run (seed 0, N=23,000)
-    ├── run-seed0.json            — machine-readable results (v0.3)
     ├── REPORT-2026-07-27.md      — v0.2 reference run
     ├── run-seed0-v0.2.0.json     — machine-readable results (v0.2)
     ├── REPORT_TEMPLATE.md        — template for each run
@@ -340,10 +374,12 @@ it.
 - Population base rates (P(sanctions)=0.05, P(PEP)=0.03, …) are documented parameters
   chosen to exercise the harness, **not** estimates of any real portfolio.
 - Agent-level metrics need large samples; sanctioned cases are rare, so the missed-check
-  metric has small support.
+  metric has small support. The missed-flag rate (all truly flaggable cases) is reported
+  from v0.6.0.
 - Fairness auditing requires an extended schema with protected attributes, which this
   benchmark **deliberately omits**. That work is required before any deployment.
 - Validation on production data is the natural next step and has not been done.
+- In the regulatory-shift track the proposer is not an LLM; see above.
 - CACE-Bench measures auditability and decision quality; it does **not** by itself
   certify regulatory compliance in any jurisdiction.
 - This is an evidence and methodology tool, not legal or regulatory advice.

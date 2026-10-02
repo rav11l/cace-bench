@@ -8,6 +8,47 @@ resolves to the latest version.
 
 ---
 
+## [Unreleased] — 0.6.0 Regulatory-shift track
+
+Answers the review of the accompanying paper (ACM ICAIF 2026 submission #103): every number
+the revised paper reports is now produced by code in this repository.
+
+### Added
+- `evolve.py` — regulatory-shift track. A screening-alert stream with a versioned
+  compliance rule; three families of supervisory re-interpretation (threshold, scope,
+  structural) at three severities; a dual-loop engine that may change only the runtime
+  harness; an admission gate (paired 95% lower bound of improvement > 0, regression on
+  previously correct cases ≤ ε = 0.005) evaluated on half of the relabelled pre-shift pool;
+  the other half used only to audit admissions; a held-out post-shift window for
+  evaluation. Ten arms: healthy, degraded, oracle, manual update, no gate, gate on stale
+  labels, global only, local only, compute-matched local only, dual loop.
+- Hash-chained, append-only gate log: every admission and rejection is written, with the
+  SHA-256 digests of the harness before and after, before anything is deployed;
+  `AuditLog.verify()` checks the chain.
+- `results/shift/` — 90 runs (9 cells × 10 seeds) with full gate logs for the dual, no-gate
+  and global-only arms; `results/shift-eps010/` — tolerance sensitivity.
+- `tools/shift_tables.py`, `tools/paper_numbers.py` — tables and the paper's numbers are
+  generated from result files, never typed.
+- `paper/` — LaTeX source of the revised paper.
+- `DATASHEET.md`.
+- Reference run replicated on seeds 0–4 (`results/run-seed0.json` … `run-seed4.json`).
+
+### Changed
+- `cace_bench.py`: the judge now records missed flags (a truly flaggable case cleared);
+  `aggregate()` reports `n_flag`, `miss_count`, `miss_rate` and its Wilson interval; the
+  report adds a missed-flag row. Seed-0 headline figures are unchanged.
+- `step_correct` is summed with `math.fsum`, so `run-seed*.json` no longer differs in the
+  15th digit between Python versions (the earlier "byte-identical" claim held only on one
+  interpreter).
+- `__version__` corrected: it read 0.3.0 through releases 0.4.0 and 0.4.1.
+- README: the section stating that the paper's regulatory-shift figures were not produced
+  by this repository is replaced by the track itself; the earlier figures are superseded.
+- METHODOLOGY.md: placeholders filled.
+- Reports are described as dated, not signed: the word "signed" referred to a text line,
+  not a cryptographic signature.
+
+---
+
 ## [Unreleased] — 0.5.0 DeFi track (draft)
 
 **No changes to `cace_bench.py`, the credit-track generator, the reference agent, the judge
