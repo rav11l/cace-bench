@@ -239,7 +239,7 @@ cace-bench/
 │   ├── fig_exit_curves.py        — DeFi: figure from results/defi/micro/exit_curves.csv
 │   ├── fig_manipulation.py       — DeFi: figure from results/defi/micro/manipulation_h12.csv
 │   ├── snapshot_p01.py           — DeFi: facts at t0 for prospective case P01
-│   └── export_hf_defi.py         — DeFi: builds the `defi` config of the HF dataset
+│   └── export_hf_defi.py         — DeFi: builds the DeFi configs of the HF dataset
 ├── examples/
 │   ├── benchmark_your_pipeline.py — credit track: plug in your own pipeline
 │   ├── defi_adapter.py           — DeFi: run an external agent (cutoff gate, anonymisation)
@@ -276,7 +276,7 @@ python cace_bench.py --n 23000 --seed 0 --providers configs/providers.json --out
 file still runs standalone. Passing it explicitly is what makes a published figure
 traceable to a registry version.
 
-Prefer to inspect the data without running code? The 23,000 reference cases (seed 0), with the reference agent's outputs and the judge's verdicts, are on Hugging Face: [rav11l/cace-bench](https://huggingface.co/datasets/rav11l/cace-bench) — `load_dataset("rav11l/cace-bench", split="test")`. The DeFi track is the `defi` config, with `synthetic` and `historical` splits: `load_dataset("rav11l/cace-bench", "defi", split="historical")`.
+Prefer to inspect the data without running code? The 23,000 reference cases (seed 0), with the reference agent's outputs and the judge's verdicts, are on Hugging Face: [rav11l/cace-bench](https://huggingface.co/datasets/rav11l/cace-bench) — `load_dataset("rav11l/cace-bench", split="test")`. The DeFi track is in two configs, `defi` (split `synthetic`) and `defi_historical` (split `historical`): `load_dataset("rav11l/cace-bench", "defi_historical", split="historical")`.
 
 ## Benchmark your own pipeline
 

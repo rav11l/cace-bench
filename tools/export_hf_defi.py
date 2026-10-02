@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""export_hf_defi.py — build the `defi` config of the Hugging Face dataset rav11l/cace-bench.
+"""export_hf_defi.py — build the DeFi configs of the Hugging Face dataset rav11l/cace-bench.
 
-Two splits, written to --out (outside git; upload them to the dataset repo):
+Two files, written to --out (outside git; upload them to the dataset repo's defi/ folder).
+They go into two configs, `defi` (split `synthetic`) and `defi_historical` (split
+`historical`), because a config's splits must share one schema:
 
   synthetic   one row per generated DeFi case (seed 0, N=23,000 by default), with the
               reference agent's first pass and post-recovery narrative and the unchanged
