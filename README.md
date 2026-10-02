@@ -177,6 +177,41 @@ GiveMeSomeCredit and Lending Club. These are **not** required to run the benchma
 copies only, through a common column schema. See
 [real_data/README.md](real_data/README.md).
 
+## DeFi track (v0.5, draft)
+
+A second domain on the **same judge**: agents that issue GO / NO-GO verdicts on lending
+markets, curated vaults and tokenized collateral. `judge()`, `aggregate()`, `wilson()`,
+`diff_ci()` and `_walk_chain()` are imported from `cace_bench.py` unchanged; only the case
+generator, the source registry and the ground-truth rule are new. NO-GO / GO /
+INSUFFICIENT_DATA map onto FLAG / CLEAR / ESCALATE. Full design, rules and open questions:
+[METHODOLOGY-DeFi.md](METHODOLOGY-DeFi.md).
+
+- **Synthetic split.** `python defi_track.py --n 23000 --seed 0` — 16.88% of cases are
+  undecidable; the reference agent's silent-decision rate falls from 59.71% to 7.26% with
+  its verification loop on. Like the credit run, this checks the pipeline, not a real agent.
+- **Historical split.** 13 cases from 12 public incidents (2022–2026), each labelled by
+  the rule at a reference block *before* the event; 12 have reconstruction files from an
+  archive node (one non-EVM case has no reader yet). Every re-derived
+  fact carries an evidence capsule (chain, block, contract, call, SHA-256 of
+  the response), so anyone can re-issue the read. `python defi_track.py --check-historical
+  data/defi_historical_v0.json` prints the rule labels and their calibration against
+  realised outcomes, including the one known false negative (H11).
+- **Microstructure.** Exit-cost curves around three market-depth incidents and the cost of
+  moving an oracle against what it lets an attacker borrow (H12), read at the block:
+  `tools/microstructure.py`, results and figures in [results/defi/micro/](results/defi/micro/).
+- **Prospective split.** Verdicts are committed by hash before the outcome is known
+  (`prereg.py`, ledger in [data/prospective/](data/prospective/)). First commitment: P01,
+  1 October 2026, block 26,097,498, 90-day horizon — a rules baseline, no language model.
+- **Your agent.** `examples/defi_adapter.py` runs any agent that reads JSON on stdin and
+  writes a verdict on stdout, with a model-cutoff gate, anonymised cases and a recall probe
+  for the historical split. `examples/claude_code_agent.py` is a bridge for agents built on
+  Claude Code.
+
+Archive reads need your own RPC endpoints in environment variables (see `rpc.py`); nothing
+in the repository holds a key. The track is a draft: thresholds are policy choices, the
+historical cases were chosen after their outcomes were known, and no external agent has
+been scored yet.
+
 ## Repository structure
 
 ```
@@ -190,14 +225,33 @@ cace-bench/
 ├── LICENSE                       — MIT
 ├── configs/
 │   ├── default.json              — run config (n, seed, reference-agent parameters)
-│   └── providers.json            — provider registry: per-country chains and coverage
+│   ├── providers.json            — provider registry: per-country chains and coverage
+│   └── defi_sources.json         — DeFi source registry: per-chain sources and coverage
 ├── real_data/                    — optional public-dataset integration (v0.4)
 │   ├── loaders.py                — readers for locally provided public credit datasets
 │   ├── schema.py                 — common column schema
 │   ├── download_data.py          — helper for fetching those datasets locally
 │   └── requirements.txt          — dependencies for this module only
 ├── tools/
-│   └── providers_yaml_to_json.py — regenerates configs/providers.json from the registry
+│   ├── providers_yaml_to_json.py — regenerates configs/providers.json from the registry
+│   ├── reconstruct_historical.py — DeFi: re-derives each historical label at its t0 block
+│   ├── microstructure.py         — DeFi: exit-cost curves, oracle-manipulation economics
+│   ├── fig_exit_curves.py        — DeFi: figure from results/defi/micro/exit_curves.csv
+│   ├── fig_manipulation.py       — DeFi: figure from results/defi/micro/manipulation_h12.csv
+│   ├── snapshot_p01.py           — DeFi: facts at t0 for prospective case P01
+│   └── export_hf_defi.py         — DeFi: builds the `defi` config of the HF dataset
+├── examples/
+│   ├── benchmark_your_pipeline.py — credit track: plug in your own pipeline
+│   ├── defi_adapter.py           — DeFi: run an external agent (cutoff gate, anonymisation)
+│   └── claude_code_agent.py      — DeFi: bridge for agents built on Claude Code
+├── METHODOLOGY-DeFi.md           — DeFi track: design, rules, historical cases, leakage
+├── defi_track.py                 — DeFi: generator, ground-truth rule, reference agent, CLI
+├── rpc.py                        — DeFi: point-in-time archive reads with evidence capsules
+├── prereg.py                     — DeFi: commit-reveal pre-registration for the prospective split
+├── data/
+│   ├── defi_historical_v0.json   — DeFi historical split, controls and prospective slots
+│   ├── reconstructed/            — per-case reconstruction at t0 with capsules
+│   └── prospective/ledger.jsonl  — public commitments (hashes only)
 ├── cace_bench.py                 — single-file benchmark: generator + reference agent +
 │                                   deterministic ground-truth judge + ablation + metrics + CLI
 └── results/                      — signed, dated result reports
@@ -205,7 +259,8 @@ cace-bench/
     ├── run-seed0.json            — machine-readable results (v0.3)
     ├── REPORT-2026-07-27.md      — v0.2 reference run
     ├── run-seed0-v0.2.0.json     — machine-readable results (v0.2)
-    └── REPORT_TEMPLATE.md        — template for each run
+    ├── REPORT_TEMPLATE.md        — template for each run
+    └── defi/micro/               — DeFi microstructure results and figures
 ```
 
 ## Quickstart
@@ -221,7 +276,7 @@ python cace_bench.py --n 23000 --seed 0 --providers configs/providers.json --out
 file still runs standalone. Passing it explicitly is what makes a published figure
 traceable to a registry version.
 
-Prefer to inspect the data without running code? The 23,000 reference cases (seed 0), with the reference agent's outputs and the judge's verdicts, are on Hugging Face: [rav11l/cace-bench](https://huggingface.co/datasets/rav11l/cace-bench) — `load_dataset("rav11l/cace-bench", split="test")`.
+Prefer to inspect the data without running code? The 23,000 reference cases (seed 0), with the reference agent's outputs and the judge's verdicts, are on Hugging Face: [rav11l/cace-bench](https://huggingface.co/datasets/rav11l/cace-bench) — `load_dataset("rav11l/cace-bench", split="test")`. The DeFi track is the `defi` config, with `synthetic` and `historical` splits: `load_dataset("rav11l/cace-bench", "defi", split="historical")`.
 
 ## Benchmark your own pipeline
 

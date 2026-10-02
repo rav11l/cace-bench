@@ -197,7 +197,8 @@ Use `examples/defi_adapter.py` (`--demo` for a dry run, `--cmd` to call your age
 - [ ] Thresholds config (`configs/defi_thresholds.json`)
 - [x] Recall probe, cutoff gate and anonymisation (names, tx hashes, dates, block offsets) in the adapter (§5a)
 - [ ] First external adapter run; results under `results/defi/`
-- [ ] Hugging Face config `defi` alongside the credit split; Zenodo version bump
+- [x] Hugging Face config `defi`: export script `tools/export_hf_defi.py` (synthetic + historical splits, checked against `run_defi`); upload to the dataset repo pending
+- [ ] Zenodo version bump
 
 ## 12. Affiliation and conflict of interest
 
