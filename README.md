@@ -2,10 +2,9 @@
 
 [![DOI](https://zenodo.org/badge/DOI/[anonymized DOI].svg)]([anonymized DOI])
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.6.0--unreleased-informational.svg)](CHANGELOG.md)
 [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20dataset-anonymous%2Fbench--bench-yellow.svg)]([anonymized dataset])
 
-**Compliance-Aware Credit-agent Evaluation** — *a synthetic agentic evaluation
+**BENCH** (full name withheld for review) — *a synthetic agentic evaluation
 benchmark for LLM credit-pipeline agents.* A fully synthetic, reproducible benchmark
 and generator for evaluating and auto-evolving LLM-agent credit pipelines under
 auditability constraints.
@@ -191,8 +190,6 @@ tolerance (ε = 0.005) rejects the correct primitive replacement in 5 of 10 seed
 typed library contains the correct primitive by construction. The track measures the bound
 and the gate, not proposal quality.
 
-The figures in the earlier conference submission (compliance FP 23.7% → 13.5% → 5.1%) were
-not produced by code in this repository and are superseded by this track; do not cite them.
 
 ## Real-dataset baselines (optional, added in v0.4)
 
@@ -248,7 +245,6 @@ bench/
 ├── evolve.py                     — regulatory-shift track: dual loop, gate, hash-chained log (v0.6)
 ├── paper/                        — LaTeX source of the accompanying paper; numbers generated from results/
 ├── REPRODUCIBILITY.md            — environment, seeds and steps to reproduce
-├── CHANGELOG.md                  — version history
 ├── CITATION.cff / CITATION.md    — how to cite (machine-readable + BibTeX and DOI guidance)
 ├── .zenodo.json                  — Zenodo archiving metadata (DOI)
 ├── LICENSE                       — MIT

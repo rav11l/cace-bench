@@ -1,6 +1,6 @@
 # BENCH — Methodology
 
-> Compliance-Aware Credit-agent Evaluation. The definitions, metrics and protocol below
+> BENCH (full name withheld for review). The definitions, metrics and protocol below
 > are those of the reference run in `bench.py`; the regulatory-shift track is
 > specified in `evolve.py` and the accompanying paper. Every figure cited here is an output
 > of a dated run in `results/`.

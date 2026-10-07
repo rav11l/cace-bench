@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""BENCH — Compliance-Aware Credit-agent Evaluation (single-file reference run).
+"""BENCH — BENCH (full name withheld for review) (single-file reference run).
 
 v0.3 adds the axis that made v0.2 easy to pass and easy to dismiss: **data
 availability**. In v0.2 every fact a compliance narrative needed was always
