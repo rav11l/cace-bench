@@ -21,8 +21,8 @@ abstract: >-
   Version 0.4 added an optional module integrating public credit datasets for
   baseline comparison, which reads locally provided copies and redistributes
   nothing. No real personal or production credit data is used.
-version: "0.4.1"
-date-released: "2026-08-19"
+version: "0.6.0"
+date-released: "2026-10-07"
 doi: 10.5281/zenodo.21394049
 identifiers:
   - type: doi

@@ -8,7 +8,7 @@ resolves to the latest version.
 
 ---
 
-## [Unreleased] — 0.6.0 Regulatory-shift track
+## [0.6.0] — 2026-10-07 — Regulatory-shift track
 
 Answers the review of the accompanying paper (ACM ICAIF 2026 submission #103): every number
 the revised paper reports is now produced by code in this repository.
@@ -49,7 +49,7 @@ the revised paper reports is now produced by code in this repository.
 
 ---
 
-## [Unreleased] — 0.5.0 DeFi track (draft)
+## [0.5.0-draft] — DeFi track (draft; first archived as part of 0.6.0)
 
 **No changes to `cace_bench.py`, the credit-track generator, the reference agent, the judge
 or the published data.** The DeFi track imports the judge and metrics unchanged.
