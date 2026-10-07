@@ -1,0 +1,72 @@
+{
+  "t0_block": 14935368,
+  "capsules": [
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 14935368,
+      "contract": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+      "fn": "coins",
+      "calldata": "0xc66106570000000000000000000000000000000000000000000000000000000000000001",
+      "provider": "alchemy_archive",
+      "result_sha256": "3b77ec90356636463df0f57501a787417e6c5da52eebb5fbddf3c4bc6fdcb3b0",
+      "retrieved_at": "2026-10-01T08:37:57+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 14935368,
+      "contract": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+      "fn": "decimals",
+      "calldata": "0x313ce567",
+      "provider": "alchemy_archive",
+      "result_sha256": "5aae0566f3b11c8113a5f6c6e256f8f98c3c539a0dc89698edf830d735de5268",
+      "retrieved_at": "2026-10-01T08:37:57+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 14935368,
+      "contract": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+      "fn": "get_dy",
+      "calldata": "0x5e0d443f0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001dd0c885f9a0d80000",
+      "provider": "alchemy_archive",
+      "result_sha256": "94127e75485ca903bcbb1f561090bd6bcb4064b409c031fc18801ade30122371",
+      "retrieved_at": "2026-10-01T08:37:58+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 14935368,
+      "contract": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+      "fn": "balances",
+      "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000000",
+      "provider": "alchemy_archive",
+      "result_sha256": "a3b2431e16870b671c94c852a36af53789ff5419210952ce49ae611e47735816",
+      "retrieved_at": "2026-10-01T08:37:58+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 14935368,
+      "contract": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+      "fn": "balances",
+      "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000001",
+      "provider": "alchemy_archive",
+      "result_sha256": "0a0935efa909adcfbcf0dec24dfa58e2376c00e1872ab6ba62a85a98f51c5aac",
+      "retrieved_at": "2026-10-01T08:37:58+00:00"
+    }
+  ],
+  "observed": {
+    "pool": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+    "exit": "550 stETH -> ETH (\u2248 $1,000,000)",
+    "exit_discount": 0.02852,
+    "steth_share_of_pool": 0.73
+  },
+  "derived": {
+    "gate_fail": false
+  },
+  "agrees_with_draft": {
+    "gate_fail": true
+  }
+}

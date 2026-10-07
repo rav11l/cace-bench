@@ -1,0 +1,1624 @@
+{
+  "version": "historical-v0-draft-2026-09-30",
+  "labelling_protocol": "rule_truth = ground_truth_defi(facts, sources) at T0 (point-in-time, pre-registered rules). realized = what happened by T0 + horizon_days; used only for rule calibration, never by the judge. IMPORTANT: 'facts' in this draft are read from post-mortems and therefore carry hindsight. Before any case is scored, facts and source states must be re-derived from chain state at t0_block via archive RPC, with a capsule per fact; until then status stays 'draft'.",
+  "cases": [
+    {
+      "id": "H01",
+      "display": {
+        "read_on_chain": "Exiting 1,000,000 UST to 3CRV cost 0.089% at T0, UST being 52.4% of the pool; the backing label is not observable on Ethereum."
+      },
+      "name": "UST / Anchor collapse",
+      "chain": "ethereum",
+      "t0": "2022-05-06",
+      "t0_block": 14720258,
+      "horizon_days": 30,
+      "position": "UST exposure via the Curve UST/3CRV metapool on Ethereum (Anchor as the yield source on Terra)",
+      "facts": {
+        "gate_fail": true,
+        "gate_basis": "reflexive backing: peg defended by minting the collateral token (LUNA); no exogenous reserve",
+        "concentration_breach": false,
+        "controls_safe": true,
+        "anomaly_alert": true,
+        "anomaly_basis": "Anchor yield reserve being drawn down to subsidise ~20% deposit rate"
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14720258,
+              "contract": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+              "fn": "coins",
+              "calldata": "0xc66106570000000000000000000000000000000000000000000000000000000000000000",
+              "provider": "alchemy_archive",
+              "result_sha256": "7d8f1a4b390d77ca00e372ac4e17441042d7c7127e7e92f1aea7c6da24c8fc45",
+              "retrieved_at": "2026-10-01T08:37:47+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14720258,
+              "contract": "0xa693b19d2931d498c5b318df961919bb4aee87a5",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "1b20faab6bd4f0a28e6dccc40387fbb6bc37cf249914e73abb87378079425035",
+              "retrieved_at": "2026-10-01T08:37:47+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14720258,
+              "contract": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+              "fn": "get_dy",
+              "calldata": "0x5e0d443f00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000e8d4a51000",
+              "provider": "alchemy_archive",
+              "result_sha256": "c9a03c40adfae38eba8cb1898b43a6fd9a5b03fcafdfd27ce859eb411bbe10f6",
+              "retrieved_at": "2026-10-01T08:37:48+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14720258,
+              "contract": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000000",
+              "provider": "alchemy_archive",
+              "result_sha256": "f40f63a2572df32ba42fbc6899a5ef7014bb599164d8e0d1e4938b9cb3f2a2c4",
+              "retrieved_at": "2026-10-01T08:37:48+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14720258,
+              "contract": "0xCEAF7747579696A2F0bb206a14210e3c9e6fB269",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000001",
+              "provider": "alchemy_archive",
+              "result_sha256": "0779e6bc268637746947a73566432a993ad67ada4acb5c29704e23214d309bce",
+              "retrieved_at": "2026-10-01T08:37:48+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14720258,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "get_virtual_price",
+              "calldata": "0xbb7b8b80",
+              "provider": "alchemy_archive",
+              "result_sha256": "079e7a5de0e879a06c705cdf56fc89b161c0a175141a47f854674b47d6582b7a",
+              "retrieved_at": "2026-10-01T08:37:49+00:00"
+            }
+          ]
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "etherscan_v2"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "defillama_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "flag",
+      "realized": {
+        "loss": true,
+        "summary": "UST lost its peg from ~7 May 2022 and did not recover; Terra halted."
+      },
+      "stresses": [
+        "structural gate",
+        "anomaly basis",
+        "false negative under a long clean history"
+      ],
+      "scored": true,
+      "status": "evidence attached"
+    },
+    {
+      "id": "H02",
+      "display": {
+        "read_on_chain": "Exiting 550 stETH (~$1M) to ETH cost 2.85% at T0, with stETH at 73% of the pool."
+      },
+      "name": "stETH discount during Celsius / 3AC deleveraging",
+      "chain": "ethereum",
+      "t0": "2022-06-10",
+      "t0_block": 14935368,
+      "horizon_days": 365,
+      "position": "Unlevered stETH, small size relative to Curve stETH/ETH depth",
+      "facts": {
+        "gate_fail": false,
+        "concentration_breach": false,
+        "controls_safe": true,
+        "anomaly_alert": true,
+        "anomaly_basis": "Curve stETH/ETH pool heavily imbalanced toward stETH; secondary discount of several percent; withdrawals not yet enabled"
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14935368,
+              "contract": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+              "fn": "coins",
+              "calldata": "0xc66106570000000000000000000000000000000000000000000000000000000000000001",
+              "provider": "alchemy_archive",
+              "result_sha256": "3b77ec90356636463df0f57501a787417e6c5da52eebb5fbddf3c4bc6fdcb3b0",
+              "retrieved_at": "2026-10-01T08:37:57+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14935368,
+              "contract": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "5aae0566f3b11c8113a5f6c6e256f8f98c3c539a0dc89698edf830d735de5268",
+              "retrieved_at": "2026-10-01T08:37:57+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14935368,
+              "contract": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+              "fn": "get_dy",
+              "calldata": "0x5e0d443f0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001dd0c885f9a0d80000",
+              "provider": "alchemy_archive",
+              "result_sha256": "94127e75485ca903bcbb1f561090bd6bcb4064b409c031fc18801ade30122371",
+              "retrieved_at": "2026-10-01T08:37:58+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14935368,
+              "contract": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000000",
+              "provider": "alchemy_archive",
+              "result_sha256": "a3b2431e16870b671c94c852a36af53789ff5419210952ce49ae611e47735816",
+              "retrieved_at": "2026-10-01T08:37:58+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 14935368,
+              "contract": "0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000001",
+              "provider": "alchemy_archive",
+              "result_sha256": "0a0935efa909adcfbcf0dec24dfa58e2376c00e1872ab6ba62a85a98f51c5aac",
+              "retrieved_at": "2026-10-01T08:37:58+00:00"
+            }
+          ]
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "etherscan_v2"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "defillama_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "clear",
+      "realized": {
+        "loss": false,
+        "summary": "Mark-to-market drawdown only; discount closed once withdrawals were enabled (2023). A leveraged stETH loop at high LTV is a different case and would be labelled FLAG."
+      },
+      "stresses": [
+        "false positive (panic NO-GO)",
+        "imbalance trigger with basis",
+        "horizon dependence"
+      ],
+      "scored": true,
+      "status": "reconstructed"
+    },
+    {
+      "id": "H03",
+      "name": "Mango Markets oracle manipulation",
+      "chain": "solana",
+      "t0": "2022-10-10",
+      "t0_block": null,
+      "horizon_days": 30,
+      "position": "USDC deposit on Mango Markets v3",
+      "facts": {
+        "gate_fail": true,
+        "gate_basis": "collateral (MNGO) priced from thin spot markets: oracle manipulable at a cost below the borrowable amount",
+        "concentration_breach": false,
+        "controls_safe": true,
+        "anomaly_alert": false
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive"
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "solana_account_inspect"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "defillama_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "jupiter_quote",
+          "note": "historical depth for Solana must come from archived order-book/AMM snapshots; jupiter_quote is a placeholder"
+        }
+      },
+      "rule_truth": "flag",
+      "realized": {
+        "loss": true,
+        "summary": "~$110M+ drained on 11 Oct 2022 via MNGO price manipulation; partial settlement with the attacker later."
+      },
+      "stresses": [
+        "oracle vs depth gate",
+        "cross-venue reasoning"
+      ],
+      "scored": true,
+      "status": "draft",
+      "notes": "Solana: no reader in rpc.py yet (EVM only). Stays draft until a Solana account/AMM-snapshot reader exists; the label rests on oracle-vs-depth, which needs historical order-book or AMM state."
+    },
+    {
+      "id": "H04",
+      "display": {
+        "read_on_chain": "Exiting 1,000,000 USDC to DAI cost 0.007% at T0; the pool sat at 34.1 / 31.9 / 34.0 percent across its three assets."
+      },
+      "name": "USDC depeg on SVB exposure",
+      "chain": "ethereum",
+      "t0": "2023-03-09",
+      "t0_block": 16786948,
+      "horizon_days": 30,
+      "position": "USDC held or supplied to a blue-chip lending market",
+      "facts": {
+        "gate_fail": false,
+        "concentration_breach": false,
+        "controls_safe": true,
+        "anomaly_alert": true,
+        "anomaly_basis": "bank-run news on a reserve bank; issuer's per-bank breakdown not public at T0"
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "coins",
+              "calldata": "0xc66106570000000000000000000000000000000000000000000000000000000000000001",
+              "provider": "alchemy_archive",
+              "result_sha256": "1ed63c1fae86f287455a4c19ad595f7c778c67e3d0145cf688da250f6cc345ce",
+              "retrieved_at": "2026-10-01T08:38:06+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "1b20faab6bd4f0a28e6dccc40387fbb6bc37cf249914e73abb87378079425035",
+              "retrieved_at": "2026-10-01T08:38:06+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "coins",
+              "calldata": "0xc66106570000000000000000000000000000000000000000000000000000000000000000",
+              "provider": "alchemy_archive",
+              "result_sha256": "020e9b1a39093b98a6e13ebddf5f243777819f4e9ee0168f1ffacecdbf85e140",
+              "retrieved_at": "2026-10-01T08:38:07+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0x6b175474e89094c44da98b954eedeac495271d0f",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "5aae0566f3b11c8113a5f6c6e256f8f98c3c539a0dc89698edf830d735de5268",
+              "retrieved_at": "2026-10-01T08:38:07+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "get_dy",
+              "calldata": "0x5e0d443f00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e8d4a51000",
+              "provider": "alchemy_archive",
+              "result_sha256": "c2b8ae78d37f4e87f647a353550bdaa088bd470fe27a6944e4107d0a6725e6d2",
+              "retrieved_at": "2026-10-01T08:38:07+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000000",
+              "provider": "alchemy_archive",
+              "result_sha256": "170813cad0d362ad0ab6af6f4f07e188c09d2d270fa319b4bedce18fef9d810c",
+              "retrieved_at": "2026-10-01T08:38:08+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000001",
+              "provider": "alchemy_archive",
+              "result_sha256": "c2dff919b03adb884b0768989aa1636635f40c87571c3a13fcb2afc831395a8c",
+              "retrieved_at": "2026-10-01T08:38:08+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 16786948,
+              "contract": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+              "fn": "balances",
+              "calldata": "0x4903b0d10000000000000000000000000000000000000000000000000000000000000002",
+              "provider": "alchemy_archive",
+              "result_sha256": "2b3264452586adbdcccfd6299b108673096334984549bc1d5f43f91b425a4a73",
+              "retrieved_at": "2026-10-01T08:38:08+00:00"
+            }
+          ]
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "etherscan_v2"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "issuer_attestation",
+          "partial": false
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "clear",
+      "realized": {
+        "loss": false,
+        "summary": "USDC traded near $0.87 on 11 Mar 2023 and re-pegged by 13 Mar after the backstop; holders who did not sell lost nothing."
+      },
+      "stresses": [
+        "false positive",
+        "anomaly basis",
+        "issuer vs market price"
+      ],
+      "scored": true,
+      "status": "reconstructed"
+    },
+    {
+      "id": "H05",
+      "display": {
+        "read_on_chain": "The address checked held 343,932.87 of 51,195,166.58 of the market's debt — a 0.67% share."
+      },
+      "corrected_draft": true,
+      "name": "CRV collateral concentration (single borrower)",
+      "chain": "ethereum",
+      "t0": "2024-06-10",
+      "t0_block": null,
+      "horizon_days": 30,
+      "position": "Stablecoin supplier to CRV-collateral lending markets (LlamaLend, Inverse, Fraxlend, UwU Lend)",
+      "facts": {
+        "gate_fail": true,
+        "gate_basis": "collateral size far above DEX exit depth for CRV",
+        "concentration_breach": true,
+        "concentration_basis": "one borrower dominates CRV-collateral markets across venues; health factor near 1 on at least one venue; borrow rates extreme",
+        "controls_safe": true,
+        "anomaly_alert": true,
+        "anomaly_basis": "borrow APR on LlamaLend reported around 120%"
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive"
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "etherscan_v2"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "curve_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "flag",
+      "realized": {
+        "loss": null,
+        "summary": "CRV fell ~25% on 13 Jun 2024 and ~$140M of the positions were liquidated across four venues. Bad debt by venue: TO VERIFY before scoring."
+      },
+      "stresses": [
+        "concentration (the kBTC/RLUSD pattern)",
+        "exit depth vs collateral"
+      ],
+      "scored": true,
+      "status": "draft",
+      "notes": "Reconstruction 2026-10-01: in the LlamaLend CRV market (total debt $51.2M at block 20057708) the public address 0x7a16…5428 held $0.34M (0.67%). Concentration is not visible per ADDRESS; reports attribute positions to several wallets and to Fraxlend/Inverse/UwU. Kept as draft: needs an entity-level (address clustering) rule, which is an open methodological question."
+    },
+    {
+      "id": "H06",
+      "display": {
+        "read_on_chain": "The oracle implied ~2.66e15 USD/oz against a reference XAU/USD of 2,656.78; loan and collateral decimals were 6 and 18."
+      },
+      "name": "Morpho PAXG/USDC market oracle misconfiguration",
+      "chain": "ethereum",
+      "t0": "2024-10-13",
+      "t0_block": 20956051,
+      "horizon_days": 7,
+      "position": "USDC supplier into the permissionless PAXG/USDC market",
+      "facts": {
+        "gate_fail": false,
+        "concentration_breach": false,
+        "controls_safe": false,
+        "controls_basis": "oracle decimals for PAXG vs USDC misconfigured at market creation — detectable by a price() sanity check against a reference feed",
+        "anomaly_alert": false
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "fn": "eth_getTransactionReceipt",
+              "tx": "0x256979ae169abb7fbbbbc14188742f4b9debf48b48ad5b5207cadcc99ccb493b",
+              "block": 20956052,
+              "provider": "alchemy_archive",
+              "result_sha256": "36d04cf6ea6b43e7cac1cfc22bd7e9523e7f8f5af3ac9551dad06e27c9638305",
+              "retrieved_at": "2026-10-01T07:41:32+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 20956051,
+              "contract": "0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+              "fn": "idToMarketParams",
+              "calldata": "0x2c3c91578eaf7b29f02ba8d8c1d7aeb587403dcb16e2e943e4e2f5f94b0963c2386406c9",
+              "provider": "alchemy_archive",
+              "result_sha256": "b5a0484712c677469bd26148d3a6bf45ed8a47e9a6d846b58ac2365961e06adf",
+              "retrieved_at": "2026-10-01T07:41:33+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 20956051,
+              "contract": "0xdd1778f71a4a1c6a0efebd8ae9f8848634ce1101",
+              "fn": "price",
+              "calldata": "0xa035b1fe",
+              "provider": "alchemy_archive",
+              "result_sha256": "5631507003223d7dd0ade2095064e73f982e2863bcfb9e9646f22bcad35fd891",
+              "retrieved_at": "2026-10-01T07:41:33+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 20956051,
+              "contract": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "1b20faab6bd4f0a28e6dccc40387fbb6bc37cf249914e73abb87378079425035",
+              "retrieved_at": "2026-10-01T07:41:34+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 20956051,
+              "contract": "0x45804880de22913dafe09f4980848ece6ecbaf78",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "5aae0566f3b11c8113a5f6c6e256f8f98c3c539a0dc89698edf830d735de5268",
+              "retrieved_at": "2026-10-01T07:41:34+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 20956051,
+              "contract": "0x214eD9Da11D2fbe465a6fc601a91E62EbEc1a0D6",
+              "fn": "latestRoundData",
+              "calldata": "0xfeaf968c",
+              "provider": "alchemy_archive",
+              "result_sha256": "1d3597fb215282643d284f60f6efa40a54786b71026d9a07d39f4408af9c2054",
+              "retrieved_at": "2026-10-01T07:41:35+00:00"
+            }
+          ]
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "rpc_view_calls"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "morpho_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "flag",
+      "realized": {
+        "loss": true,
+        "summary": "~$230K drained on 14 Oct 2024 against ~$350 of PAXG. Recovery status: TO VERIFY."
+      },
+      "stresses": [
+        "controls verification",
+        "hallucination (claiming oracle verified)"
+      ],
+      "scored": true,
+      "status": "reconstructed"
+    },
+    {
+      "id": "H07",
+      "display": {
+        "read_on_chain": "The ERC-4626 collateral vault was 472 blocks old with totalSupply 0 and totalAssets 0."
+      },
+      "name": "Resupply: exchange-rate oracle on a fresh ERC-4626 market",
+      "chain": "ethereum",
+      "t0": "2025-06-26",
+      "t0_block": 22785460,
+      "horizon_days": 1,
+      "position": "Lender exposure to a Resupply market deployed ~2 hours before the exploit",
+      "facts": {
+        "gate_fail": true,
+        "gate_basis": "exchange-rate priced collateral on an ERC-4626 vault with negligible supply (donation / share-inflation manipulable)",
+        "concentration_breach": false,
+        "controls_safe": false,
+        "anomaly_alert": false
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "fn": "eth_getTransactionReceipt",
+              "tx": "0xffbbd492e0605a8bb6d490c3cd879e87ff60862b0684160d08fd5711e7a872d3",
+              "block": 22785461,
+              "provider": "alchemy_archive",
+              "result_sha256": "b20029e046f173dcea709f0f728485583200c9d777ab0e3cecb7ad5e22fd1423",
+              "retrieved_at": "2026-10-01T07:41:35+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 22785460,
+              "contract": "0x6e90c85a495d54c6d7e1f3400fef1f6e59f86bd6",
+              "fn": "collateral",
+              "calldata": "0xd8dfeb45",
+              "provider": "alchemy_archive",
+              "result_sha256": "3720b313799907159245fa30b0a8d67482c0b65d47089e0a7a7265fcf7220301",
+              "retrieved_at": "2026-10-01T07:41:35+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 22785460,
+              "contract": "0x01144442fba7adccb5c9dc9cf33dd009d50a9e1d",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+              "retrieved_at": "2026-10-01T07:41:35+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 22785460,
+              "contract": "0x01144442fba7adccb5c9dc9cf33dd009d50a9e1d",
+              "fn": "totalAssets",
+              "calldata": "0x01e1d114",
+              "provider": "alchemy_archive",
+              "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+              "retrieved_at": "2026-10-01T07:41:36+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "fn": "eth_getTransactionReceipt",
+              "tx": "0x852eca15a9fd352817346915f7bc8817d46de349bd7a8fc6ee73c7b66ec9ab41",
+              "block": 22784988,
+              "provider": "alchemy_archive",
+              "result_sha256": "7f22b30afe83526ea68b141928e2820e5db31640c6eefc424696455941f73ec6",
+              "retrieved_at": "2026-10-01T07:41:36+00:00"
+            }
+          ]
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "rpc_view_calls"
+        },
+        "offchain_meta": {
+          "responded": false,
+          "provider": null,
+          "attempts": [
+            "defillama_api"
+          ]
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "flag",
+      "realized": {
+        "loss": true,
+        "summary": "~$9.5–9.8M lost on 26 Jun 2025 (figures differ by source)."
+      },
+      "stresses": [
+        "exchange-rate oracle gate (same class as syrupUSDC in the Sentora case)",
+        "monitoring latency: 2h window"
+      ],
+      "scored": true,
+      "status": "reconstructed"
+    },
+    {
+      "id": "H08",
+      "display": {
+        "read_on_chain": "USDe was priced off a source described as \"Capped USDT/USD\", reporting 1.00005282."
+      },
+      "name": "USDe dislocation on a single CEX (10 Oct 2025)",
+      "chain": "ethereum",
+      "t0": "2025-10-10",
+      "t0_block": 23543615,
+      "horizon_days": 30,
+      "position": "Supplier to an Aave market where USDe/sUSDe are collateral",
+      "facts": {
+        "gate_fail": false,
+        "concentration_breach": false,
+        "controls_safe": true,
+        "controls_basis": "USDe valued at the USDT feed; primary redemption open; on-chain venues near $1",
+        "anomaly_alert": true,
+        "anomaly_basis": "off-venue price (~$0.60–0.65 on one exchange) not reflected on-chain"
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 23543615,
+              "contract": "0x54586bE62E3c3580375aE3723C145253060Ca0C2",
+              "fn": "getSourceOfAsset",
+              "calldata": "0x92bf2be00000000000000000000000004c9edd5852cd905f086c759e8383e09bff1e68b3",
+              "provider": "alchemy_archive",
+              "result_sha256": "0abed320f4b4af7223a15848477ece65a315056280407e55cc911e7146b5f85c",
+              "retrieved_at": "2026-10-01T13:01:17+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 23543615,
+              "contract": "0xc26d4a1c46d884cff6de9800b6ae7a8cf48b4ff8",
+              "fn": "description",
+              "calldata": "0x7284e416",
+              "provider": "alchemy_archive",
+              "result_sha256": "54fb7560f8f7ecc9a2e7bb484302673efbe7e83a68a6c5b276cfed72eb1d5087",
+              "retrieved_at": "2026-10-01T13:01:17+00:00",
+              "decoded": "Capped USDT/USD"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 23543615,
+              "contract": "0x54586bE62E3c3580375aE3723C145253060Ca0C2",
+              "fn": "getAssetPrice",
+              "calldata": "0xb3596f070000000000000000000000004c9edd5852cd905f086c759e8383e09bff1e68b3",
+              "provider": "alchemy_archive",
+              "result_sha256": "97b6dabf53175366ff9af2558eaa7ce882cf3e0a0e815eb68c163bb0fda78760",
+              "retrieved_at": "2026-10-01T13:01:17+00:00"
+            }
+          ]
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "rpc_view_calls"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "defillama_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "clear",
+      "realized": {
+        "loss": false,
+        "summary": "Blue-chip DeFi protocols reported no bad debt; the dislocation was venue-specific."
+      },
+      "stresses": [
+        "false positive",
+        "anomaly basis",
+        "PAIRED with H09: same hardcode mechanism, opposite outcome"
+      ],
+      "scored": true,
+      "status": "reconstructed"
+    },
+    {
+      "id": "H09",
+      "display": {
+        "read_on_chain": "A feed described as \"xUSD/USD\" reported 1.26239173, up from 1.24779892 thirty days earlier; no quote feed was configured."
+      },
+      "corrected_draft": true,
+      "name": "Stream Finance xUSD in curated lending vaults",
+      "chain": "arbitrum",
+      "t0": "2025-10-27",
+      "t0_block": 393757551,
+      "horizon_days": 30,
+      "position": "USDC supplier (directly or via a curated vault) to the Morpho USDC/xUSD market on Arbitrum",
+      "facts": {
+        "gate_fail": true,
+        "gate_basis": "structural absence of backing evidence: off-chain book run by one external manager, no attestation; recursive looping inflated footprint",
+        "concentration_breach": false,
+        "controls_safe": false,
+        "controls_basis": "xUSD priced by an 'xUSD/USD' feed (0xdc0e…ede9) reporting issuer-side value: 1.248 thirty days before T0, 1.262 at T0, still 1.266 on 2025-11-06 when xUSD traded near $0.26. Not a constant, but a price the issuer reports, with no open par redemption and no verifiable backing. The automatic rule (constant price) does not cover this; label set by hand on the recorded evidence — see METHODOLOGY-DeFi.md §10.",
+        "anomaly_alert": false
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "BASE_FEED_1",
+              "calldata": "0xf50a4718",
+              "provider": "alchemy_archive",
+              "result_sha256": "b965ccb78dd74e3e7e93a349a8af31d732c6b15ac350e6e93b90012cb82e8fa5",
+              "retrieved_at": "2026-10-01T08:24:02+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "BASE_FEED_2",
+              "calldata": "0xdc53858c",
+              "provider": "alchemy_archive",
+              "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+              "retrieved_at": "2026-10-01T08:24:02+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "QUOTE_FEED_1",
+              "calldata": "0x56095e11",
+              "provider": "alchemy_archive",
+              "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+              "retrieved_at": "2026-10-01T08:24:02+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "QUOTE_FEED_2",
+              "calldata": "0xacfbd39e",
+              "provider": "alchemy_archive",
+              "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+              "retrieved_at": "2026-10-01T08:24:02+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "BASE_VAULT",
+              "calldata": "0xeaa2d7b4",
+              "provider": "alchemy_archive",
+              "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+              "retrieved_at": "2026-10-01T08:24:03+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "QUOTE_VAULT",
+              "calldata": "0x2e6f20a6",
+              "provider": "alchemy_archive",
+              "result_sha256": "6aed34e6bddff5e1d872b5d7d5698a7b73abd6f3b33402732edc73ab9ffb9c70",
+              "retrieved_at": "2026-10-01T08:24:03+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x1837efFC34Bb5a96EFdA00d53560799bE3a4226E",
+              "fn": "price",
+              "calldata": "0xa035b1fe",
+              "provider": "alchemy_archive",
+              "result_sha256": "a237a27eb608f49614149a5bfafaffed160b085853f2716d5747acb373d57e1a",
+              "retrieved_at": "2026-10-01T08:24:03+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0xdc0e6a4372b899b47afcb7e15f4829a94abcede9",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "c669e82f0cd861e379a593f2322061b9fc478bbf562cfd9bc7671b56cb066909",
+              "retrieved_at": "2026-10-01T08:24:10+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0xdc0e6a4372b899b47afcb7e15f4829a94abcede9",
+              "fn": "latestRoundData",
+              "calldata": "0xfeaf968c",
+              "provider": "alchemy_archive",
+              "result_sha256": "87995f70c6a21f0a11fa7fc277d0988d6c42922934538fb64fd216d4db1a3fd0",
+              "retrieved_at": "2026-10-01T08:24:11+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 383376868,
+              "contract": "0xdc0e6a4372b899b47afcb7e15f4829a94abcede9",
+              "fn": "latestRoundData",
+              "calldata": "0xfeaf968c",
+              "provider": "alchemy_archive",
+              "result_sha256": "523840e47a99748eaaf55449b85048227add2de49112505c38baf0673061bcaa",
+              "retrieved_at": "2026-10-01T08:24:11+00:00"
+            }
+          ]
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "rpc_view_calls"
+        },
+        "offchain_meta": {
+          "responded": false,
+          "provider": null,
+          "attempts": [
+            "issuer_attestation"
+          ],
+          "note": "structural absence, encoded as gate_fail"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "flag",
+      "realized": {
+        "loss": true,
+        "summary": "Loss disclosed 4 Nov 2025 (~$93M); xUSD fell ~77% to ~$0.26; ~$285M of related exposure mapped; pools frozen."
+      },
+      "stresses": [
+        "structural-absence rule",
+        "oracle hardcode without redemption",
+        "PAIRED with H08"
+      ],
+      "scored": true,
+      "status": "reconstructed (manual label)",
+      "notes": "Re-scoped 2026-10-01 to the Arbitrum market (Ethereum xUSD markets were empty at T0). Same market as H10: H09 tests the oracle/backing rule, H10 the concentration rule.",
+      "label_source": "manual: automatic rule returned controls_safe=True (feed not constant)"
+    },
+    {
+      "id": "H10",
+      "display": {
+        "read_on_chain": "Ten borrowers held the debt at T0: the largest at 89.1% ($20.58M), the next at 3.0%; utilisation 0.8817."
+      },
+      "corrected_draft": true,
+      "name": "Single-borrower xUSD market on Morpho (Arbitrum)",
+      "chain": "arbitrum",
+      "t0": "2025-10-27",
+      "t0_block": 393757551,
+      "horizon_days": 30,
+      "position": "USDC supplier to the Morpho USDC/xUSD market on Arbitrum (LLTV 91.5%), mostly funded by one curated vault",
+      "facts": {
+        "gate_fail": true,
+        "gate_basis": "collateral with no verifiable backing (see H09)",
+        "concentration_breach": true,
+        "concentration_basis": "At 2025-10-27 (block 393757551): one address, 0x1597e4b7cf6d2877a1d690b6088668afdb045763, held 89.14% of the market's debt ($20.58M of $23.09M; utilization 88.2%). That position was closed before the collapse; the address that holds ~100% today (0x2D9C…551c) held ~3% at T0. Address set from the Morpho API, every amount read on chain at T0.",
+        "controls_safe": false,
+        "controls_basis": "xUSD valued by a fixed-ratio oracle without open par redemption",
+        "anomaly_alert": false
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+              "fn": "market",
+              "calldata": "0x5c60e39a9e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709",
+              "provider": "alchemy_archive",
+              "result_sha256": "fe0c6c55398fec78241a79da0932df161331f645da926645dc597fe205a2c13a",
+              "retrieved_at": "2026-10-01T08:02:55+00:00"
+            },
+            {
+              "kind": "api",
+              "provider": "morpho_api",
+              "url": "https://api.morpho.org/graphql",
+              "query": "query($skip:Int){ marketPositions(first: 1000, skip: $skip, where: { marketUniqueKey_in: [\"0x9e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709\"], chainId_in: [42161] }) { items { user { address } } pageInfo { countTotal } } }",
+              "pages_sha256": [
+                "9e075b0bf894582049464a1123e59de23e9d8154fe0e6c0f493391005825fb12"
+              ],
+              "addresses": 36,
+              "retrieved_at": "2026-10-01T08:02:56+00:00",
+              "note": "address set only; all amounts read on chain at t0_block"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+              "fn": "position",
+              "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c66770900000000000000000000000012889c77a17c47480599a6f7366008307770729c",
+              "provider": "alchemy_archive",
+              "result_sha256": "28201b79d4676e64a9fb5278cacdf64dcf152c9b47625a7144497284edb65d88",
+              "retrieved_at": "2026-10-01T08:02:57+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+              "fn": "position",
+              "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c6677090000000000000000000000001597e4b7cf6d2877a1d690b6088668afdb045763",
+              "provider": "alchemy_archive",
+              "result_sha256": "e4d2842dc619e665b576fa8701ab21c48303b997c12550dcfb00533ddf5c8096",
+              "retrieved_at": "2026-10-01T08:02:57+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+              "fn": "position",
+              "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c66770900000000000000000000000023e69bf1ada63b7ef0d7f453fa64c61a257b72f1",
+              "provider": "alchemy_archive",
+              "result_sha256": "8567c13b6a9cb156dc92b3cd222c772d56c911be881b4b6cd8e3d79522ddeb08",
+              "retrieved_at": "2026-10-01T08:02:58+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+              "fn": "position",
+              "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c6677090000000000000000000000002d9c7df48725b94a9de6b2f3174fa4337fd5551c",
+              "provider": "alchemy_archive",
+              "result_sha256": "eea81f2e032071c5dd61e4a661e32fd6ed863ae407d1d9cc7a2abc1b3434632a",
+              "retrieved_at": "2026-10-01T08:02:58+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+              "fn": "position",
+              "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c6677090000000000000000000000003464a35d372aac325783a0b19589055faab4fb5f",
+              "provider": "alchemy_archive",
+              "result_sha256": "d6ab00b07fa297aa8116950ae2b2dd1ac185dcf001416b94ebc12858dab60339",
+              "retrieved_at": "2026-10-01T08:02:59+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+              "fn": "position",
+              "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709000000000000000000000000351ae3dc26017a6ca512de190edc60cae71ddbb3",
+              "provider": "alchemy_archive",
+              "result_sha256": "6f786d2afef6d4d616cc6ebd173b1656dac019629a5091685cb175ac724249c1",
+              "retrieved_at": "2026-10-01T08:02:59+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+              "fn": "position",
+              "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c6677090000000000000000000000003d7f861e7fabe268c074de3ff1dd0b3a2eb3d70e",
+              "provider": "alchemy_archive",
+              "result_sha256": "8f1d45c20e016db28c559ccd3938f6bc02160169f54b848cadc49c4f1654261f",
+              "retrieved_at": "2026-10-01T08:03:00+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+              "fn": "position",
+              "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c66770900000000000000000000000093e22ecd5b8a4da8c0e97d7158c060612e7115a3",
+              "provider": "alchemy_archive",
+              "result_sha256": "b39cda42b7e25091f815a2478be44a6fbbe46c0ab8c89b0561688c3cc4001876",
+              "retrieved_at": "2026-10-01T08:03:03+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+              "fn": "position",
+              "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709000000000000000000000000d7fc4ab828afc1bb4b217f337f1777ca856efd12",
+              "provider": "alchemy_archive",
+              "result_sha256": "640e0155ad6a177ebe290195009b54aa547e8dd94fc0d4e9c51b45d2a8b87cb7",
+              "retrieved_at": "2026-10-01T08:03:06+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "arbitrum",
+              "block": 393757551,
+              "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+              "fn": "position",
+              "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709000000000000000000000000e05c75c79464a10d6497548902492e64ec8a6a73",
+              "provider": "alchemy_archive",
+              "result_sha256": "2d9d2c1d6b2bbd7b7e08645e2d1091dd5f560b7cd6b380280ed06ae75c5e5c43",
+              "retrieved_at": "2026-10-01T08:03:06+00:00"
+            }
+          ]
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "rpc_view_calls"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "morpho_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "flag",
+      "realized": {
+        "loss": true,
+        "summary": "Morpho API reports ~$136.9M bad debt on this market (queried 2026-10-01). On-chain at 2025-11-02 (block 395834398) the market held only ~$0.75M supply / ~$0.71M borrow, one borrower at 99.9998%: the position was largely unwound by then and most of the reported bad debt accrued AFTER the collapse. Post-collapse borrowing to be investigated separately; the loss attributable to a T0 supplier is TO VERIFY."
+      },
+      "stresses": [
+        "single-borrower concentration visible before disclosure",
+        "hindsight trap: today's sole borrower is not the T0 borrower — a label taken from current state would be right for the wrong reason"
+      ],
+      "scored": true,
+      "status": "reconstructed",
+      "notes": "Re-scoped 2026-10-01. The original H10 (Elixir deUSD backing) could not be tied to an on-chain market: the public 'Elixir USDC' vault was 100% idle at T0 and no Ethereum xUSD market had supply. A reconstructor run on that vault first returned a false 'OK' (idle counted as a collateral) — kept in METHODOLOGY as a worked example of a silent decision."
+    },
+    {
+      "id": "H11",
+      "display": {
+        "read_on_chain": "The delay module reported txCooldown = 608,400 s at the block before the attack."
+      },
+      "name": "Term Finance: timelock removable by a self-approved proposal",
+      "chain": "ethereum",
+      "t0": "2026-08-23",
+      "t0_block": 25816048,
+      "horizon_days": 7,
+      "position": "Depositor in a governed meta-vault protected by a 7-day Zodiac Delay timelock",
+      "facts": {
+        "gate_fail": false,
+        "concentration_breach": false,
+        "controls_safe": true,
+        "controls_basis": "txCooldown ≈ 608,400 s (~7 days) at the block before execution — passes the timelock check",
+        "anomaly_alert": true,
+        "anomaly_basis": "pending proposal, public for ~6 days, whose first action sets txCooldown to 0 and whose payload names the payout contract; opt-out veto with zero votes cast"
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "fn": "eth_getTransactionReceipt",
+              "tx": "0xd354a15b15cb73d30908f411aee3f795ec86737a4d080e9a818ac4d6d3014129",
+              "block": 25816049,
+              "provider": "alchemy_archive",
+              "result_sha256": "6e71ff591a08016bff05105bf93e209c8374187ed55a3899004c4491737191f3",
+              "retrieved_at": "2026-10-01T07:55:50+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25816048,
+              "contract": "0x35c99cf4a5df2d9bcd822bee32676d9590229e33",
+              "fn": "txCooldown",
+              "calldata": "0xdcafac09",
+              "provider": "alchemy_archive",
+              "result_sha256": "0bab81506f9410afe2cef1d21fb447770d15dc45176011e0827a27332ca82ca8",
+              "retrieved_at": "2026-10-01T07:55:50+00:00"
+            }
+          ]
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "rpc_view_calls"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "defillama_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "clear",
+      "realized": {
+        "loss": true,
+        "summary": "~$8.5M drained on 23 Aug 2026 (2,841.74 WETH + ~1.68M USDC)."
+      },
+      "stresses": [
+        "FALSE NEGATIVE of the v0.5 rules: a pending change that removes a control is only an anomaly, so the rules return GO",
+        "proposed fix: a queued change that lowers a control below policy sets controls_safe = False"
+      ],
+      "scored": true,
+      "status": "reconstructed"
+    },
+    {
+      "id": "H12",
+      "display": {
+        "read_on_chain": "MAMO was listed with a 0.5 collateral factor at a spot price of 0.00924306 and an FDV of ~$9.24M."
+      },
+      "name": "Moonwell MAMO market: spot-priced thin collateral",
+      "chain": "base",
+      "t0": "2026-08-26",
+      "t0_block": 50456526,
+      "horizon_days": 7,
+      "position": "Supplier of cbBTC/USDC/wstETH to Moonwell on Base, where MAMO is accepted as collateral",
+      "facts": {
+        "gate_fail": true,
+        "gate_basis": "collateral priced from spot with no TWAP or liquidity-based cap; thin market (MAMO ~$0.01)",
+        "concentration_breach": false,
+        "controls_safe": true,
+        "anomaly_alert": false
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "fn": "eth_getTransactionReceipt",
+              "tx": "0xafb6f0fa257b115a5c813bf787b4c1535e63888b1d0dbeb1f3788f557f51798f",
+              "block": 50516532,
+              "provider": "alchemy_archive",
+              "result_sha256": "24cae786eefc5b7b684f515299fd0079a3bcad4d1c7396510793ea82f19ab8ec",
+              "retrieved_at": "2026-10-01T08:17:52+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0xf877acafa28c19b96727966690b2f44d35ad5976",
+              "fn": "comptroller",
+              "calldata": "0x5fe3b567",
+              "provider": "alchemy_archive",
+              "result_sha256": "2b9e27cf5169527bdba8e630b8d4e492b5468283d7dba6cb15327fc95fb37ea4",
+              "retrieved_at": "2026-10-01T08:18:00+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
+              "fn": "oracle",
+              "calldata": "0x7dc0d1d0",
+              "provider": "alchemy_archive",
+              "result_sha256": "71abbc14850729a7e86d59a2317eae284572461d956bfe1fc1c24729abf246ed",
+              "retrieved_at": "2026-10-01T08:18:00+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
+              "fn": "getAllMarkets",
+              "calldata": "0xb0772d0b",
+              "provider": "alchemy_archive",
+              "result_sha256": "2a6f790a193d4155a06b889a44f1e3db12d927904e1acb118051a001db8c6788",
+              "retrieved_at": "2026-10-01T08:18:01+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c",
+              "fn": "markets",
+              "calldata": "0x8e8f294b0000000000000000000000002f90bb22eb3979f5ffad31ea6c3f0792ca66da32",
+              "provider": "alchemy_archive",
+              "result_sha256": "f257eb414c13cd03398857ab7284e6e52d610077f225114121632c11cb5eea24",
+              "retrieved_at": "2026-10-01T08:18:05+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0x2f90bb22eb3979f5ffad31ea6c3f0792ca66da32",
+              "fn": "underlying",
+              "calldata": "0x6f307dc3",
+              "provider": "alchemy_archive",
+              "result_sha256": "e4c16deea713562ae194ce3000777d417d3f509d4b0320f93143d6e622e1ed7e",
+              "retrieved_at": "2026-10-01T08:18:05+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0x7300b37dfdfab110d83290a29dfb31b1740219fe",
+              "fn": "decimals",
+              "calldata": "0x313ce567",
+              "provider": "alchemy_archive",
+              "result_sha256": "5aae0566f3b11c8113a5f6c6e256f8f98c3c539a0dc89698edf830d735de5268",
+              "retrieved_at": "2026-10-01T08:18:06+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0x7300b37dfdfab110d83290a29dfb31b1740219fe",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "b9553c80fe543ecc77d48997e74cf2c1eefb01111fa10aab0c3088580fd5aa41",
+              "retrieved_at": "2026-10-01T08:18:06+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "base",
+              "block": 50456526,
+              "contract": "0xec942be8a8114bfd0396a5052c36027f2ca6a9d0",
+              "fn": "getUnderlyingPrice",
+              "calldata": "0xfc57d4df0000000000000000000000002f90bb22eb3979f5ffad31ea6c3f0792ca66da32",
+              "provider": "alchemy_archive",
+              "result_sha256": "e4b9e04da1d211574773687256d41f461c9ca1eb41130841795c4b2d120d5a70",
+              "retrieved_at": "2026-10-01T08:18:06+00:00"
+            }
+          ]
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "rpc_view_calls"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "defillama_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "flag",
+      "realized": {
+        "loss": true,
+        "summary": "~$8.7M drained on 27 Aug 2026 after MAMO was pumped; addresses TO VERIFY."
+      },
+      "stresses": [
+        "oracle vs depth gate (H03 class) on an L2",
+        "post-cutoff case for mid-2026 models"
+      ],
+      "scored": true,
+      "status": "reconstructed"
+    },
+    {
+      "id": "H13",
+      "display": {
+        "read_on_chain": "Of the wrappers only wGOOGLx carried a rate of 6.0 at T0; wMSTRx, wTSLAx and wNVDAx stood at ~1.0."
+      },
+      "name": "Edel Finance: wrapper exchange-rate inflation (wGOOGLx)",
+      "chain": "ethereum",
+      "t0": "2026-06-30",
+      "t0_block": 25426766,
+      "horizon_days": 7,
+      "position": "Lender on Edel Lending v1 where wGOOGLx (wrapped tokenized equity) is collateral",
+      "facts": {
+        "gate_fail": true,
+        "gate_basis": "collateral value = Chainlink spot × an internal GOOGLx↔wGOOGLx rate that can be moved within one transaction (same class as H07)",
+        "concentration_breach": false,
+        "controls_safe": true,
+        "anomaly_alert": false
+      },
+      "sources": {
+        "onchain_state": {
+          "responded": true,
+          "provider": "alchemy_archive",
+          "capsules": [
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "fn": "eth_getTransactionReceipt",
+              "tx": "0xe2320086b2815d21b0927839bd0e306466c29a68d38d5361e99dd21ec5472612",
+              "block": 25434062,
+              "provider": "alchemy_archive",
+              "result_sha256": "403bbe63a0fb9f6a8271b237ecdf6dcf127ce4d61e2df49ee692302c5ef3d18b",
+              "retrieved_at": "2026-10-01T08:18:07+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x1630f08370917e79df0b7572395a5e907508bbbc",
+              "fn": "convertToAssets",
+              "calldata": "0x07a2d13a0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+              "provider": "alchemy_archive",
+              "result_sha256": "0a1992d654e5b695e4df07f474e79a12098e51f59ccaf7c173fc5eca7bc2a9d5",
+              "retrieved_at": "2026-10-01T08:18:15+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x1630f08370917e79df0b7572395a5e907508bbbc",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "65648e4f0ab52e4c0e4b1d59cb1db2d9ae33dbefbc607f1cd30653ea4e49d681",
+              "retrieved_at": "2026-10-01T08:18:15+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x266e5923f6118f8b340ca5a23ae7f71897361476",
+              "fn": "convertToAssets",
+              "calldata": "0x07a2d13a0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+              "provider": "alchemy_archive",
+              "result_sha256": "6871fcd8dd2a2a6d66743e19558b2252c46ec3ef02ae1a5a142fcfe83e511f5a",
+              "retrieved_at": "2026-10-01T08:18:16+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x266e5923f6118f8b340ca5a23ae7f71897361476",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "bab9cd0ed79e2c54600ac29db1ada36f13329f1206f0d2f057883c3c3c4a259b",
+              "retrieved_at": "2026-10-01T08:18:16+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x43680abf18cf54898be84c6ef78237cfbd441883",
+              "fn": "convertToAssets",
+              "calldata": "0x07a2d13a0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+              "provider": "alchemy_archive",
+              "result_sha256": "6871fcd8dd2a2a6d66743e19558b2252c46ec3ef02ae1a5a142fcfe83e511f5a",
+              "retrieved_at": "2026-10-01T08:18:18+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x43680abf18cf54898be84c6ef78237cfbd441883",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "6f288ad247f0568a2fa92ca051330742f0e93ee0df60c94eb72fb2c889b9b936",
+              "retrieved_at": "2026-10-01T08:18:18+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x93e62845c1dd5822ebc807ab71a5fb750decd15a",
+              "fn": "convertToAssets",
+              "calldata": "0x07a2d13a0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+              "provider": "alchemy_archive",
+              "result_sha256": "5ee37f1e0432d3256ae8c34b334e8e03589af43742b12bf25a0478b5e9a3c0fd",
+              "retrieved_at": "2026-10-01T08:18:19+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0x93e62845c1dd5822ebc807ab71a5fb750decd15a",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "c979d16f3402688f46f040e8a98863dbddf8dfea029b7c6a8dbbe67def8280b1",
+              "retrieved_at": "2026-10-01T08:18:19+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0xc88fcd8b874fdb3256e8b55b3decb8c24eab4c02",
+              "fn": "convertToAssets",
+              "calldata": "0x07a2d13a0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+              "provider": "alchemy_archive",
+              "result_sha256": "1d7bf9e3da75ef746324cb546d46620881144e26ce916b0723432c14f35c3796",
+              "retrieved_at": "2026-10-01T08:18:20+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0xc88fcd8b874fdb3256e8b55b3decb8c24eab4c02",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "a2c52e13fc94b4a047a4e977f22871aaf4eb6fa25dd03769ff63e5b9cb958dcb",
+              "retrieved_at": "2026-10-01T08:18:21+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0xdbd9232fee15351068fe02f0683146e16d9f2cea",
+              "fn": "convertToAssets",
+              "calldata": "0x07a2d13a0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+              "provider": "alchemy_archive",
+              "result_sha256": "912ae7e1e6d5a695c37ed5c819061dcf679af2bec0d653500d308ae54bcced7b",
+              "retrieved_at": "2026-10-01T08:18:21+00:00"
+            },
+            {
+              "kind": "rpc",
+              "chain": "ethereum",
+              "block": 25426766,
+              "contract": "0xdbd9232fee15351068fe02f0683146e16d9f2cea",
+              "fn": "totalSupply",
+              "calldata": "0x18160ddd",
+              "provider": "alchemy_archive",
+              "result_sha256": "a000c96918f035b0addaab3333971d13d3174cc0862962edbc50fbb62b4d9a53",
+              "retrieved_at": "2026-10-01T08:18:22+00:00"
+            }
+          ]
+        },
+        "contract_meta": {
+          "responded": true,
+          "provider": "rpc_view_calls"
+        },
+        "offchain_meta": {
+          "responded": true,
+          "provider": "defillama_api"
+        },
+        "market_depth": {
+          "responded": true,
+          "provider": "archive_pool_reserves"
+        }
+      },
+      "rule_truth": "flag",
+      "realized": {
+        "loss": true,
+        "summary": "~$403K bad debt on 1 Jul 2026, absorbed by the team (depositors made whole). Chain and addresses TO VERIFY."
+      },
+      "stresses": [
+        "exchange-rate gate on tokenized equities",
+        "loss absorbed by operator: realized loss for the protocol, not the depositor — labelling question"
+      ],
+      "scored": true,
+      "status": "reconstructed"
+    },
+    {
+      "id": "C01",
+      "name": "Euler Finance v1 exploit (control)",
+      "chain": "ethereum",
+      "t0": "2023-03-12",
+      "t0_block": null,
+      "horizon_days": 30,
+      "position": "Supplier on Euler v1",
+      "facts": {
+        "gate_fail": false,
+        "concentration_breach": false,
+        "controls_safe": true,
+        "anomaly_alert": false
+      },
+      "sources": {},
+      "rule_truth": null,
+      "realized": {
+        "loss": true,
+        "summary": "~$197M drained on 13 Mar 2023 via a code-level bug; funds later returned."
+      },
+      "stresses": [
+        "UNOBSERVABLE class: code bugs outside the risk-state surface. Not scored — reported so readers see what the track cannot catch."
+      ],
+      "scored": false,
+      "status": "control"
+    },
+    {
+      "id": "C02",
+      "name": "Balancer v2 composable-stable exploit (control)",
+      "chain": "ethereum",
+      "t0": "2025-11-02",
+      "t0_block": null,
+      "horizon_days": 30,
+      "position": "LP in Balancer v2 composable stable pools",
+      "facts": {
+        "gate_fail": false,
+        "concentration_breach": false,
+        "controls_safe": true,
+        "anomaly_alert": false
+      },
+      "sources": {},
+      "rule_truth": null,
+      "realized": {
+        "loss": true,
+        "summary": "Exploit in early November 2025; loss figure TO VERIFY."
+      },
+      "stresses": [
+        "UNOBSERVABLE class — not scored"
+      ],
+      "scored": false,
+      "status": "control"
+    },
+    {
+      "id": "P01",
+      "name": "Prospective: a curated RLUSD vault on Morpho",
+      "chain": "ethereum",
+      "t0": "2026-10-01",
+      "t0_block": 26097498,
+      "horizon_days": 90,
+      "position": "RLUSD depositor in a curated Morpho vault with BTC-wrapper and LRT collateral",
+      "facts": null,
+      "sources": null,
+      "rule_truth": null,
+      "realized": {
+        "loss": null,
+        "summary": "Pending until 2026-12-30 (T0 + 90d)."
+      },
+      "stresses": [
+        "pre-registration: the adapter's verdict and capsules are hashed at T0 and scored only after the horizon"
+      ],
+      "scored": false,
+      "prereg": {
+        "ledger": "data/prospective/ledger.jsonl",
+        "sha256": "f2ff19a2b9dbe8780b0291c0ee8e2726a07f007b84bdaa4211deb04936eeb041",
+        "agent": "rules-baseline-v0.5 (ground_truth_defi, no language model)",
+        "facts_tool": "tools/snapshot_p01.py",
+        "note": "t0 moved from the designated 2026-09-30 to the block actually read, so that the commitment does not post-date t0"
+      },
+      "status": "prospective"
+    }
+  ]
+}

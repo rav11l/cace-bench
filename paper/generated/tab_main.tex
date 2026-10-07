@@ -1,0 +1,35 @@
+\multicolumn{7}{l}{\textit{Thr shift, mid severity, 10 seeds}}\\
+Healthy (no shift) & 2.0 {\scriptsize [1.6, 2.3]} & 1.9 {\scriptsize [1.6, 2.1]} & 0.0 & -- & -- & --\\
+Degraded (no adaptation) & 28.0 {\scriptsize [27.3, 28.7]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.0 & 498 & 7.0 & --\\
+Oracle update & 1.9 {\scriptsize [1.6, 2.2]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.3 & 0 & 0.0 & --\\
+Manual update (lag 2{,}000) & 1.9 {\scriptsize [1.6, 2.2]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.3 & 295 & 4.0 & --\\
+No gate (trace check only) & 1.9 {\scriptsize [1.6, 2.2]} & 1.9 {\scriptsize \{1.2--2.5\}} & 0.3 & 139 & 2.5 & 784 / 30 / 6\\
+Gate on stale labels & 28.0 {\scriptsize [27.3, 28.7]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.0 & 498 & 7.0 & 948 / 0 / 0\\
+Global loop only & 28.0 {\scriptsize [27.3, 28.7]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.0 & 498 & 7.0 & 360 / 0 / 0\\
+Local loop only & 1.9 {\scriptsize [1.6, 2.2]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.3 & 81 & 1.3 & 566 / 18 / 0\\
+Local only, compute-matched & 1.9 {\scriptsize [1.6, 2.2]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.3 & 74 & 1.0 & 1519 / 20 / 0\\
+Dual loop (gated) & 1.9 {\scriptsize [1.6, 2.2]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.3 & 82 & 1.3 & 834 / 21 / 0\\
+\midrule
+\multicolumn{7}{l}{\textit{Scope shift, mid severity, 10 seeds}}\\
+Healthy (no shift) & 2.0 {\scriptsize [1.6, 2.3]} & 1.9 {\scriptsize [1.6, 2.1]} & 0.0 & -- & -- & --\\
+Degraded (no adaptation) & 36.9 {\scriptsize [36.1, 37.7]} & 1.8 {\scriptsize [1.6, 2.1]} & 0.0 & 780 & 7.0 & --\\
+Oracle update & 2.0 {\scriptsize [1.7, 2.2]} & 1.8 {\scriptsize [1.6, 2.1]} & 0.6 & 0 & 0.0 & --\\
+Manual update (lag 2{,}000) & 2.0 {\scriptsize [1.7, 2.2]} & 1.8 {\scriptsize [1.6, 2.1]} & 0.6 & 455 & 4.0 & --\\
+No gate (trace check only) & 2.0 {\scriptsize [1.7, 2.2]} & 79.7 {\scriptsize \{2.1--98.7\}} & 38.1 & 940 & 6.9 & 536 / 68 / 50\\
+Gate on stale labels & 36.9 {\scriptsize [36.1, 37.7]} & 1.8 {\scriptsize [1.6, 2.1]} & 0.0 & 780 & 7.0 & 921 / 0 / 0\\
+Global loop only & 36.9 {\scriptsize [36.1, 37.7]} & 1.8 {\scriptsize [1.6, 2.1]} & 0.0 & 780 & 7.0 & 360 / 0 / 0\\
+Local loop only & 3.7 {\scriptsize [0.0, 7.7]} & 1.8 {\scriptsize [1.6, 2.1]} & 0.6 & 266 & 3.0 & 590 / 19 / 0\\
+Local only, compute-matched & 2.0 {\scriptsize [1.7, 2.2]} & 1.8 {\scriptsize [1.6, 2.1]} & 0.6 & 111 & 1.0 & 1306 / 20 / 0\\
+Dual loop (gated) & 2.0 {\scriptsize [1.7, 2.2]} & 1.8 {\scriptsize [1.6, 2.1]} & 0.6 & 236 & 2.8 & 789 / 20 / 0\\
+\midrule
+\multicolumn{7}{l}{\textit{Struct shift, mid severity, 10 seeds}}\\
+Healthy (no shift) & 2.1 {\scriptsize [1.7, 2.5]} & 1.9 {\scriptsize [1.7, 2.2]} & 0.0 & -- & -- & --\\
+Degraded (no adaptation) & 27.4 {\scriptsize [26.8, 28.0]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.0 & 498 & 7.0 & --\\
+Oracle update & 2.0 {\scriptsize [1.7, 2.3]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.3 & 0 & 0.0 & --\\
+Manual update (lag 2{,}000) & 2.0 {\scriptsize [1.7, 2.3]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.3 & 293 & 4.0 & --\\
+No gate (trace check only) & 2.0 {\scriptsize [1.7, 2.3]} & 32.7 {\scriptsize \{1.2--98.1\}} & 16.9 & 1126 & 6.8 & 478 / 88 / 63\\
+Gate on stale labels & 27.4 {\scriptsize [26.8, 28.0]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.0 & 498 & 7.0 & 954 / 0 / 0\\
+Global loop only & 2.0 {\scriptsize [1.7, 2.3]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.3 & 156 & 2.1 & 43 / 10 / 0\\
+Local loop only & 27.4 {\scriptsize [26.8, 28.0]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.0 & 498 & 7.0 & 630 / 0 / 0\\
+Local only, compute-matched & 27.4 {\scriptsize [26.8, 28.0]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.0 & 498 & 7.0 & 2133 / 0 / 0\\
+Dual loop (gated) & 2.0 {\scriptsize [1.7, 2.3]} & 1.9 {\scriptsize [1.6, 2.2]} & 0.3 & 228 & 3.1 & 878 / 10 / 0\\

@@ -1,0 +1,179 @@
+{
+  "t0_block": 393757551,
+  "capsules": [
+    {
+      "kind": "rpc",
+      "chain": "arbitrum",
+      "block": 393757551,
+      "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+      "fn": "market",
+      "calldata": "0x5c60e39a9e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709",
+      "provider": "alchemy_archive",
+      "result_sha256": "fe0c6c55398fec78241a79da0932df161331f645da926645dc597fe205a2c13a",
+      "retrieved_at": "2026-10-01T08:02:55+00:00"
+    },
+    {
+      "kind": "api",
+      "provider": "morpho_api",
+      "url": "https://api.morpho.org/graphql",
+      "query": "query($skip:Int){ marketPositions(first: 1000, skip: $skip, where: { marketUniqueKey_in: [\"0x9e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709\"], chainId_in: [42161] }) { items { user { address } } pageInfo { countTotal } } }",
+      "pages_sha256": [
+        "9e075b0bf894582049464a1123e59de23e9d8154fe0e6c0f493391005825fb12"
+      ],
+      "addresses": 36,
+      "retrieved_at": "2026-10-01T08:02:56+00:00",
+      "note": "address set only; all amounts read on chain at t0_block"
+    },
+    {
+      "kind": "rpc",
+      "chain": "arbitrum",
+      "block": 393757551,
+      "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+      "fn": "position",
+      "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c66770900000000000000000000000012889c77a17c47480599a6f7366008307770729c",
+      "provider": "alchemy_archive",
+      "result_sha256": "28201b79d4676e64a9fb5278cacdf64dcf152c9b47625a7144497284edb65d88",
+      "retrieved_at": "2026-10-01T08:02:57+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "arbitrum",
+      "block": 393757551,
+      "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+      "fn": "position",
+      "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c6677090000000000000000000000001597e4b7cf6d2877a1d690b6088668afdb045763",
+      "provider": "alchemy_archive",
+      "result_sha256": "e4d2842dc619e665b576fa8701ab21c48303b997c12550dcfb00533ddf5c8096",
+      "retrieved_at": "2026-10-01T08:02:57+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "arbitrum",
+      "block": 393757551,
+      "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+      "fn": "position",
+      "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c66770900000000000000000000000023e69bf1ada63b7ef0d7f453fa64c61a257b72f1",
+      "provider": "alchemy_archive",
+      "result_sha256": "8567c13b6a9cb156dc92b3cd222c772d56c911be881b4b6cd8e3d79522ddeb08",
+      "retrieved_at": "2026-10-01T08:02:58+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "arbitrum",
+      "block": 393757551,
+      "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+      "fn": "position",
+      "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c6677090000000000000000000000002d9c7df48725b94a9de6b2f3174fa4337fd5551c",
+      "provider": "alchemy_archive",
+      "result_sha256": "eea81f2e032071c5dd61e4a661e32fd6ed863ae407d1d9cc7a2abc1b3434632a",
+      "retrieved_at": "2026-10-01T08:02:58+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "arbitrum",
+      "block": 393757551,
+      "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+      "fn": "position",
+      "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c6677090000000000000000000000003464a35d372aac325783a0b19589055faab4fb5f",
+      "provider": "alchemy_archive",
+      "result_sha256": "d6ab00b07fa297aa8116950ae2b2dd1ac185dcf001416b94ebc12858dab60339",
+      "retrieved_at": "2026-10-01T08:02:59+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "arbitrum",
+      "block": 393757551,
+      "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+      "fn": "position",
+      "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709000000000000000000000000351ae3dc26017a6ca512de190edc60cae71ddbb3",
+      "provider": "alchemy_archive",
+      "result_sha256": "6f786d2afef6d4d616cc6ebd173b1656dac019629a5091685cb175ac724249c1",
+      "retrieved_at": "2026-10-01T08:02:59+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "arbitrum",
+      "block": 393757551,
+      "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+      "fn": "position",
+      "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c6677090000000000000000000000003d7f861e7fabe268c074de3ff1dd0b3a2eb3d70e",
+      "provider": "alchemy_archive",
+      "result_sha256": "8f1d45c20e016db28c559ccd3938f6bc02160169f54b848cadc49c4f1654261f",
+      "retrieved_at": "2026-10-01T08:03:00+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "arbitrum",
+      "block": 393757551,
+      "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+      "fn": "position",
+      "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c66770900000000000000000000000093e22ecd5b8a4da8c0e97d7158c060612e7115a3",
+      "provider": "alchemy_archive",
+      "result_sha256": "b39cda42b7e25091f815a2478be44a6fbbe46c0ab8c89b0561688c3cc4001876",
+      "retrieved_at": "2026-10-01T08:03:03+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "arbitrum",
+      "block": 393757551,
+      "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+      "fn": "position",
+      "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709000000000000000000000000d7fc4ab828afc1bb4b217f337f1777ca856efd12",
+      "provider": "alchemy_archive",
+      "result_sha256": "640e0155ad6a177ebe290195009b54aa547e8dd94fc0d4e9c51b45d2a8b87cb7",
+      "retrieved_at": "2026-10-01T08:03:06+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "arbitrum",
+      "block": 393757551,
+      "contract": "0x6c247b1F6182318877311737BaC0844bAa518F5e",
+      "fn": "position",
+      "calldata": "0x93c520629e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709000000000000000000000000e05c75c79464a10d6497548902492e64ec8a6a73",
+      "provider": "alchemy_archive",
+      "result_sha256": "2d9d2c1d6b2bbd7b7e08645e2d1091dd5f560b7cd6b380280ed06ae75c5e5c43",
+      "retrieved_at": "2026-10-01T08:03:06+00:00"
+    }
+  ],
+  "observed": {
+    "market": "0x9e90aec7d768403dacc9dd0d8320307fda3f980eed4df43e3e52168a1c667709",
+    "total_supply_usdc": 26187913.205045,
+    "total_borrow_usdc": 23088804.9999,
+    "utilization": 0.8817,
+    "candidate_addresses": 36,
+    "borrowers_at_t0": 10,
+    "top_borrowers": [
+      {
+        "address": "0x1597e4b7cf6d2877a1d690b6088668afdb045763",
+        "share": 0.891417,
+        "debt_usdc": 20581753.67
+      },
+      {
+        "address": "0x2d9c7df48725b94a9de6b2f3174fa4337fd5551c",
+        "share": 0.030431,
+        "debt_usdc": 702621.7
+      },
+      {
+        "address": "0x93e22ecd5b8a4da8c0e97d7158c060612e7115a3",
+        "share": 0.025743,
+        "debt_usdc": 594382.39
+      },
+      {
+        "address": "0x12889c77a17c47480599a6f7366008307770729c",
+        "share": 0.024566,
+        "debt_usdc": 567206.94
+      },
+      {
+        "address": "0x3464a35d372aac325783a0b19589055faab4fb5f",
+        "share": 0.015425,
+        "debt_usdc": 356136.3
+      }
+    ]
+  },
+  "derived": {
+    "concentration_breach": true
+  },
+  "agrees_with_draft": {
+    "concentration_breach": true
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "t0_block": 20057708,
+  "capsules": [
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 20057708,
+      "contract": "0xeA6876DDE9e3467564acBeE1Ed5bac88783205E0",
+      "fn": "market_count",
+      "calldata": "0xfd775c78",
+      "provider": "alchemy_archive",
+      "result_sha256": "53b91b89a7a691d3f20524800d578c98e80ad809e2d4115ed165f60cc6ee9df8",
+      "retrieved_at": "2026-10-01T08:22:03+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 20057708,
+      "contract": "0xeA6876DDE9e3467564acBeE1Ed5bac88783205E0",
+      "fn": "collateral_tokens",
+      "calldata": "0x49b899840000000000000000000000000000000000000000000000000000000000000003",
+      "provider": "alchemy_archive",
+      "result_sha256": "5c524a069947d32311f9bc1d6d71d6ecaf8971541026f849b83233523ed4eca9",
+      "retrieved_at": "2026-10-01T08:22:04+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 20057708,
+      "contract": "0xeA6876DDE9e3467564acBeE1Ed5bac88783205E0",
+      "fn": "controllers",
+      "calldata": "0xe94b0dd20000000000000000000000000000000000000000000000000000000000000003",
+      "provider": "alchemy_archive",
+      "result_sha256": "58dfd5b9935403cbc98f00639c2415fb4e016c56c205d1201b12b35d44ac27a1",
+      "retrieved_at": "2026-10-01T08:22:04+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 20057708,
+      "contract": "0xeda215b7666936ded834f76f3fbc6f323295110a",
+      "fn": "total_debt",
+      "calldata": "0x31dc3ca8",
+      "provider": "alchemy_archive",
+      "result_sha256": "0f03cb301564a3f8c62e7065d2dd01083b53e8e7dd5497a7437407e54c4f9ab3",
+      "retrieved_at": "2026-10-01T08:22:04+00:00"
+    },
+    {
+      "kind": "rpc",
+      "chain": "ethereum",
+      "block": 20057708,
+      "contract": "0xeda215b7666936ded834f76f3fbc6f323295110a",
+      "fn": "debt",
+      "calldata": "0x9b6c56ec0000000000000000000000007a16ff8270133f063aab6c9977183d9e72835428",
+      "provider": "alchemy_archive",
+      "result_sha256": "c279849c21d5a219631ff2b8173f295c150933db7028b1fa2b713f5b264935ac",
+      "retrieved_at": "2026-10-01T08:22:04+00:00"
+    }
+  ],
+  "observed": {
+    "borrower": "0x7a16fF8270133F063aAb6C9977183D9e72835428",
+    "markets": [
+      {
+        "controller": "0xeda215b7666936ded834f76f3fbc6f323295110a",
+        "total_debt": 51195166.582031436,
+        "borrower_debt": 343932.865912089,
+        "borrower_share": 0.0067
+      }
+    ]
+  },
+  "derived": {
+    "concentration_breach": false
+  },
+  "agrees_with_draft": {
+    "concentration_breach": false
+  }
+}

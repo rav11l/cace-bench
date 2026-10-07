@@ -1,0 +1,68 @@
+{
+ "rejected": {
+  "H_sel": {
+   "C_regressed": 864,
+   "C_regression_rate": 0.12903225806451613,
+   "C_size": 6696,
+   "gain": 0.0620477965358474,
+   "gain_ci": [
+    0.054941891200204686,
+    0.06915370187149011
+   ],
+   "improved": 287,
+   "improvement_ok": true,
+   "n_target": 4561,
+   "regression_ok": false,
+   "target": "fp",
+   "worsened": 4
+  },
+  "cause": [
+   "designation",
+   "fp"
+  ],
+  "decision": "regression_on_C",
+  "diff": "scope -designation",
+  "h": "95e9db810817305bed33a2551b03c9c9f2c5294fa0af7a2682f739ef614a9cee",
+  "h_prime": "cc769fb26601af4ceffbffda032da80d314bdda21bda446832fe1f22b1486e20",
+  "h_prime_text": "[direct_stake_check] Flag the applicant if the name hit is one of adverse_media_high, adverse_media_low, pep_domestic, pep_foreign and the stake held through the first-layer vehicle is at least 25%. Otherwise clear.",
+  "hash": "0f6978c250794ce9ea2e603e31fb883910c0bfa541725441280c20ac4c6473a4",
+  "identity": "gate@bench",
+  "loop": "local",
+  "prev": "0000000000000000000000000000000000000000000000000000000000000000",
+  "seq": 0,
+  "t": 16099
+ },
+ "admitted": {
+  "H_sel": {
+   "C_regressed": 21,
+   "C_regression_rate": 0.0031362007168458782,
+   "C_size": 6696,
+   "gain": 0.26266169699627273,
+   "gain_ci": [
+    0.2495898594443891,
+    0.27573353454815636
+   ],
+   "improved": 1219,
+   "improvement_ok": true,
+   "n_target": 4561,
+   "regression_ok": true,
+   "target": "fp",
+   "worsened": 21
+  },
+  "cause": [
+   "designation",
+   "fp"
+  ],
+  "decision": "admitted",
+  "diff": "primitive direct_stake_check -> effective_stake_check",
+  "h": "95e9db810817305bed33a2551b03c9c9f2c5294fa0af7a2682f739ef614a9cee",
+  "h_prime": "e8c8091279cf76556f78e717e3d772ee8209ec2ef3bc2472d53510f4570942ea",
+  "h_prime_text": "[effective_stake_check] Flag the applicant if the name hit is one of adverse_media_high, adverse_media_low, designation, pep_domestic, pep_foreign and the effective stake, the product of stakes along the ownership chain is at least 25%. Otherwise clear.",
+  "hash": "42296978e505226caf076969303bfea9a3b6048025e1d84fc25d6cb39c42c1e7",
+  "identity": "gate@bench",
+  "loop": "global",
+  "prev": "cf5da8092868b046eb8cbcfe7078b650bab3dd48b4c25e4f50a297e58ef4ca1e",
+  "seq": 25,
+  "t": 17099
+ }
+}

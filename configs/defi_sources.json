@@ -1,0 +1,131 @@
+{
+  "version": "defi-2026-09-30-draft",
+  "_note": "Same structure as configs/providers.json so bench._walk_chain is reused unchanged. In the DeFi track the per-provider 'countries' map is keyed by CHAIN, and 'chains' maps chain -> source class -> fallback order. Every coverage and partial_rate figure is a working assumption (verified=false), not a vendor-confirmed number; a result published from this registry must say so.",
+  "classes": {
+    "onchain_state": "Positions, health factors, utilization, supply, pool reserves, oracle addresses — read via RPC/archive or an indexer. Screening-equivalent: without it no case is decidable.",
+    "contract_meta": "Verified source, oracle configuration, timelock delay, multisig owners/threshold, upgradeability. Strong control verification.",
+    "offchain_meta": "Protocol APIs, docs, curator reports, issuer reserve attestations. Weak control verification; issuer attestations may be structurally absent.",
+    "market_depth": "Exit capacity at the position size: aggregator quotes live, pool reserves at a past block for the historical split."
+  },
+  "providers": {
+    "alchemy_archive": {
+      "class": "onchain_state", "partial_rate": 0.01, "p95_latency_ms": 800, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.99, "base": 0.99, "arbitrum": 0.99, "solana": 0.97},
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms", "cost_usd_per_pull"]
+    },
+    "quicknode_archive": {
+      "class": "onchain_state", "partial_rate": 0.01, "p95_latency_ms": 800, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.99, "base": 0.99, "arbitrum": 0.99, "monad": 0.95, "solana": 0.97},
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms", "cost_usd_per_pull"]
+    },
+    "public_rpc": {
+      "class": "onchain_state", "partial_rate": 0.25, "p95_latency_ms": 3000, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.90, "base": 0.90, "arbitrum": 0.90, "monad": 0.85, "solana": 0.85},
+      "notes": "No archive: historical reads come back partial, hence the high partial_rate.",
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms"]
+    },
+    "etherscan_v2": {
+      "class": "contract_meta", "partial_rate": 0.05, "p95_latency_ms": 1500, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.97, "base": 0.95, "arbitrum": 0.95, "monad": 0.80},
+      "notes": "Verified source + ABI. Unverified contracts return partial.",
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms", "cost_usd_per_pull"]
+    },
+    "sourcify": {
+      "class": "contract_meta", "partial_rate": 0.10, "p95_latency_ms": 2000, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.85, "base": 0.80, "arbitrum": 0.80, "monad": 0.70},
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms"]
+    },
+    "rpc_view_calls": {
+      "class": "contract_meta", "partial_rate": 0.08, "p95_latency_ms": 900, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.95, "base": 0.95, "arbitrum": 0.95, "monad": 0.90},
+      "notes": "Direct view calls: Safe getOwners/getThreshold, timelock getMinDelay, oracle price()/decimals(), ERC-4626 totalSupply.",
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms"]
+    },
+    "solana_account_inspect": {
+      "class": "contract_meta", "partial_rate": 0.15, "p95_latency_ms": 1200, "cost_usd_per_pull": 0.0,
+      "countries": {"solana": 0.85},
+      "notes": "Program upgrade authority, oracle account owner and staleness.",
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms"]
+    },
+    "morpho_api": {
+      "class": "offchain_meta", "partial_rate": 0.08, "p95_latency_ms": 1500, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.97, "base": 0.97, "arbitrum": 0.85, "monad": 0.80},
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms"]
+    },
+    "pendle_api": {
+      "class": "offchain_meta", "partial_rate": 0.10, "p95_latency_ms": 1500, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.95, "base": 0.90, "arbitrum": 0.95, "monad": 0.80},
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms"]
+    },
+    "curve_api": {
+      "class": "offchain_meta", "partial_rate": 0.12, "p95_latency_ms": 2000, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.95, "base": 0.85, "arbitrum": 0.90, "monad": 0.75},
+      "notes": "Gauge reward fields may be null (see Tangent case) — counts as partial.",
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms"]
+    },
+    "defillama_api": {
+      "class": "offchain_meta", "partial_rate": 0.15, "p95_latency_ms": 2500, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.95, "base": 0.95, "arbitrum": 0.95, "monad": 0.85, "solana": 0.95},
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms"]
+    },
+    "issuer_attestation": {
+      "class": "offchain_meta", "partial_rate": 0.30, "p95_latency_ms": 10000, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.60, "base": 0.60, "arbitrum": 0.60, "monad": 0.50, "solana": 0.60},
+      "notes": "Reserve reports of stablecoin/RWA issuers. Often stale (partial). Structural absence is modelled as a gate failure, not as low coverage.",
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms"]
+    },
+    "odos_quote": {
+      "class": "market_depth", "partial_rate": 0.05, "p95_latency_ms": 1500, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.95, "base": 0.95, "arbitrum": 0.95},
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms", "cost_usd_per_pull"]
+    },
+    "kyberswap_quote": {
+      "class": "market_depth", "partial_rate": 0.05, "p95_latency_ms": 1500, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.93, "base": 0.93, "arbitrum": 0.93, "monad": 0.70},
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms"]
+    },
+    "jupiter_quote": {
+      "class": "market_depth", "partial_rate": 0.05, "p95_latency_ms": 1200, "cost_usd_per_pull": 0.0,
+      "countries": {"solana": 0.95},
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms"]
+    },
+    "archive_pool_reserves": {
+      "class": "market_depth", "partial_rate": 0.15, "p95_latency_ms": 4000, "cost_usd_per_pull": 0.0,
+      "countries": {"ethereum": 0.90, "base": 0.90, "arbitrum": 0.90, "monad": 0.80},
+      "notes": "Reserves read at a block and priced with the pool's own invariant. The only depth source for the historical split: aggregator quotes cannot be replayed. Partial when the exit routes through pools the reader does not model.",
+      "verified": false, "unverified_fields": ["countries", "partial_rate", "p95_latency_ms"]
+    }
+  },
+  "chains": {
+    "ethereum": {
+      "onchain_state": ["alchemy_archive", "quicknode_archive", "public_rpc"],
+      "contract_meta": ["etherscan_v2", "sourcify", "rpc_view_calls"],
+      "offchain_meta": ["morpho_api", "pendle_api", "curve_api", "defillama_api", "issuer_attestation"],
+      "market_depth": ["odos_quote", "kyberswap_quote", "archive_pool_reserves"]
+    },
+    "base": {
+      "onchain_state": ["alchemy_archive", "quicknode_archive", "public_rpc"],
+      "contract_meta": ["etherscan_v2", "rpc_view_calls"],
+      "offchain_meta": ["morpho_api", "defillama_api", "issuer_attestation"],
+      "market_depth": ["odos_quote", "kyberswap_quote", "archive_pool_reserves"]
+    },
+    "arbitrum": {
+      "onchain_state": ["alchemy_archive", "quicknode_archive", "public_rpc"],
+      "contract_meta": ["etherscan_v2", "rpc_view_calls"],
+      "offchain_meta": ["pendle_api", "morpho_api", "defillama_api"],
+      "market_depth": ["odos_quote", "kyberswap_quote", "archive_pool_reserves"]
+    },
+    "monad": {
+      "onchain_state": ["quicknode_archive", "public_rpc"],
+      "contract_meta": ["etherscan_v2", "sourcify", "rpc_view_calls"],
+      "offchain_meta": ["curve_api", "pendle_api", "morpho_api", "defillama_api", "issuer_attestation"],
+      "market_depth": ["kyberswap_quote", "archive_pool_reserves"]
+    },
+    "solana": {
+      "onchain_state": ["alchemy_archive", "quicknode_archive", "public_rpc"],
+      "contract_meta": ["solana_account_inspect"],
+      "offchain_meta": ["defillama_api", "issuer_attestation"],
+      "market_depth": ["jupiter_quote"]
+    }
+  }
+}

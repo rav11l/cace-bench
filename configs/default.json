@@ -1,0 +1,12 @@
+{
+  "n": 23000,
+  "seed": 0,
+  "params": {
+    "fp_base": 0.45,
+    "fn_base": 0.30,
+    "h_base": 0.35,
+    "aml_miss_base": 0.35,
+    "detect": 0.85,
+    "correct": 0.92
+  }
+}
