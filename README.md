@@ -139,7 +139,7 @@ explains why a pipeline escalates more in one market than in another.
 reference run generates (`--n 23000`) — a population size, not a step count. The figure
 carries a different meaning in the accompanying paper; see the next section.
 
-**v0.2.0** — archived under [DOI 10.5281/zenodo.21394049](https://doi.org/10.5281/zenodo.21394049)
+**v0.2.0** — archived under [DOI 10.5281/zenodo.21628447](https://doi.org/10.5281/zenodo.21628447)
 and reproducible at tag `v0.2.0` — measured the same ablation without the availability
 axis: compliance false-positive rate 22.25% → 4.80% (−78.4%), hallucination 2.80% → 0.56%,
 recovery 78.8%, step-level correctness 87.94% → 97.44%
@@ -390,7 +390,8 @@ qualifier. Quoting it as a production result is a misstatement.
 ## How to cite
 
 Archived on Zenodo with a DOI. Cite **10.5281/zenodo.21394049** (concept DOI — always
-resolves to the latest version; v0.1.0 = 10.5281/zenodo.21394051). Machine-readable
+resolves to the latest version). To pin this release, cite v0.6.0 =
+[10.5281/zenodo.23207546](https://doi.org/10.5281/zenodo.23207546). Machine-readable
 metadata in [CITATION.cff](CITATION.cff); BibTeX and DOI guidance in
 [CITATION.md](CITATION.md).
 

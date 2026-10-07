@@ -4,14 +4,14 @@
 
 If you use CACE-Bench, please cite:
 
-Akhtyamov, R. (2026). *CACE-Bench: A Synthetic Agentic Evaluation Benchmark for LLM Credit-Pipeline Agents* (v0.4.1) [Software]. Zenodo. https://doi.org/10.5281/zenodo.21394049
+Akhtyamov, R. (2026). *CACE-Bench: A Synthetic Agentic Evaluation Benchmark for LLM Credit-Pipeline Agents* (v0.6.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.21394049
 
 Repository: https://github.com/rav11l/cace-bench
 
 ### Which DOI to use
 
 - **`10.5281/zenodo.21394049`** — concept DOI. Always resolves to the latest version. Use this in papers, letters, slides and profile links, so the reference never goes stale.
-- **Version DOI** — shown on each individual Zenodo record. Use this only when you need to pin a specific release, for example to reproduce a published result.
+- **Version DOI** — shown on each individual Zenodo record. Use this only when you need to pin a specific release, for example to reproduce a published result. v0.6.0 = `10.5281/zenodo.23207546`; the full list is in [CITATION.cff](CITATION.cff).
 
 ### BibTeX
 
@@ -21,7 +21,7 @@ Repository: https://github.com/rav11l/cace-bench
   title     = {{CACE-Bench: A Synthetic Agentic Evaluation Benchmark
                for LLM Credit-Pipeline Agents}},
   year      = {2026},
-  version   = {0.4.1},
+  version   = {0.6.0},
   publisher = {Zenodo},
   doi       = {10.5281/zenodo.21394049},
   url       = {https://doi.org/10.5281/zenodo.21394049},
@@ -29,23 +29,27 @@ Repository: https://github.com/rav11l/cace-bench
 }
 ```
 
-### Citing the results — two different experiments
+### Citing the results
 
-**This repository.** The reference run in [results/](results/) is the two-condition
-auto-evolution ablation produced by [`cace_bench.py`](cace_bench.py): compliance
-false-positive rate **22.51% → 4.96%** (−77.9% relative) on 23,000 synthetic cases at
-seed 0, registry `2026-08-03`. Cite the software record above for this figure — it
-regenerates from the code in one command.
+**This repository** produces two experiments, each regenerated from the code in one command:
 
-**The accompanying paper.** A different experiment, whose harness is not part of this
-release:
+- *Reference run* ([`cace_bench.py`](cace_bench.py)): compliance false-positive rate
+  **22.51% → 4.96%** with the missed-flag rate **15.30% → 3.47%** beside it, on 23,000
+  synthetic cases, seed 0, registry `2026-08-03`; replicated on seeds 0–4.
+- *Regulatory-shift track* ([`evolve.py`](evolve.py), v0.6.0): over 90 runs the gated
+  dual loop admitted **144 of 7,449** candidate harness changes with no harmful
+  admission; the same loops without the gate admitted **309** harmful changes and left
+  missed flags above 10% in **49 of 90** runs.
 
-Akhtyamov, R. (2026). *Compliance-Bounded Self-Evolution of LLM Agents in Regulated Credit Pipelines: A Dual-Loop Harness Architecture with Three-Level Quality Metrics*.
+**The accompanying paper** reports the regulatory-shift track and is built from
+[`paper/`](paper/), with every number generated from the result files in this release:
 
-It simulates a regulatory re-interpretation at the 70% mark of the stream and compares
-four conditions; there the compliance false-positive rate recovers from **23.7% to 5.1%**
-(−78% relative), counted over ~23,000 labelled trace steps for 3,000 applications. Cite
-the paper for that figure, not this repository.
+Akhtyamov, R. (2026). *The Harness as the Only Mutable Surface: Compliance-Bounded
+Self-Evolution of LLM Agents in Credit Pipelines, with a Measured Admission Gate*. Preprint.
+
+Figures from an earlier version of that paper (compliance false-positive rate
+23.7% → 13.5% → 5.1%) were not produced by code in this repository and are superseded;
+do not cite them.
 
 Either way, state that the figure is measured on a **synthetic** benchmark. It is
 illustrative of the method, not of production performance.

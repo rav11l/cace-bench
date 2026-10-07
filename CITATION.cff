@@ -20,7 +20,10 @@ abstract: >-
   step-level correctness, with 95% Wilson intervals, on 23,000 synthetic cases.
   Version 0.4 added an optional module integrating public credit datasets for
   baseline comparison, which reads locally provided copies and redistributes
-  nothing. No real personal or production credit data is used.
+  nothing. Version 0.6 adds the regulatory-shift track: a dual-loop engine that
+  may change only the runtime harness, and an admission gate whose every
+  decision is written to a hash-chained log, measured over 90 runs. No real
+  personal or production credit data is used.
 version: "0.6.0"
 date-released: "2026-10-07"
 doi: 10.5281/zenodo.21394049
@@ -28,6 +31,9 @@ identifiers:
   - type: doi
     value: 10.5281/zenodo.21394049
     description: Concept DOI (all versions; resolves to the latest)
+  - type: doi
+    value: 10.5281/zenodo.23207546
+    description: DOI for version 0.6.0
   - type: doi
     value: 10.5281/zenodo.22012383
     description: DOI for version 0.4.1
