@@ -20,11 +20,24 @@ resolves to the latest version.
 - `results/shift-real/` (90 runs), `results/shift-real-eps010/` (scope family, ε = 0.01),
   `results/shift-real-n1000/` (each applicant once, window 50).
 - `tools/real_tables.py`, `tools/paper_numbers_real.py`.
+- `proposer_llm.py` — the regulatory-shift track with a language-model proposer: the
+  engine, gate and arms are unchanged; prompts show only what operations would see; JSON
+  candidates validated against the typed edit space; response cache keyed by SHA-256 of
+  (model, system, prompt) for exact replay; `--queue` / `--ingest` for responses produced
+  outside the process; `--mock` for plumbing tests.
+- `results/shift-llm/` — 15 runs (mid severity, 5 seeds) with Claude Haiku 4.5 as proposer
+  (unpinned; reproducible from the released cache). `tools/llm_tables.py` reconstructs each
+  arm's harness window by window from the gate log and reports missed flags during
+  adaptation, checked against the engine's logged error counts.
 
 ### Found
 - The gate holds on real applicants (171 admissions, 0 harmful; no gate: 228 harmful).
 - The fixed tolerance blocks the correct scope-high change (0/10; 9/10 at ε = 0.01), and the
   residual errors then fall unevenly: excess FP gap +2.3 pp for women, +4.2 pp for under-25s.
+- With a language-model proposer both loops end at the correct harness, but without the gate
+  the model's first edits loosen the screen: 13 harmful admissions and 22.3% missed flags
+  during adaptation in the scope family, against 0 and 2.0% (oracle level) with the gate,
+  which recovers more slowly.
 
 ---
 

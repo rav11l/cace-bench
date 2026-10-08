@@ -188,12 +188,45 @@ harness. Known failure: at the highest structural severity the fixed non-regress
 tolerance (ε = 0.005) rejects the correct primitive replacement in 5 of 10 seeds;
 ε = 0.010 recovers all 10 with no harmful admission.
 
-**The proposer is a seeded search over a stated edit space, not a language model**, and the
+**In the main grid the proposer is a seeded search over a stated edit space**, and the
 typed library contains the correct primitive by construction. The track measures the bound
-and the gate, not proposal quality.
+and the gate, not proposal quality. A language-model proposer is measured separately (below).
 
 The figures in the earlier conference submission (compliance FP 23.7% → 13.5% → 5.1%) were
 not produced by code in this repository and are superseded by this track; do not cite them.
+
+## Language-model proposer (0.7.0-dev)
+
+[`proposer_llm.py`](proposer_llm.py) replaces only the two proposer functions with a language
+model. Each call shows the deployed harness, the triggering error cluster, the window's
+visible error counts, up to six example cases and the typed edit space — never labels, the
+rule version or the gate. Candidates must be JSON inside the typed space; invalid ones are
+dropped. Every response is cached by the SHA-256 of (model, system prompt, prompt), so a run
+with the cache present makes no calls and reproduces exactly.
+
+`results/shift-llm/` — mid severity, three families, 5 seeds (15 runs, 714 calls, 2,245
+candidates, 0 invalid). Responses came from Claude Haiku 4.5 run as isolated sub-agents
+(`--queue` / `--ingest`), so the model version and temperature were not pinned: reproduce
+from the released `llm_cache.jsonl`, not by re-querying.
+
+```bash
+python proposer_llm.py --seeds 5 --severities mid \
+    --model "claude-haiku-4-5 via session subagent (unpinned)" --out results/shift-llm   # replays from cache
+python tools/llm_tables.py results/shift-llm results/shift paper/generated              # tables.md
+python proposer_llm.py --seeds 10 --out results/shift-llm-api   # with ANTHROPIC_API_KEY set
+```
+
+| | No gate | Dual loop, gated |
+|---|---|---|
+| Admitted / harmful (15 runs) | 59 / 13 | 21 / 0 |
+| Ended at the oracle harness | 15 / 15 | 15 / 15 |
+| Missed flags during adaptation, scope family | 22.3% (worst window 87.9%) | 2.0% (oracle level) |
+| Missed flags during adaptation, threshold family | 7.1% | 2.0% |
+
+The model reaches the right harness, but its first proposal after a scope change raises the
+threshold for every hit type; without the gate that is admitted and misses climb until
+audited misses push it back. The gate rejects it, at the cost of slower recovery (scope
+repair completed in window 4–6 against 1–3 with seeded search).
 
 ## Regulatory-shift track on real applicants (0.7.0-dev)
 
@@ -281,6 +314,7 @@ cace-bench/
 ├── DATASHEET.md                  — datasheet for the synthetic data (both credit tracks)
 ├── evolve.py                     — regulatory-shift track: dual loop, gate, hash-chained log (v0.6)
 ├── evolve_real.py                — the same track on German Credit applicants, subgroup metrics (0.7.0-dev)
+├── proposer_llm.py               — the same track with a language-model proposer; response cache (0.7.0-dev)
 ├── paper/                        — LaTeX source of the accompanying paper; numbers generated from results/
 ├── REPRODUCIBILITY.md            — environment, seeds and steps to reproduce
 ├── CHANGELOG.md                  — version history
@@ -300,6 +334,7 @@ cace-bench/
 │   ├── shift_tables.py           — tables for the regulatory-shift track
 │   ├── real_tables.py            — tables for the real-applicant track (gate, subgroups)
 │   ├── paper_numbers_real.py     — paper/generated/numbers_real.tex, tab_real.tex
+│   ├── llm_tables.py             — LLM vs seeded proposer; missed flags during adaptation
 │   ├── paper_numbers.py          — writes paper/generated/*.tex from the result files
 │   ├── providers_yaml_to_json.py — regenerates configs/providers.json from the registry
 │   ├── reconstruct_historical.py — DeFi: re-derives each historical label at its t0 block
@@ -328,6 +363,7 @@ cace-bench/
     ├── run-seed0..4.json         — machine-readable results (v0.6), seeds 0–4
     ├── shift/                    — regulatory-shift track: 90 cells, gate logs, tables.md
     ├── shift-eps010/             — tolerance sensitivity (structural family, ε = 0.010)
+    ├── shift-llm/                — language-model proposer: 15 cells, llm_cache.jsonl, tables.md
     ├── shift-real/               — real-applicant track: 90 cells, subgroups, tables.md
     ├── shift-real-eps010/        — real applicants, scope family, ε = 0.010
     ├── shift-real-n1000/         — real applicants, each used once (single pass)
