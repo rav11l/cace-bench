@@ -8,6 +8,26 @@ resolves to the latest version.
 
 ---
 
+## [Unreleased] — 0.7.0-dev
+
+### Added
+- `evolve_real.py` — the regulatory-shift track on the 1,000 real applications of the Statlog
+  German Credit data (CC BY 4.0, `data/real/`, SHA-256 checked on load). `evolve.py` is
+  unchanged; the module replaces only the case stream, the rule's facts and the harness text.
+  Development / held-out split of applicants per seed, so no evaluated applicant is in the
+  gate's pool. Per-arm error rates by sex and by age (< 25 / 25+) with Wilson intervals, and
+  the realised bad-credit rate among flagged and cleared applicants.
+- `results/shift-real/` (90 runs), `results/shift-real-eps010/` (scope family, ε = 0.01),
+  `results/shift-real-n1000/` (each applicant once, window 50).
+- `tools/real_tables.py`, `tools/paper_numbers_real.py`.
+
+### Found
+- The gate holds on real applicants (171 admissions, 0 harmful; no gate: 228 harmful).
+- The fixed tolerance blocks the correct scope-high change (0/10; 9/10 at ε = 0.01), and the
+  residual errors then fall unevenly: excess FP gap +2.3 pp for women, +4.2 pp for under-25s.
+
+---
+
 ## [0.6.0] — 2026-10-07 — Regulatory-shift track
 
 Answers the review of the accompanying paper (ACM ICAIF 2026 submission #103): every number

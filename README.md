@@ -34,7 +34,8 @@ It has two parts:
 
 - **A generator** that produces *fully synthetic* credit cases, populations and
   multi-agent traces. No real personal or company data is used, so the benchmark is
-  shareable, privacy-safe and reproducible by anyone.
+  shareable, privacy-safe and reproducible by anyone. (The regulatory-shift track can also
+  run on the public, anonymised German Credit data set; see below.)
 - **A benchmark** that scores a pipeline on decision quality *and* on auditability,
   and supports **auto-evolving** agents (iterative self-improvement under the same
   constraints) — shipped with an **auto-evolution ablation** on ~23k labelled
@@ -194,6 +195,39 @@ and the gate, not proposal quality.
 The figures in the earlier conference submission (compliance FP 23.7% → 13.5% → 5.1%) were
 not produced by code in this repository and are superseded by this track; do not cite them.
 
+## Regulatory-shift track on real applicants (0.7.0-dev)
+
+[`evolve_real.py`](evolve_real.py) keeps `evolve.py` byte-identical — engine, gate, arms, agent
+noise, constants — and replaces the generated alert stream with the 1,000 applications of the
+Statlog German Credit data (Hofmann 1994, UCI, [doi:10.24432/C5NC77](https://doi.org/10.24432/C5NC77),
+CC BY 4.0; copy and SHA-256 in [data/real/](data/real/README.md)). The primitive becomes an
+affordability screen: loan purpose (five groups) as hit type, a rank-mapped burden index
+(amount / duration) as the first-layer stake, savings and guarantor/co-applicant as the
+mitigants the structural rule credits. Per seed the applicants are split 700 / 300; the gate's
+pool is a bootstrap of the 700, the held-out window a bootstrap of the other 300. Subgroups:
+sex (attribute 9) and age under 25 (attribute 13).
+
+```bash
+python evolve_real.py --seeds 10 --out results/shift-real                       # ~6 min
+python evolve_real.py --seeds 10 --families scope --eps 0.01 --out results/shift-real-eps010
+python evolve_real.py --seeds 10 --n 1000 --window 50 --out results/shift-real-n1000   # each applicant once
+python tools/real_tables.py results/shift-real                                 # tables.md
+```
+
+Over 90 runs ([results/shift-real/tables.md](results/shift-real/tables.md)):
+
+| Arm | Proposed | Admitted | Harmful admissions | Runs with missed flags > 10% |
+|---|---|---|---|---|
+| Dual loop, gated | 6,874 | 171 | 0 | 0 |
+| Same loops, no gate | 5,653 | 539 | 228 | 29 |
+
+The dual loop reached the oracle harness in 80/80 runs outside scope-high and 0/10 within it:
+dropping household goods from scope (47% of applicants) changes so many outputs that execution
+noise exceeds ε = 0.005 on previously correct cases; with ε = 0.01, 9/10 with no harmful
+admission. Where the correct harness is reached, group error gaps equal the oracle's; where
+it is blocked, the residual false positives fall more on women (+2.3 pp FP gap beyond the
+oracle's, mean) and under-25s (+4.2 pp). The screen is a referral policy, not a risk model.
+
 ## Real-dataset baselines (optional, added in v0.4)
 
 For baseline comparison the generator can optionally read public credit datasets:
@@ -246,6 +280,7 @@ cace-bench/
 ├── METHODOLOGY.md                — full methodology (definitions, protocol, governance)
 ├── DATASHEET.md                  — datasheet for the synthetic data (both credit tracks)
 ├── evolve.py                     — regulatory-shift track: dual loop, gate, hash-chained log (v0.6)
+├── evolve_real.py                — the same track on German Credit applicants, subgroup metrics (0.7.0-dev)
 ├── paper/                        — LaTeX source of the accompanying paper; numbers generated from results/
 ├── REPRODUCIBILITY.md            — environment, seeds and steps to reproduce
 ├── CHANGELOG.md                  — version history
@@ -263,6 +298,8 @@ cace-bench/
 │   └── requirements.txt          — dependencies for this module only
 ├── tools/
 │   ├── shift_tables.py           — tables for the regulatory-shift track
+│   ├── real_tables.py            — tables for the real-applicant track (gate, subgroups)
+│   ├── paper_numbers_real.py     — paper/generated/numbers_real.tex, tab_real.tex
 │   ├── paper_numbers.py          — writes paper/generated/*.tex from the result files
 │   ├── providers_yaml_to_json.py — regenerates configs/providers.json from the registry
 │   ├── reconstruct_historical.py — DeFi: re-derives each historical label at its t0 block
@@ -280,6 +317,7 @@ cace-bench/
 ├── rpc.py                        — DeFi: point-in-time archive reads with evidence capsules
 ├── prereg.py                     — DeFi: commit-reveal pre-registration for the prospective split
 ├── data/
+│   ├── real/german.data          — Statlog German Credit (CC BY 4.0), SHA-256 in data/real/README.md
 │   ├── defi_historical_v0.json   — DeFi historical split, controls and prospective slots
 │   ├── reconstructed/            — per-case reconstruction at t0 with capsules
 │   └── prospective/ledger.jsonl  — public commitments (hashes only)
@@ -290,6 +328,9 @@ cace-bench/
     ├── run-seed0..4.json         — machine-readable results (v0.6), seeds 0–4
     ├── shift/                    — regulatory-shift track: 90 cells, gate logs, tables.md
     ├── shift-eps010/             — tolerance sensitivity (structural family, ε = 0.010)
+    ├── shift-real/               — real-applicant track: 90 cells, subgroups, tables.md
+    ├── shift-real-eps010/        — real applicants, scope family, ε = 0.010
+    ├── shift-real-n1000/         — real applicants, each used once (single pass)
     ├── REPORT-2026-08-03.md      — v0.3 reference run (seed 0, N=23,000)
     ├── REPORT-2026-07-27.md      — v0.2 reference run
     ├── run-seed0-v0.2.0.json     — machine-readable results (v0.2)
