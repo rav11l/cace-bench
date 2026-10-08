@@ -453,10 +453,13 @@ it.
 - Agent-level metrics need large samples; sanctioned cases are rare, so the missed-check
   metric has small support. The missed-flag rate (all truly flaggable cases) is reported
   from v0.6.0.
-- Fairness auditing requires an extended schema with protected attributes, which this
-  benchmark **deliberately omits**. That work is required before any deployment.
+- Fairness auditing requires an extended schema with protected attributes, which the
+  synthetic benchmark **deliberately omits**. The real-applicant track reports error gaps by
+  sex and age on German Credit — a measurement on one small public data set, not a fairness
+  audit, which is required before any deployment.
 - Validation on production data is the natural next step and has not been done.
-- In the regulatory-shift track the proposer is not an LLM; see above.
+- In the regulatory-shift track the main grid's proposer is a seeded search; the
+  language-model proposer is measured on 15 mid-severity runs with an unpinned model; see above.
 - CACE-Bench measures auditability and decision quality; it does **not** by itself
   certify regulatory compliance in any jurisdiction.
 - This is an evidence and methodology tool, not legal or regulatory advice.
