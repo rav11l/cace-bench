@@ -309,6 +309,8 @@ bench/
 ├── METHODOLOGY.md                — full methodology (definitions, protocol, governance)
 ├── DATASHEET.md                  — datasheet for the synthetic data (both credit tracks)
 ├── evolve.py                     — regulatory-shift track: dual loop, gate, hash-chained log (v0.6)
+├── evolve_real.py                — the same track on German Credit applicants, subgroup metrics (0.7.0-dev)
+├── proposer_llm.py               — the same track with a language-model proposer; response cache (0.7.0-dev)
 ├── paper/                        — LaTeX source of the accompanying paper; numbers generated from results/
 ├── REPRODUCIBILITY.md            — environment, seeds and steps to reproduce
 ├── CITATION.cff / CITATION.md    — how to cite (machine-readable + BibTeX and DOI guidance)
@@ -325,6 +327,9 @@ bench/
 │   └── requirements.txt          — dependencies for this module only
 ├── tools/
 │   ├── shift_tables.py           — tables for the regulatory-shift track
+│   ├── real_tables.py            — tables for the real-applicant track (gate, subgroups)
+│   ├── paper_numbers_real.py     — paper/generated/numbers_real.tex, tab_real.tex
+│   ├── llm_tables.py             — LLM vs seeded proposer; missed flags during adaptation
 │   ├── paper_numbers.py          — writes paper/generated/*.tex from the result files
 │   ├── providers_yaml_to_json.py — regenerates configs/providers.json from the registry
 │   ├── reconstruct_historical.py — DeFi: re-derives each historical label at its t0 block
@@ -342,6 +347,7 @@ bench/
 ├── rpc.py                        — DeFi: point-in-time archive reads with evidence capsules
 ├── prereg.py                     — DeFi: commit-reveal pre-registration for the prospective split
 ├── data/
+│   ├── real/german.data          — Statlog German Credit (CC BY 4.0), SHA-256 in data/real/README.md
 │   ├── defi_historical_v0.json   — DeFi historical split, controls and prospective slots
 │   ├── reconstructed/            — per-case reconstruction at t0 with capsules
 │   └── prospective/ledger.jsonl  — public commitments (hashes only)
@@ -352,6 +358,10 @@ bench/
     ├── run-seed0..4.json         — machine-readable results (v0.6), seeds 0–4
     ├── shift/                    — regulatory-shift track: 90 cells, gate logs, tables.md
     ├── shift-eps010/             — tolerance sensitivity (structural family, ε = 0.010)
+    ├── shift-llm/                — language-model proposer: 15 cells, llm_cache.jsonl, tables.md
+    ├── shift-real/               — real-applicant track: 90 cells, subgroups, tables.md
+    ├── shift-real-eps010/        — real applicants, scope family, ε = 0.010
+    ├── shift-real-n1000/         — real applicants, each used once (single pass)
     ├── REPORT-2026-08-03.md      — v0.3 reference run (seed 0, N=23,000)
     ├── REPORT-2026-07-27.md      — v0.2 reference run
     ├── run-seed0-v0.2.0.json     — machine-readable results (v0.2)
@@ -438,10 +448,13 @@ it.
 - Agent-level metrics need large samples; sanctioned cases are rare, so the missed-check
   metric has small support. The missed-flag rate (all truly flaggable cases) is reported
   from v0.6.0.
-- Fairness auditing requires an extended schema with protected attributes, which this
-  benchmark **deliberately omits**. That work is required before any deployment.
+- Fairness auditing requires an extended schema with protected attributes, which the
+  synthetic benchmark **deliberately omits**. The real-applicant track reports error gaps by
+  sex and age on German Credit — a measurement on one small public data set, not a fairness
+  audit, which is required before any deployment.
 - Validation on production data is the natural next step and has not been done.
-- In the regulatory-shift track the proposer is not an LLM; see above.
+- In the regulatory-shift track the main grid's proposer is a seeded search; the
+  language-model proposer is measured on 15 mid-severity runs with an unpinned model; see above.
 - BENCH measures auditability and decision quality; it does **not** by itself
   certify regulatory compliance in any jurisdiction.
 - This is an evidence and methodology tool, not legal or regulatory advice.
