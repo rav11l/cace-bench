@@ -191,6 +191,72 @@ typed library contains the correct primitive by construction. The track measures
 and the gate, not proposal quality.
 
 
+## Language-model proposer (0.7.0-dev)
+
+[`proposer_llm.py`](proposer_llm.py) replaces only the two proposer functions with a language
+model. Each call shows the deployed harness, the triggering error cluster, the window's
+visible error counts, up to six example cases and the typed edit space — never labels, the
+rule version or the gate. Candidates must be JSON inside the typed space; invalid ones are
+dropped. Every response is cached by the SHA-256 of (model, system prompt, prompt), so a run
+with the cache present makes no calls and reproduces exactly.
+
+`results/shift-llm/` — mid severity, three families, 5 seeds (15 runs, 714 calls, 2,245
+candidates, 0 invalid). Responses came from Claude Haiku 4.5 run as isolated sub-agents
+(`--queue` / `--ingest`), so the model version and temperature were not pinned: reproduce
+from the released `llm_cache.jsonl`, not by re-querying.
+
+```bash
+python proposer_llm.py --seeds 5 --severities mid \
+    --model "claude-haiku-4-5 via session subagent (unpinned)" --out results/shift-llm   # replays from cache
+python tools/llm_tables.py results/shift-llm results/shift paper/generated              # tables.md
+python proposer_llm.py --seeds 10 --out results/shift-llm-api   # with ANTHROPIC_API_KEY set
+```
+
+| | No gate | Dual loop, gated |
+|---|---|---|
+| Admitted / harmful (15 runs) | 59 / 13 | 21 / 0 |
+| Ended at the oracle harness | 15 / 15 | 15 / 15 |
+| Missed flags during adaptation, scope family | 22.3% (worst window 87.9%) | 2.0% (oracle level) |
+| Missed flags during adaptation, threshold family | 7.1% | 2.0% |
+
+The model reaches the right harness, but its first proposal after a scope change raises the
+threshold for every hit type; without the gate that is admitted and misses climb until
+audited misses push it back. The gate rejects it, at the cost of slower recovery (scope
+repair completed in window 4–6 against 1–3 with seeded search).
+
+## Regulatory-shift track on real applicants (0.7.0-dev)
+
+[`evolve_real.py`](evolve_real.py) keeps `evolve.py` byte-identical — engine, gate, arms, agent
+noise, constants — and replaces the generated alert stream with the 1,000 applications of the
+Statlog German Credit data (Hofmann 1994, UCI, [doi:10.24432/C5NC77](https://doi.org/10.24432/C5NC77),
+CC BY 4.0; copy and SHA-256 in [data/real/](data/real/README.md)). The primitive becomes an
+affordability screen: loan purpose (five groups) as hit type, a rank-mapped burden index
+(amount / duration) as the first-layer stake, savings and guarantor/co-applicant as the
+mitigants the structural rule credits. Per seed the applicants are split 700 / 300; the gate's
+pool is a bootstrap of the 700, the held-out window a bootstrap of the other 300. Subgroups:
+sex (attribute 9) and age under 25 (attribute 13).
+
+```bash
+python evolve_real.py --seeds 10 --out results/shift-real                       # ~6 min
+python evolve_real.py --seeds 10 --families scope --eps 0.01 --out results/shift-real-eps010
+python evolve_real.py --seeds 10 --n 1000 --window 50 --out results/shift-real-n1000   # each applicant once
+python tools/real_tables.py results/shift-real                                 # tables.md
+```
+
+Over 90 runs ([results/shift-real/tables.md](results/shift-real/tables.md)):
+
+| Arm | Proposed | Admitted | Harmful admissions | Runs with missed flags > 10% |
+|---|---|---|---|---|
+| Dual loop, gated | 6,874 | 171 | 0 | 0 |
+| Same loops, no gate | 5,653 | 539 | 228 | 29 |
+
+The dual loop reached the oracle harness in 80/80 runs outside scope-high and 0/10 within it:
+dropping household goods from scope (47% of applicants) changes so many outputs that execution
+noise exceeds ε = 0.005 on previously correct cases; with ε = 0.01, 9/10 with no harmful
+admission. Where the correct harness is reached, group error gaps equal the oracle's; where
+it is blocked, the residual false positives fall more on women (+2.3 pp FP gap beyond the
+oracle's, mean) and under-25s (+4.2 pp). The screen is a referral policy, not a risk model.
+
 ## Real-dataset baselines (optional, added in v0.4)
 
 For baseline comparison the generator can optionally read public credit datasets:

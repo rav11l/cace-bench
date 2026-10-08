@@ -1,0 +1,1214 @@
+{
+ "arms": [
+  "healthy",
+  "degraded",
+  "oracle",
+  "manual",
+  "no_gate",
+  "dual"
+ ],
+ "engine_version": "0.6.0",
+ "proposer": {
+  "kind": "llm",
+  "max_tokens": 700,
+  "model": "claude-haiku-4-5 via session subagent (unpinned)",
+  "n_examples": 6,
+  "temperature": null
+ },
+ "proposer_stats": {
+  "api_errors": 0,
+  "cache_hits": 714,
+  "calls": 714,
+  "duplicate": 11,
+  "invalid": 0,
+  "returned": 2245
+ },
+ "rows": [
+  {
+   "C_E_per_seed": 2608.6,
+   "admitted": 0,
+   "arm": "degraded",
+   "escalations": 0,
+   "excess_adapt_errors": {
+    "ci": [
+     759.816842334934,
+     816.5831576650661
+    ],
+    "mean": 788.2
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "scope",
+   "fp_rate": {
+    "ci": [
+     0.3585042843973651,
+     0.38222217658106045
+    ],
+    "mean": 0.37036323048921277
+   },
+   "harness_size": {
+    "ci": [
+     228.0,
+     228.0
+    ],
+    "mean": 228.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.013720784324361511,
+     0.021471897967566055
+    ],
+    "mean": 0.017596341145963784
+   },
+   "n_true_clear_per_seed": 2212.6,
+   "n_true_flag_per_seed": 1237.4,
+   "precision": {
+    "ci": [
+     0.5819566331912164,
+     0.6126794626494786
+    ],
+    "mean": 0.5973180479203475
+   },
+   "proposed": 0,
+   "recall": {
+    "ci": [
+     0.9785281020324339,
+     0.9862792156756386
+    ],
+    "mean": 0.9824036588540362
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0,
+     0.0
+    ],
+    "mean": 0.0
+   },
+   "rejected": {},
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2608.6,
+   "admitted": 10,
+   "arm": "dual",
+   "escalations": 20,
+   "excess_adapt_errors": {
+    "ci": [
+     456.16614244745216,
+     647.0338575525479
+    ],
+    "mean": 551.6
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "scope",
+   "fp_rate": {
+    "ci": [
+     0.01417987410985672,
+     0.023776855671948132
+    ],
+    "mean": 0.018978364890902426
+   },
+   "harness_size": {
+    "ci": [
+     189.0,
+     189.0
+    ],
+    "mean": 189.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.013720784324361511,
+     0.021471897967566055
+    ],
+    "mean": 0.017596341145963784
+   },
+   "n_true_clear_per_seed": 2212.6,
+   "n_true_flag_per_seed": 1237.4,
+   "precision": {
+    "ci": [
+     0.9583522847987158,
+     0.9748847515933996
+    ],
+    "mean": 0.9666185181960577
+   },
+   "proposed": 382,
+   "recall": {
+    "ci": [
+     0.9785281020324339,
+     0.9862792156756386
+    ],
+    "mean": 0.9824036588540362
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0033247124816506036,
+     0.007553509204865135
+    ],
+    "mean": 0.005439110843257869
+   },
+   "rejected": {
+    "no_significant_improvement": 74,
+    "regression_on_C": 298
+   },
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 3386.2,
+   "admitted": 0,
+   "arm": "healthy",
+   "escalations": 0,
+   "excess_adapt_errors": {
+    "ci": [
+     759.816842334934,
+     816.5831576650661
+    ],
+    "mean": 788.2
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "scope",
+   "fp_rate": {
+    "ci": [
+     0.011472466029900718,
+     0.02799395048553265
+    ],
+    "mean": 0.019733208257716683
+   },
+   "harness_size": {
+    "ci": [
+     228.0,
+     228.0
+    ],
+    "mean": 228.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.013136473595477045,
+     0.02211031399757729
+    ],
+    "mean": 0.017623393796527168
+   },
+   "n_true_clear_per_seed": 1406.6,
+   "n_true_flag_per_seed": 2043.4,
+   "precision": {
+    "ci": [
+     0.9805289508459735,
+     0.9921701600522513
+    ],
+    "mean": 0.9863495554491124
+   },
+   "proposed": 0,
+   "recall": {
+    "ci": [
+     0.9778896860024228,
+     0.986863526404523
+    ],
+    "mean": 0.9823766062034729
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0,
+     0.0
+    ],
+    "mean": 0.0
+   },
+   "rejected": {},
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2608.6,
+   "admitted": 0,
+   "arm": "manual",
+   "escalations": 0,
+   "excess_adapt_errors": {
+    "ci": [
+     431.9568378769722,
+     487.24316212302784
+    ],
+    "mean": 459.6
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "scope",
+   "fp_rate": {
+    "ci": [
+     0.01417987410985672,
+     0.023776855671948132
+    ],
+    "mean": 0.018978364890902426
+   },
+   "harness_size": {
+    "ci": [
+     189.0,
+     189.0
+    ],
+    "mean": 189.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.013720784324361511,
+     0.021471897967566055
+    ],
+    "mean": 0.017596341145963784
+   },
+   "n_true_clear_per_seed": 2212.6,
+   "n_true_flag_per_seed": 1237.4,
+   "precision": {
+    "ci": [
+     0.9583522847987158,
+     0.9748847515933996
+    ],
+    "mean": 0.9666185181960577
+   },
+   "proposed": 0,
+   "recall": {
+    "ci": [
+     0.9785281020324339,
+     0.9862792156756386
+    ],
+    "mean": 0.9824036588540362
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0033247124816506036,
+     0.007553509204865135
+    ],
+    "mean": 0.005439110843257869
+   },
+   "rejected": {},
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2608.6,
+   "admitted": 32,
+   "arm": "no_gate",
+   "escalations": 11,
+   "excess_adapt_errors": {
+    "ci": [
+     327.1497356078689,
+     422.45026439213115
+    ],
+    "mean": 374.8
+   },
+   "false_admissions_on_H_val": 9,
+   "family": "scope",
+   "fp_rate": {
+    "ci": [
+     0.01417987410985672,
+     0.023776855671948132
+    ],
+    "mean": 0.018978364890902426
+   },
+   "harness_size": {
+    "ci": [
+     189.0,
+     189.0
+    ],
+    "mean": 189.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.013720784324361511,
+     0.021471897967566055
+    ],
+    "mean": 0.017596341145963784
+   },
+   "n_true_clear_per_seed": 2212.6,
+   "n_true_flag_per_seed": 1237.4,
+   "precision": {
+    "ci": [
+     0.9583522847987158,
+     0.9748847515933996
+    ],
+    "mean": 0.9666185181960577
+   },
+   "proposed": 292,
+   "recall": {
+    "ci": [
+     0.9785281020324339,
+     0.9862792156756386
+    ],
+    "mean": 0.9824036588540362
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0033247124816506036,
+     0.007553509204865135
+    ],
+    "mean": 0.005439110843257869
+   },
+   "rejected": {
+    "no_trace_improvement": 260
+   },
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2608.6,
+   "admitted": 0,
+   "arm": "oracle",
+   "escalations": 0,
+   "excess_adapt_errors": {
+    "ci": [
+     0.0,
+     0.0
+    ],
+    "mean": 0.0
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "scope",
+   "fp_rate": {
+    "ci": [
+     0.01417987410985672,
+     0.023776855671948132
+    ],
+    "mean": 0.018978364890902426
+   },
+   "harness_size": {
+    "ci": [
+     189.0,
+     189.0
+    ],
+    "mean": 189.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.013720784324361511,
+     0.021471897967566055
+    ],
+    "mean": 0.017596341145963784
+   },
+   "n_true_clear_per_seed": 2212.6,
+   "n_true_flag_per_seed": 1237.4,
+   "precision": {
+    "ci": [
+     0.9583522847987158,
+     0.9748847515933996
+    ],
+    "mean": 0.9666185181960577
+   },
+   "proposed": 0,
+   "recall": {
+    "ci": [
+     0.9785281020324339,
+     0.9862792156756386
+    ],
+    "mean": 0.9824036588540362
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0033247124816506036,
+     0.007553509204865135
+    ],
+    "mean": 0.005439110843257869
+   },
+   "rejected": {},
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2894.8,
+   "admitted": 0,
+   "arm": "degraded",
+   "escalations": 0,
+   "excess_adapt_errors": {
+    "ci": [
+     482.755050096346,
+     522.8449499036541
+    ],
+    "mean": 502.8
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "struct",
+   "fp_rate": {
+    "ci": [
+     0.26483207644343665,
+     0.2861422102080835
+    ],
+    "mean": 0.2754871433257601
+   },
+   "harness_size": {
+    "ci": [
+     228.0,
+     228.0
+    ],
+    "mean": 228.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.012145915420679453,
+     0.024028322684020584
+    ],
+    "mean": 0.01808711905235002
+   },
+   "n_true_clear_per_seed": 1914.0,
+   "n_true_flag_per_seed": 1536.0,
+   "precision": {
+    "ci": [
+     0.7283322619652753,
+     0.7535054426318201
+    ],
+    "mean": 0.7409188522985477
+   },
+   "proposed": 0,
+   "recall": {
+    "ci": [
+     0.9759716773159794,
+     0.9878540845793204
+    ],
+    "mean": 0.98191288094765
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0,
+     0.0
+    ],
+    "mean": 0.0
+   },
+   "rejected": {},
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2894.8,
+   "admitted": 5,
+   "arm": "dual",
+   "escalations": 23,
+   "excess_adapt_errors": {
+    "ci": [
+     64.94602536126176,
+     75.85397463873825
+    ],
+    "mean": 70.4
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "struct",
+   "fp_rate": {
+    "ci": [
+     0.01307340301275544,
+     0.027406063183871072
+    ],
+    "mean": 0.020239733098313256
+   },
+   "harness_size": {
+    "ci": [
+     253.0,
+     253.0
+    ],
+    "mean": 253.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.012145915420679453,
+     0.024028322684020584
+    ],
+    "mean": 0.01808711905235002
+   },
+   "n_true_clear_per_seed": 1914.0,
+   "n_true_flag_per_seed": 1536.0,
+   "precision": {
+    "ci": [
+     0.9657698333465322,
+     0.9840731576739911
+    ],
+    "mean": 0.9749214955102616
+   },
+   "proposed": 368,
+   "recall": {
+    "ci": [
+     0.9759716773159794,
+     0.9878540845793204
+    ],
+    "mean": 0.98191288094765
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.002758534061387783,
+     0.003735575199719363
+    ],
+    "mean": 0.003247054630553573
+   },
+   "rejected": {
+    "no_significant_improvement": 363
+   },
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 3383.4,
+   "admitted": 0,
+   "arm": "healthy",
+   "escalations": 0,
+   "excess_adapt_errors": {
+    "ci": [
+     482.755050096346,
+     522.8449499036541
+    ],
+    "mean": 502.8
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "struct",
+   "fp_rate": {
+    "ci": [
+     0.01144292956146386,
+     0.03028932147786855
+    ],
+    "mean": 0.020866125519666205
+   },
+   "harness_size": {
+    "ci": [
+     228.0,
+     228.0
+    ],
+    "mean": 228.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.013578862770827394,
+     0.022840997086217
+    ],
+    "mean": 0.018209929928522196
+   },
+   "n_true_clear_per_seed": 1406.6,
+   "n_true_flag_per_seed": 2043.4,
+   "precision": {
+    "ci": [
+     0.978936937107942,
+     0.9922022328697778
+    ],
+    "mean": 0.9855695849888599
+   },
+   "proposed": 0,
+   "recall": {
+    "ci": [
+     0.9771590029137831,
+     0.9864211372291727
+    ],
+    "mean": 0.9817900700714779
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0,
+     0.0
+    ],
+    "mean": 0.0
+   },
+   "rejected": {},
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2894.8,
+   "admitted": 0,
+   "arm": "manual",
+   "escalations": 0,
+   "excess_adapt_errors": {
+    "ci": [
+     285.5952211521242,
+     303.20477884787573
+    ],
+    "mean": 294.4
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "struct",
+   "fp_rate": {
+    "ci": [
+     0.01307340301275544,
+     0.027406063183871072
+    ],
+    "mean": 0.020239733098313256
+   },
+   "harness_size": {
+    "ci": [
+     253.0,
+     253.0
+    ],
+    "mean": 253.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.012145915420679453,
+     0.024028322684020584
+    ],
+    "mean": 0.01808711905235002
+   },
+   "n_true_clear_per_seed": 1914.0,
+   "n_true_flag_per_seed": 1536.0,
+   "precision": {
+    "ci": [
+     0.9657698333465322,
+     0.9840731576739911
+    ],
+    "mean": 0.9749214955102616
+   },
+   "proposed": 0,
+   "recall": {
+    "ci": [
+     0.9759716773159794,
+     0.9878540845793204
+    ],
+    "mean": 0.98191288094765
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.002758534061387783,
+     0.003735575199719363
+    ],
+    "mean": 0.003247054630553573
+   },
+   "rejected": {},
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2894.8,
+   "admitted": 5,
+   "arm": "no_gate",
+   "escalations": 23,
+   "excess_adapt_errors": {
+    "ci": [
+     64.94602536126176,
+     75.85397463873825
+    ],
+    "mean": 70.4
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "struct",
+   "fp_rate": {
+    "ci": [
+     0.01307340301275544,
+     0.027406063183871072
+    ],
+    "mean": 0.020239733098313256
+   },
+   "harness_size": {
+    "ci": [
+     253.0,
+     253.0
+    ],
+    "mean": 253.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.012145915420679453,
+     0.024028322684020584
+    ],
+    "mean": 0.01808711905235002
+   },
+   "n_true_clear_per_seed": 1914.0,
+   "n_true_flag_per_seed": 1536.0,
+   "precision": {
+    "ci": [
+     0.9657698333465322,
+     0.9840731576739911
+    ],
+    "mean": 0.9749214955102616
+   },
+   "proposed": 368,
+   "recall": {
+    "ci": [
+     0.9759716773159794,
+     0.9878540845793204
+    ],
+    "mean": 0.98191288094765
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.002758534061387783,
+     0.003735575199719363
+    ],
+    "mean": 0.003247054630553573
+   },
+   "rejected": {
+    "no_trace_improvement": 363
+   },
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2894.8,
+   "admitted": 0,
+   "arm": "oracle",
+   "escalations": 0,
+   "excess_adapt_errors": {
+    "ci": [
+     0.0,
+     0.0
+    ],
+    "mean": 0.0
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "struct",
+   "fp_rate": {
+    "ci": [
+     0.01307340301275544,
+     0.027406063183871072
+    ],
+    "mean": 0.020239733098313256
+   },
+   "harness_size": {
+    "ci": [
+     253.0,
+     253.0
+    ],
+    "mean": 253.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.012145915420679453,
+     0.024028322684020584
+    ],
+    "mean": 0.01808711905235002
+   },
+   "n_true_clear_per_seed": 1914.0,
+   "n_true_flag_per_seed": 1536.0,
+   "precision": {
+    "ci": [
+     0.9657698333465322,
+     0.9840731576739911
+    ],
+    "mean": 0.9749214955102616
+   },
+   "proposed": 0,
+   "recall": {
+    "ci": [
+     0.9759716773159794,
+     0.9878540845793204
+    ],
+    "mean": 0.98191288094765
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.002758534061387783,
+     0.003735575199719363
+    ],
+    "mean": 0.003247054630553573
+   },
+   "rejected": {},
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2873.4,
+   "admitted": 0,
+   "arm": "degraded",
+   "escalations": 0,
+   "excess_adapt_errors": {
+    "ci": [
+     496.82058425366773,
+     527.1794157463322
+    ],
+    "mean": 512.0
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "thr",
+   "fp_rate": {
+    "ci": [
+     0.27196691438959597,
+     0.295558444721838
+    ],
+    "mean": 0.283762679555717
+   },
+   "harness_size": {
+    "ci": [
+     228.0,
+     228.0
+    ],
+    "mean": 228.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.012066747224623735,
+     0.022868562540674747
+    ],
+    "mean": 0.01746765488264924
+   },
+   "n_true_clear_per_seed": 1938.6,
+   "n_true_flag_per_seed": 1511.4,
+   "precision": {
+    "ci": [
+     0.7175428799954794,
+     0.7418282404200801
+    ],
+    "mean": 0.7296855602077797
+   },
+   "proposed": 0,
+   "recall": {
+    "ci": [
+     0.9771314374593254,
+     0.9879332527753764
+    ],
+    "mean": 0.9825323451173509
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0,
+     0.0
+    ],
+    "mean": 0.0
+   },
+   "rejected": {},
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2873.4,
+   "admitted": 6,
+   "arm": "dual",
+   "escalations": 21,
+   "excess_adapt_errors": {
+    "ci": [
+     64.92743177349527,
+     86.67256822650472
+    ],
+    "mean": 75.8
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "thr",
+   "fp_rate": {
+    "ci": [
+     0.013567382205220989,
+     0.025015889733779127
+    ],
+    "mean": 0.019291635969500058
+   },
+   "harness_size": {
+    "ci": [
+     228.0,
+     228.0
+    ],
+    "mean": 228.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.012066747224623735,
+     0.022868562540674747
+    ],
+    "mean": 0.01746765488264924
+   },
+   "n_true_clear_per_seed": 1938.6,
+   "n_true_flag_per_seed": 1511.4,
+   "precision": {
+    "ci": [
+     0.9684721063801764,
+     0.9824558039218214
+    ],
+    "mean": 0.9754639551509989
+   },
+   "proposed": 389,
+   "recall": {
+    "ci": [
+     0.9771314374593254,
+     0.9879332527753764
+    ],
+    "mean": 0.9825323451173509
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0029527235446495112,
+     0.003729521634288008
+    ],
+    "mean": 0.0033411225894687596
+   },
+   "rejected": {
+    "no_significant_improvement": 374,
+    "regression_on_C": 9
+   },
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 3386.2,
+   "admitted": 0,
+   "arm": "healthy",
+   "escalations": 0,
+   "excess_adapt_errors": {
+    "ci": [
+     496.82058425366773,
+     527.1794157463322
+    ],
+    "mean": 512.0
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "thr",
+   "fp_rate": {
+    "ci": [
+     0.011472466029900718,
+     0.02799395048553265
+    ],
+    "mean": 0.019733208257716683
+   },
+   "harness_size": {
+    "ci": [
+     228.0,
+     228.0
+    ],
+    "mean": 228.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.013136473595477045,
+     0.02211031399757729
+    ],
+    "mean": 0.017623393796527168
+   },
+   "n_true_clear_per_seed": 1406.6,
+   "n_true_flag_per_seed": 2043.4,
+   "precision": {
+    "ci": [
+     0.9805289508459735,
+     0.9921701600522513
+    ],
+    "mean": 0.9863495554491124
+   },
+   "proposed": 0,
+   "recall": {
+    "ci": [
+     0.9778896860024228,
+     0.986863526404523
+    ],
+    "mean": 0.9823766062034729
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0,
+     0.0
+    ],
+    "mean": 0.0
+   },
+   "rejected": {},
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2873.4,
+   "admitted": 0,
+   "arm": "manual",
+   "escalations": 0,
+   "excess_adapt_errors": {
+    "ci": [
+     297.2518268840167,
+     315.5481731159833
+    ],
+    "mean": 306.4
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "thr",
+   "fp_rate": {
+    "ci": [
+     0.013567382205220989,
+     0.025015889733779127
+    ],
+    "mean": 0.019291635969500058
+   },
+   "harness_size": {
+    "ci": [
+     228.0,
+     228.0
+    ],
+    "mean": 228.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.012066747224623735,
+     0.022868562540674747
+    ],
+    "mean": 0.01746765488264924
+   },
+   "n_true_clear_per_seed": 1938.6,
+   "n_true_flag_per_seed": 1511.4,
+   "precision": {
+    "ci": [
+     0.9684721063801764,
+     0.9824558039218214
+    ],
+    "mean": 0.9754639551509989
+   },
+   "proposed": 0,
+   "recall": {
+    "ci": [
+     0.9771314374593254,
+     0.9879332527753764
+    ],
+    "mean": 0.9825323451173509
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0029527235446495112,
+     0.003729521634288008
+    ],
+    "mean": 0.0033411225894687596
+   },
+   "rejected": {},
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2873.4,
+   "admitted": 22,
+   "arm": "no_gate",
+   "escalations": 15,
+   "excess_adapt_errors": {
+    "ci": [
+     108.97973967624125,
+     198.22026032375874
+    ],
+    "mean": 153.6
+   },
+   "false_admissions_on_H_val": 4,
+   "family": "thr",
+   "fp_rate": {
+    "ci": [
+     0.013567382205220989,
+     0.025015889733779127
+    ],
+    "mean": 0.019291635969500058
+   },
+   "harness_size": {
+    "ci": [
+     228.0,
+     228.0
+    ],
+    "mean": 228.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.012066747224623735,
+     0.022868562540674747
+    ],
+    "mean": 0.01746765488264924
+   },
+   "n_true_clear_per_seed": 1938.6,
+   "n_true_flag_per_seed": 1511.4,
+   "precision": {
+    "ci": [
+     0.9684721063801764,
+     0.9824558039218214
+    ],
+    "mean": 0.9754639551509989
+   },
+   "proposed": 322,
+   "recall": {
+    "ci": [
+     0.9771314374593254,
+     0.9879332527753764
+    ],
+    "mean": 0.9825323451173509
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0029527235446495112,
+     0.003729521634288008
+    ],
+    "mean": 0.0033411225894687596
+   },
+   "rejected": {
+    "no_trace_improvement": 300
+   },
+   "seeds": 5,
+   "severity": "mid"
+  },
+  {
+   "C_E_per_seed": 2873.4,
+   "admitted": 0,
+   "arm": "oracle",
+   "escalations": 0,
+   "excess_adapt_errors": {
+    "ci": [
+     0.0,
+     0.0
+    ],
+    "mean": 0.0
+   },
+   "false_admissions_on_H_val": 0,
+   "family": "thr",
+   "fp_rate": {
+    "ci": [
+     0.013567382205220989,
+     0.025015889733779127
+    ],
+    "mean": 0.019291635969500058
+   },
+   "harness_size": {
+    "ci": [
+     228.0,
+     228.0
+    ],
+    "mean": 228.0
+   },
+   "logs_verified": true,
+   "miss_rate": {
+    "ci": [
+     0.012066747224623735,
+     0.022868562540674747
+    ],
+    "mean": 0.01746765488264924
+   },
+   "n_true_clear_per_seed": 1938.6,
+   "n_true_flag_per_seed": 1511.4,
+   "precision": {
+    "ci": [
+     0.9684721063801764,
+     0.9824558039218214
+    ],
+    "mean": 0.9754639551509989
+   },
+   "proposed": 0,
+   "recall": {
+    "ci": [
+     0.9771314374593254,
+     0.9879332527753764
+    ],
+    "mean": 0.9825323451173509
+   },
+   "recovered_to_oracle_seeds": null,
+   "regression_rate": {
+    "ci": [
+     0.0029527235446495112,
+     0.003729521634288008
+    ],
+    "mean": 0.0033411225894687596
+   },
+   "rejected": {},
+   "seeds": 5,
+   "severity": "mid"
+  }
+ ],
+ "version": "0.7.0-dev",
+ "world": "synthetic"
+}
