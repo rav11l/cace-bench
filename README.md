@@ -186,9 +186,9 @@ harness. Known failure: at the highest structural severity the fixed non-regress
 tolerance (ε = 0.005) rejects the correct primitive replacement in 5 of 10 seeds;
 ε = 0.010 recovers all 10 with no harmful admission.
 
-**The proposer is a seeded search over a stated edit space, not a language model**, and the
+**In the main grid the proposer is a seeded search over a stated edit space**, and the
 typed library contains the correct primitive by construction. The track measures the bound
-and the gate, not proposal quality.
+and the gate, not proposal quality. A language-model proposer is measured separately (below).
 
 
 ## Language-model proposer (0.7.0-dev)
