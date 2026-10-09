@@ -45,7 +45,23 @@ Repository: https://github.com/rav11l/cace-bench
 [`paper/`](paper/), with every number generated from the result files in this release:
 
 Akhtyamov, R. (2026). *The Harness as the Only Mutable Surface: Compliance-Bounded
-Self-Evolution of LLM Agents in Credit Pipelines, with a Measured Admission Gate*. Preprint.
+Self-Evolution of LLM Agents in Credit Pipelines, with a Measured Admission Gate*.
+arXiv:2610.10629. https://arxiv.org/abs/2610.10629
+
+```bibtex
+@misc{akhtyamov2026harness,
+  author        = {Akhtyamov, Ravil},
+  title         = {The Harness as the Only Mutable Surface: Compliance-Bounded Self-Evolution
+                   of {LLM} Agents in Credit Pipelines, with a Measured Admission Gate},
+  year          = {2026},
+  eprint        = {2610.10629},
+  archivePrefix = {arXiv},
+  url           = {https://arxiv.org/abs/2610.10629}
+}
+```
+
+arXiv v1 reports the v0.6.0 results; the real-applicant and language-model proposer tracks
+added in 0.7.0-dev are not in it.
 
 Figures from an earlier version of that paper (compliance false-positive rate
 23.7% → 13.5% → 5.1%) were not produced by code in this repository and are superseded;

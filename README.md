@@ -475,6 +475,10 @@ resolves to the latest version). To pin this release, cite v0.6.0 =
 metadata in [CITATION.cff](CITATION.cff); BibTeX and DOI guidance in
 [CITATION.md](CITATION.md).
 
+The accompanying paper: R. Akhtyamov, *The Harness as the Only Mutable Surface:
+Compliance-Bounded Self-Evolution of LLM Agents in Credit Pipelines, with a Measured
+Admission Gate*, [arXiv:2610.10629](https://arxiv.org/abs/2610.10629) (2026).
+
 ## License
 
 **MIT** — see [LICENSE](LICENSE). Chosen so the benchmark can be freely adopted as an
