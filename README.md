@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21394049.svg)](https://doi.org/10.5281/zenodo.21394049)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.6.0-informational.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.7.0-informational.svg)](CHANGELOG.md)
 [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20dataset-rav11l%2Fcace--bench-yellow.svg)](https://huggingface.co/datasets/rav11l/cace-bench)
 
 **Compliance-Aware Credit-agent Evaluation** — *a synthetic agentic evaluation
@@ -195,7 +195,7 @@ and the gate, not proposal quality. A language-model proposer is measured separa
 The figures in the earlier conference submission (compliance FP 23.7% → 13.5% → 5.1%) were
 not produced by code in this repository and are superseded by this track; do not cite them.
 
-## Language-model proposer (0.7.0-dev)
+## Language-model proposer (0.7.0)
 
 [`proposer_llm.py`](proposer_llm.py) replaces only the two proposer functions with a language
 model. Each call shows the deployed harness, the triggering error cluster, the window's
@@ -213,7 +213,7 @@ from the released `llm_cache.jsonl`, not by re-querying.
 python proposer_llm.py --seeds 5 --severities mid \
     --model "claude-haiku-4-5 via session subagent (unpinned)" --out results/shift-llm   # replays from cache
 python tools/llm_tables.py results/shift-llm results/shift paper/generated              # tables.md
-python proposer_llm.py --seeds 10 --out results/shift-llm-api   # with ANTHROPIC_API_KEY set
+python proposer_llm.py --seeds 10 --out results/shift-llm-api   # with CACE_API_KEY set
 ```
 
 | | No gate | Dual loop, gated |
@@ -228,7 +228,7 @@ threshold for every hit type; without the gate that is admitted and misses climb
 audited misses push it back. The gate rejects it, at the cost of slower recovery (scope
 repair completed in window 4–6 against 1–3 with seeded search).
 
-## Regulatory-shift track on real applicants (0.7.0-dev)
+## Regulatory-shift track on real applicants (0.7.0)
 
 [`evolve_real.py`](evolve_real.py) keeps `evolve.py` byte-identical — engine, gate, arms, agent
 noise, constants — and replaces the generated alert stream with the 1,000 applications of the
@@ -313,8 +313,8 @@ cace-bench/
 ├── METHODOLOGY.md                — full methodology (definitions, protocol, governance)
 ├── DATASHEET.md                  — datasheet for the synthetic data (both credit tracks)
 ├── evolve.py                     — regulatory-shift track: dual loop, gate, hash-chained log (v0.6)
-├── evolve_real.py                — the same track on German Credit applicants, subgroup metrics (0.7.0-dev)
-├── proposer_llm.py               — the same track with a language-model proposer; response cache (0.7.0-dev)
+├── evolve_real.py                — the same track on German Credit applicants, subgroup metrics (0.7.0)
+├── proposer_llm.py               — the same track with a language-model proposer; response cache (0.7.0)
 ├── paper/                        — LaTeX source of the accompanying paper; numbers generated from results/
 ├── REPRODUCIBILITY.md            — environment, seeds and steps to reproduce
 ├── CHANGELOG.md                  — version history

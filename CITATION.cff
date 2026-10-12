@@ -9,7 +9,7 @@ authors:
 repository-code: "https://github.com/rav11l/cace-bench"
 url: "https://digitaleconomylab.org"
 abstract: >-
-  Compliance-Aware Credit-agent Evaluation (CACE-Bench): a fully synthetic,
+  Compliance-Aware Credit-agent Evaluation (CACE-Bench): a synthetic,
   reproducible benchmark and generator for evaluating and auto-evolving
   LLM-agent credit pipelines under auditability constraints. Cases are drawn
   per country and each source class is resolved against a provider registry, so
@@ -22,10 +22,13 @@ abstract: >-
   baseline comparison, which reads locally provided copies and redistributes
   nothing. Version 0.6 adds the regulatory-shift track: a dual-loop engine that
   may change only the runtime harness, and an admission gate whose every
-  decision is written to a hash-chained log, measured over 90 runs. No real
-  personal or production credit data is used.
-version: "0.6.0"
-date-released: "2026-10-07"
+  decision is written to a hash-chained log, measured over 90 runs. Version 0.7
+  runs that track on the 1,000 applications of the public, anonymised Statlog
+  German Credit data (CC BY 4.0), with error gaps by sex and age, and adds a
+  language-model proposer with a response cache for exact replay. No
+  production credit data is used.
+version: "0.7.0"
+date-released: "2026-10-12"
 doi: 10.5281/zenodo.21394049
 identifiers:
   - type: doi

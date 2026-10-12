@@ -61,7 +61,7 @@ arXiv:2610.10629. https://arxiv.org/abs/2610.10629
 ```
 
 arXiv v1 reports the v0.6.0 results; the real-applicant and language-model proposer tracks
-added in 0.7.0-dev are not in it.
+added in 0.7.0 are not in it.
 
 Figures from an earlier version of that paper (compliance false-positive rate
 23.7% → 13.5% → 5.1%) were not produced by code in this repository and are superseded;

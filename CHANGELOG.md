@@ -8,7 +8,7 @@ resolves to the latest version.
 
 ---
 
-## [Unreleased] — 0.7.0-dev
+## [0.7.0] — 2026-10-12 — Real applicants and a language-model proposer
 
 ### Added
 - `evolve_real.py` — the regulatory-shift track on the 1,000 real applications of the Statlog
@@ -38,6 +38,12 @@ resolves to the latest version.
   the model's first edits loosen the screen: 13 harmful admissions and 22.3% missed flags
   during adaptation in the scope family, against 0 and 2.0% (oracle level) with the gate,
   which recovers more slowly.
+
+### Not yet included
+- The language-model proposer on the full grid with a pinned model
+  (`claude-haiku-4-5-20251001`, temperature 0), synthetic and German Credit, 90 + 90 runs.
+  The code path is in place and tested with `--mock`; the runs need an API key and will
+  replace the unpinned 15-run pilot in `results/shift-llm/`.
 
 ---
 
