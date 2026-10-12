@@ -29,11 +29,13 @@ calls and reproduces the run exactly. The cache is released with the results.
 
 Running it
 ----------
-The API key is read from the environment variable ``ANTHROPIC_API_KEY`` and is never
-written anywhere. Without a key, ``--mock`` replaces the model by a deterministic stub
+The API key is read from the environment variable ``CACE_API_KEY`` (or, failing that,
+``ANTHROPIC_API_KEY``) and is never written anywhere. Use ``CACE_API_KEY`` when running from
+Claude Code, which would otherwise pick ``ANTHROPIC_API_KEY`` up for its own requests.
+Without a key, ``--mock`` replaces the model by a deterministic stub
 (for testing the plumbing only; its results mean nothing).
 
-    set ANTHROPIC_API_KEY=...            (Windows: $env:ANTHROPIC_API_KEY="..." in PowerShell)
+    export CACE_API_KEY=...              (PowerShell: $env:CACE_API_KEY = Read-Host "key")
     python proposer_llm.py --seeds 10 --out results/shift-llm
     python proposer_llm.py --world real --seeds 10 --out results/shift-llm-real
 
@@ -149,11 +151,14 @@ def _call(user: str) -> str:
     if MOCK:
         text = _mock(user)
     else:
-        api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip().strip('"').strip("'")
+        # CACE_API_KEY first: inside Claude Code, ANTHROPIC_API_KEY would also switch Claude Code's
+        # own billing to the API key, so the run's key is kept under a separate name
+        api_key = (os.environ.get("CACE_API_KEY") or os.environ.get("ANTHROPIC_API_KEY", "")
+                   ).strip().strip('"').strip("'")
         if not api_key:
-            raise SystemExit("ANTHROPIC_API_KEY is not set (or use --mock)")
+            raise SystemExit("Neither CACE_API_KEY nor ANTHROPIC_API_KEY is set (or use --mock)")
         if not api_key.isascii() or any(ch.isspace() for ch in api_key):
-            raise SystemExit(f"ANTHROPIC_API_KEY contains spaces or non-Latin characters "
+            raise SystemExit(f"The API key contains spaces or non-Latin characters "
                              f"({len(api_key)} chars) - it holds some other text, not only the key. "
                              f"Copy just the key (sk-ant-api03-...) and set it again.")
         body = json.dumps({"model": MODEL, "max_tokens": MAX_TOKENS, "temperature": 0,
