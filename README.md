@@ -470,8 +470,8 @@ qualifier. Quoting it as a production result is a misstatement.
 ## How to cite
 
 Archived on Zenodo with a DOI. Cite **10.5281/zenodo.21394049** (concept DOI — always
-resolves to the latest version). To pin this release, cite v0.6.0 =
-[10.5281/zenodo.23207546](https://doi.org/10.5281/zenodo.23207546). Machine-readable
+resolves to the latest version). To pin this release, cite v0.7.0 =
+[10.5281/zenodo.23313365](https://doi.org/10.5281/zenodo.23313365). Machine-readable
 metadata in [CITATION.cff](CITATION.cff); BibTeX and DOI guidance in
 [CITATION.md](CITATION.md).
 

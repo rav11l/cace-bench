@@ -4,14 +4,14 @@
 
 If you use CACE-Bench, please cite:
 
-Akhtyamov, R. (2026). *CACE-Bench: A Synthetic Agentic Evaluation Benchmark for LLM Credit-Pipeline Agents* (v0.6.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.21394049
+Akhtyamov, R. (2026). *CACE-Bench: A Synthetic Agentic Evaluation Benchmark for LLM Credit-Pipeline Agents* (v0.7.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.21394049
 
 Repository: https://github.com/rav11l/cace-bench
 
 ### Which DOI to use
 
 - **`10.5281/zenodo.21394049`** — concept DOI. Always resolves to the latest version. Use this in papers, letters, slides and profile links, so the reference never goes stale.
-- **Version DOI** — shown on each individual Zenodo record. Use this only when you need to pin a specific release, for example to reproduce a published result. v0.6.0 = `10.5281/zenodo.23207546`; the full list is in [CITATION.cff](CITATION.cff).
+- **Version DOI** — shown on each individual Zenodo record. Use this only when you need to pin a specific release, for example to reproduce a published result. v0.7.0 = `10.5281/zenodo.23313365`, v0.6.0 = `10.5281/zenodo.23207546`; the full list is in [CITATION.cff](CITATION.cff).
 
 ### BibTeX
 
@@ -21,7 +21,7 @@ Repository: https://github.com/rav11l/cace-bench
   title     = {{CACE-Bench: A Synthetic Agentic Evaluation Benchmark
                for LLM Credit-Pipeline Agents}},
   year      = {2026},
-  version   = {0.6.0},
+  version   = {0.7.0},
   publisher = {Zenodo},
   doi       = {10.5281/zenodo.21394049},
   url       = {https://doi.org/10.5281/zenodo.21394049},
@@ -31,7 +31,7 @@ Repository: https://github.com/rav11l/cace-bench
 
 ### Citing the results
 
-**This repository** produces two experiments, each regenerated from the code in one command:
+**This repository** produces these experiments, each regenerated from the code in one command:
 
 - *Reference run* ([`cace_bench.py`](cace_bench.py)): compliance false-positive rate
   **22.51% → 4.96%** with the missed-flag rate **15.30% → 3.47%** beside it, on 23,000
@@ -40,6 +40,10 @@ Repository: https://github.com/rav11l/cace-bench
   dual loop admitted **144 of 7,449** candidate harness changes with no harmful
   admission; the same loops without the gate admitted **309** harmful changes and left
   missed flags above 10% in **49 of 90** runs.
+- *Real-applicant track* ([`evolve_real.py`](evolve_real.py), v0.7.0): the same track on the
+  1,000 Statlog German Credit applications; over 90 runs the gated dual loop admitted
+  **171 of 6,874** candidates with no harmful admission; without the gate **228** harmful
+  admissions and missed flags above 10% in **29 of 90** runs.
 
 **The accompanying paper** reports the regulatory-shift track and is built from
 [`paper/`](paper/), with every number generated from the result files in this release:
