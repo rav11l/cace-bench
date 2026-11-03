@@ -1,0 +1,1894 @@
+{
+  "protocol": "Fresh synthetic execution votes; majority at 1,5,11 repeats; per-step plus fixed-H0 regression <=0.005; unchanged gain confidence bound. Estimator never reads original u_slip or oracle. Ground-truth labels remain the existing supervised selection labels.",
+  "limitations": "One repeat-draw seed per scenario; independent symmetric 2% noise assumed by simulator. Frozen proposals after changed decisions are off-policy. No fresh LLM calls; majority vote has no calibrated safety guarantee and correlated LLM errors may persist. Original noisy held-out metrics remain reported.",
+  "script_sha256": "f23f9ac1ed4959c7abe30c88e5675551527bf29ca8cb6afee01ec99bbcb5c4cc",
+  "summary": {
+    "Sol": {
+      "1": {
+        "cells": 15,
+        "oracle_reached": 10,
+        "harmful_on_original_validation": 0,
+        "original_validation_limit_exceeded": 1
+      },
+      "5": {
+        "cells": 15,
+        "oracle_reached": 15,
+        "harmful_on_original_validation": 0,
+        "original_validation_limit_exceeded": 5
+      },
+      "11": {
+        "cells": 15,
+        "oracle_reached": 15,
+        "harmful_on_original_validation": 0,
+        "original_validation_limit_exceeded": 5
+      }
+    },
+    "Haiku": {
+      "1": {
+        "cells": 15,
+        "oracle_reached": 10,
+        "harmful_on_original_validation": 0,
+        "original_validation_limit_exceeded": 1
+      },
+      "5": {
+        "cells": 15,
+        "oracle_reached": 15,
+        "harmful_on_original_validation": 0,
+        "original_validation_limit_exceeded": 5
+      },
+      "11": {
+        "cells": 15,
+        "oracle_reached": 15,
+        "harmful_on_original_validation": 0,
+        "original_validation_limit_exceeded": 5
+      }
+    }
+  },
+  "cells": [
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 0,
+      "repeats": 1,
+      "admitted": 0,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": false,
+      "original_validation_regression": 0.0,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 0,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0051443743776966476,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 0,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0051443743776966476,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 1,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": false,
+      "original_validation_regression": 0.003392020675173639,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 1,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.008560814084962043,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 1,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.008560814084962043,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 2,
+      "repeats": 1,
+      "admitted": 0,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": false,
+      "original_validation_regression": 0.0,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 2,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.007415952537903757,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 2,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.007415952537903757,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 3,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": false,
+      "original_validation_regression": 0.0018163804491413474,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 3,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.004788639365918098,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 3,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.004788639365918098,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 4,
+      "repeats": 1,
+      "admitted": 0,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": false,
+      "original_validation_regression": 0.0,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 4,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.005098684210526316,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 4,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.005098684210526316,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 0,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0033793711431090215,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 0,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0033793711431090215,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 0,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0033793711431090215,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 1,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.00427224513847967,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 1,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.00427224513847967,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 1,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.00427224513847967,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 2,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0028173190984578885,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 2,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0028173190984578885,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 2,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0028173190984578885,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 3,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.005035545023696682,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 3,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.005035545023696682,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 3,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.005035545023696682,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 4,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0028366676619886533,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 4,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0028366676619886533,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 4,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0028366676619886533,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 0,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.003837638376383764,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 0,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.003837638376383764,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 0,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.003837638376383764,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 1,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.004749183734045711,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 1,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.004749183734045711,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 1,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.004749183734045711,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 2,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0048026414527990394,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 2,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0048026414527990394,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 2,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0048026414527990394,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 3,
+      "repeats": 1,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.003246274162608824,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 3,
+      "repeats": 5,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.003246274162608824,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 3,
+      "repeats": 11,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.003246274162608824,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 4,
+      "repeats": 1,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0023721275018532247,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 4,
+      "repeats": 5,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0023721275018532247,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 4,
+      "repeats": 11,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0023721275018532247,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 0,
+      "repeats": 1,
+      "admitted": 0,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": false,
+      "original_validation_regression": 0.0,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 0,
+      "repeats": 5,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0051443743776966476,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 0,
+      "repeats": 11,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0051443743776966476,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 1,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": false,
+      "original_validation_regression": 0.003392020675173639,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 1,
+      "repeats": 5,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.008560814084962043,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 1,
+      "repeats": 11,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.008560814084962043,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 2,
+      "repeats": 1,
+      "admitted": 0,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": false,
+      "original_validation_regression": 0.0,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 2,
+      "repeats": 5,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.007415952537903757,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 2,
+      "repeats": 11,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.007415952537903757,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 3,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": false,
+      "original_validation_regression": 0.0018163804491413474,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 3,
+      "repeats": 5,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.004788639365918098,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 3,
+      "repeats": 11,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.004788639365918098,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 4,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": false,
+      "original_validation_regression": 0.0024671052631578946,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 4,
+      "repeats": 5,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.005098684210526316,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 4,
+      "repeats": 11,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.005098684210526316,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 0,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0033793711431090215,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 0,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0033793711431090215,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 0,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0033793711431090215,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 1,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.00427224513847967,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 1,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.00427224513847967,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 1,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.00427224513847967,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 2,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0028173190984578885,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 2,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0028173190984578885,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 2,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0028173190984578885,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 3,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.005035545023696682,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 3,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.005035545023696682,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 3,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.005035545023696682,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 4,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0028366676619886533,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 4,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0028366676619886533,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 4,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0028366676619886533,
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 0,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.003837638376383764,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 0,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.003837638376383764,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 0,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.003837638376383764,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 1,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.004749183734045711,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 1,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.004749183734045711,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 1,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.004749183734045711,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 2,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0048026414527990394,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 2,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0048026414527990394,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 2,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0048026414527990394,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 3,
+      "repeats": 1,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.003246274162608824,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 3,
+      "repeats": 5,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.003246274162608824,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 3,
+      "repeats": 11,
+      "admitted": 2,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.003246274162608824,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 4,
+      "repeats": 1,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0023721275018532247,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 4,
+      "repeats": 5,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0023721275018532247,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 4,
+      "repeats": 11,
+      "admitted": 1,
+      "harmful_on_original_validation": 0,
+      "oracle_reached": true,
+      "original_validation_regression": 0.0023721275018532247,
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    }
+  ]
+}

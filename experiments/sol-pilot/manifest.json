@@ -1,0 +1,27 @@
+{
+  "model": "gpt-6.1-sol via Codex CLI isolated sessions (unpinned, low effort)",
+  "temperature": null,
+  "reasoning_effort": "low",
+  "seeds": 5,
+  "families": [
+    "thr",
+    "scope",
+    "struct"
+  ],
+  "severity": "mid",
+  "world": "synthetic",
+  "started_at": "2026-11-03T12:02:01.864830+00:00",
+  "source_commit": "69fdf032e1b0f389f421a3ce56a26e389c186a12",
+  "source_hashes": {
+    "proposer_llm.py": "af1d6f3aa8fb777f3518be27a3f8c8d9823fe5ad9ba1b1569c6eb372d420ebdc",
+    "evolve.py": "a4f1222f7d6f5a822319c06b3c92340aaf5e10a38eccacc5e52dd9234655cc19"
+  },
+  "protocol_notes": [
+    "Codex agent system instructions also apply; not raw API equivalence.",
+    "One new ephemeral session per cache miss; tool-use responses are rejected.",
+    "Model snapshot and temperature cannot be pinned through this CLI.",
+    "No reference answers or source repository supplied to model."
+  ],
+  "status": "completed",
+  "updated_at": "2026-11-03T12:39:37.354491+00:00"
+}

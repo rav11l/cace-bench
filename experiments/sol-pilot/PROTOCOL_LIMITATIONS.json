@@ -1,0 +1,9 @@
+{
+  "scope": "Preliminary synthetic mid-severity pilot, seeds 0..4, thr/scope/struct",
+  "limitations": [
+    "Codex CLI system context remains active; this is not a raw model API run.",
+    "Temperature and exact serving snapshot are not controlled.",
+    "Original harness metadata max_tokens=700 describes its Anthropic API path; the CLI path does NOT enforce that cap. Do not interpret 700 as this run output cap.",
+    "Cache replay establishes reproducibility of evaluation, not determinism of fresh model calls."
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "status": "deferred_no_api_access",
+  "user_confirmed": "2026-11-03",
+  "model": "claude-haiku-4-5-20251001",
+  "temperature": 0,
+  "synthetic_cells": 90,
+  "german_credit_cells": 90,
+  "completed_cells": 0
+}
