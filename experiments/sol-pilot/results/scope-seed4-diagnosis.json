@@ -1,0 +1,65 @@
+{
+  "scenario": "scope/mid/seed4",
+  "epsilon_unchanged": 0.005,
+  "method": "Offline regeneration of original selection pool and gate; no LLM calls",
+  "direct_to_oracle": {
+    "diff": "scope -adverse_media_high; scope -adverse_media_low",
+    "decision": "regression_on_C",
+    "improvement_ok": true,
+    "regression_ok": false,
+    "target": "fp",
+    "gain": 0.3484789391575663,
+    "gain_ci": [
+      0.3350293993954996,
+      0.361928478919633
+    ],
+    "improved": 1824,
+    "worsened": 37,
+    "n_target": 5128,
+    "C_size": 6101,
+    "C_regressed": 37,
+    "C_regression_rate": 0.006064579577118505
+  },
+  "sequential_step_1": {
+    "diff": "scope -adverse_media_low",
+    "decision": "admitted",
+    "improvement_ok": true,
+    "regression_ok": true,
+    "target": "fp",
+    "gain": 0.1747269890795632,
+    "gain_ci": [
+      0.16398806162418203,
+      0.18546591653494435
+    ],
+    "improved": 921,
+    "worsened": 25,
+    "n_target": 5128,
+    "C_size": 6101,
+    "C_regressed": 25,
+    "C_regression_rate": 0.004097688903458449
+  },
+  "sequential_step_2": {
+    "diff": "scope -adverse_media_high",
+    "decision": "admitted",
+    "improvement_ok": true,
+    "regression_ok": true,
+    "target": "fp",
+    "gain": 0.17375195007800312,
+    "gain_ci": [
+      0.16321389904798034,
+      0.1842900011080259
+    ],
+    "improved": 903,
+    "worsened": 12,
+    "n_target": 5128,
+    "C_size": 6997,
+    "C_regressed": 12,
+    "C_regression_rate": 0.0017150207231670716
+  },
+  "sol_oracle_proposals_rejected": 9,
+  "sol_final_fp_rate": 0.3685897435897436,
+  "finding": "Gate is path-dependent: the same final harness is rejected directly and admitted through two steps. C is recomputed relative to the current harness.",
+  "interpretation": "Failure to reach the oracle is not failure to propose it. Execution noise and per-step regression limits contribute. Sequential admission is not a cumulative regression guarantee.",
+  "next_experiment": "Pre-register atomic proposal and fixed-baseline cumulative regression variants; evaluate separately on held-out data without changing this pilot's results.",
+  "limitations": "Synthetic mid-severity pilot; unpinned Codex model, not raw API; output token cap not enforced. This diagnoses CACE-Bench, not a deployed Cauce LLM integration."
+}

@@ -1,0 +1,3596 @@
+{
+  "protocol": "Noise ablation: set u_slip=1 only in copied selection cases for per-step gate and cumulative H0 gate; EPS unchanged. Report both original noisy and clean held-out metrics. Frozen proposal order.",
+  "limitations": "Simulator-only diagnostic using known latent slip draws, not an estimated noise correction or a deployable gate. Observed regressions are not eliminated. After divergent admissions proposals are off-policy. No new LLM calls; no source or production changes.",
+  "previous_summary": {
+    "Sol": {
+      "original": {
+        "cells": 15,
+        "oracle_reached": 14,
+        "admitted": 20,
+        "blocked_by_fixed_baseline": 0,
+        "harmful_on_validation": 0,
+        "cells_over_selection_limit": 5,
+        "cells_over_validation_limit": 4
+      },
+      "fixed_baseline_added": {
+        "cells": 15,
+        "oracle_reached": 9,
+        "admitted": 15,
+        "blocked_by_fixed_baseline": 5,
+        "harmful_on_validation": 0,
+        "cells_over_selection_limit": 0,
+        "cells_over_validation_limit": 1
+      }
+    },
+    "Haiku": {
+      "original": {
+        "cells": 15,
+        "oracle_reached": 15,
+        "admitted": 21,
+        "blocked_by_fixed_baseline": 0,
+        "harmful_on_validation": 0,
+        "cells_over_selection_limit": 6,
+        "cells_over_validation_limit": 5
+      },
+      "fixed_baseline_added": {
+        "cells": 15,
+        "oracle_reached": 9,
+        "admitted": 15,
+        "blocked_by_fixed_baseline": 6,
+        "harmful_on_validation": 0,
+        "cells_over_selection_limit": 0,
+        "cells_over_validation_limit": 1
+      }
+    }
+  },
+  "summary": {
+    "Sol": {
+      "cells": 15,
+      "oracle_reached": 15,
+      "admitted": 17,
+      "harmful_admissions_on_noisy_validation": 0,
+      "rule_only_validation_limit_exceeded": 0,
+      "observed_validation_limit_exceeded": 5,
+      "rule_only_evaluation_errors": 0
+    },
+    "Haiku": {
+      "cells": 15,
+      "oracle_reached": 15,
+      "admitted": 21,
+      "harmful_admissions_on_noisy_validation": 0,
+      "rule_only_validation_limit_exceeded": 0,
+      "observed_validation_limit_exceeded": 5,
+      "rule_only_evaluation_errors": 0
+    }
+  },
+  "cells": [
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 0,
+      "oracle_observed_selection_regressions": 36,
+      "oracle_regressions_on_slip_cases": 36,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6162,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 36,
+            "correct_baseline": 6085,
+            "rate": 0.005916187345932621
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6162,
+            "rate": 0.0
+          },
+          "observed_errors": 149,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 31,
+            "correct_baseline": 6026,
+            "rate": 0.0051443743776966476
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6121,
+            "rate": 0.0
+          },
+          "observed_errors": 157,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 11,
+            "correct_baseline": 2563,
+            "rate": 0.004291845493562232
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2599,
+            "rate": 0.0
+          },
+          "observed_errors": 58,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 1,
+      "oracle_observed_selection_regressions": 36,
+      "oracle_regressions_on_slip_cases": 36,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6122,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 36,
+            "correct_baseline": 6038,
+            "rate": 0.0059622391520370984
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6122,
+            "rate": 0.0
+          },
+          "observed_errors": 156,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 53,
+            "correct_baseline": 6191,
+            "rate": 0.008560814084962043
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6241,
+            "rate": 0.0
+          },
+          "observed_errors": 156,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 12,
+            "correct_baseline": 2619,
+            "rate": 0.004581901489117984
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2670,
+            "rate": 0.0
+          },
+          "observed_errors": 75,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 2,
+      "oracle_observed_selection_regressions": 35,
+      "oracle_regressions_on_slip_cases": 35,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6086,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 35,
+            "correct_baseline": 6005,
+            "rate": 0.005828476269775187
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6086,
+            "rate": 0.0
+          },
+          "observed_errors": 151,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 45,
+            "correct_baseline": 6068,
+            "rate": 0.007415952537903757
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6173,
+            "rate": 0.0
+          },
+          "observed_errors": 195,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 12,
+            "correct_baseline": 2619,
+            "rate": 0.004581901489117984
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2650,
+            "rate": 0.0
+          },
+          "observed_errors": 55,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 3,
+      "oracle_observed_selection_regressions": 48,
+      "oracle_regressions_on_slip_cases": 48,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6162,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 48,
+            "correct_baseline": 6086,
+            "rate": 0.007886953664147224
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6162,
+            "rate": 0.0
+          },
+          "observed_errors": 172,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 29,
+            "correct_baseline": 6056,
+            "rate": 0.004788639365918098
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6137,
+            "rate": 0.0
+          },
+          "observed_errors": 139,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 22,
+            "correct_baseline": 2617,
+            "rate": 0.008406572411157814
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2640,
+            "rate": 0.0
+          },
+          "observed_errors": 67,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "scope",
+      "seed": 4,
+      "oracle_observed_selection_regressions": 37,
+      "oracle_regressions_on_slip_cases": 37,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6189,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 37,
+            "correct_baseline": 6101,
+            "rate": 0.006064579577118505
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6189,
+            "rate": 0.0
+          },
+          "observed_errors": 162,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 31,
+            "correct_baseline": 6080,
+            "rate": 0.005098684210526316
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6164,
+            "rate": 0.0
+          },
+          "observed_errors": 146,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 14,
+            "correct_baseline": 2625,
+            "rate": 0.005333333333333333
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2661,
+            "rate": 0.0
+          },
+          "observed_errors": 64,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 0,
+      "oracle_observed_selection_regressions": 21,
+      "oracle_regressions_on_slip_cases": 21,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6810,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 21,
+            "correct_baseline": 6696,
+            "rate": 0.0031362007168458782
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6810,
+            "rate": 0.0
+          },
+          "observed_errors": 156,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 23,
+            "correct_baseline": 6806,
+            "rate": 0.0033793711431090215
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6916,
+            "rate": 0.0
+          },
+          "observed_errors": 156,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 8,
+            "correct_baseline": 2879,
+            "rate": 0.0027787426189649182
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2921,
+            "rate": 0.0
+          },
+          "observed_errors": 58,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 1,
+      "oracle_observed_selection_regressions": 25,
+      "oracle_regressions_on_slip_cases": 25,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6817,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 25,
+            "correct_baseline": 6716,
+            "rate": 0.0037224538415723644
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6817,
+            "rate": 0.0
+          },
+          "observed_errors": 151,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 29,
+            "correct_baseline": 6788,
+            "rate": 0.00427224513847967
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6884,
+            "rate": 0.0
+          },
+          "observed_errors": 154,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 11,
+            "correct_baseline": 2879,
+            "rate": 0.0038207711010767626
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2937,
+            "rate": 0.0
+          },
+          "observed_errors": 80,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 2,
+      "oracle_observed_selection_regressions": 21,
+      "oracle_regressions_on_slip_cases": 21,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6868,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 21,
+            "correct_baseline": 6750,
+            "rate": 0.003111111111111111
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6868,
+            "rate": 0.0
+          },
+          "observed_errors": 160,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 19,
+            "correct_baseline": 6744,
+            "rate": 0.0028173190984578885
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6889,
+            "rate": 0.0
+          },
+          "observed_errors": 183,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 10,
+            "correct_baseline": 2921,
+            "rate": 0.003423485107839781
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2958,
+            "rate": 0.0
+          },
+          "observed_errors": 57,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 3,
+      "oracle_observed_selection_regressions": 28,
+      "oracle_regressions_on_slip_cases": 28,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6857,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 28,
+            "correct_baseline": 6733,
+            "rate": 0.004158621713946235
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6857,
+            "rate": 0.0
+          },
+          "observed_errors": 180,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 34,
+            "correct_baseline": 6752,
+            "rate": 0.005035545023696682
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6838,
+            "rate": 0.0
+          },
+          "observed_errors": 154,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 9,
+            "correct_baseline": 2892,
+            "rate": 0.0031120331950207467
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2942,
+            "rate": 0.0
+          },
+          "observed_errors": 68,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "struct",
+      "seed": 4,
+      "oracle_observed_selection_regressions": 30,
+      "oracle_regressions_on_slip_cases": 30,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6838,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 30,
+            "correct_baseline": 6739,
+            "rate": 0.004451699065143196
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6838,
+            "rate": 0.0
+          },
+          "observed_errors": 159,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 19,
+            "correct_baseline": 6698,
+            "rate": 0.0028366676619886533
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6805,
+            "rate": 0.0
+          },
+          "observed_errors": 145,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 9,
+            "correct_baseline": 2903,
+            "rate": 0.003100241129865656
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2955,
+            "rate": 0.0
+          },
+          "observed_errors": 70,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 0,
+      "oracle_observed_selection_regressions": 12,
+      "oracle_regressions_on_slip_cases": 12,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6826,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 12,
+            "correct_baseline": 6701,
+            "rate": 0.0017907774958961348
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6826,
+            "rate": 0.0
+          },
+          "observed_errors": 149,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 26,
+            "correct_baseline": 6775,
+            "rate": 0.003837638376383764
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6880,
+            "rate": 0.0
+          },
+          "observed_errors": 157,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 9,
+            "correct_baseline": 2850,
+            "rate": 0.003157894736842105
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2890,
+            "rate": 0.0
+          },
+          "observed_errors": 58,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 1,
+      "oracle_observed_selection_regressions": 23,
+      "oracle_regressions_on_slip_cases": 23,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6779,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 23,
+            "correct_baseline": 6669,
+            "rate": 0.003448792922477133
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6779,
+            "rate": 0.0
+          },
+          "observed_errors": 156,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 32,
+            "correct_baseline": 6738,
+            "rate": 0.004749183734045711
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6830,
+            "rate": 0.0
+          },
+          "observed_errors": 156,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 9,
+            "correct_baseline": 2895,
+            "rate": 0.0031088082901554403
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2952,
+            "rate": 0.0
+          },
+          "observed_errors": 75,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 2,
+      "oracle_observed_selection_regressions": 23,
+      "oracle_regressions_on_slip_cases": 23,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6829,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 23,
+            "correct_baseline": 6724,
+            "rate": 0.003420582986317668
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6829,
+            "rate": 0.0
+          },
+          "observed_errors": 151,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 32,
+            "correct_baseline": 6663,
+            "rate": 0.0048026414527990394
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6794,
+            "rate": 0.0
+          },
+          "observed_errors": 195,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 10,
+            "correct_baseline": 2894,
+            "rate": 0.0034554250172771253
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2929,
+            "rate": 0.0
+          },
+          "observed_errors": 55,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 3,
+      "oracle_observed_selection_regressions": 34,
+      "oracle_regressions_on_slip_cases": 34,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6831,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 2,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 34,
+            "correct_baseline": 6727,
+            "rate": 0.00505425895644418
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6831,
+            "rate": 0.0
+          },
+          "observed_errors": 172,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 22,
+            "correct_baseline": 6777,
+            "rate": 0.003246274162608824
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6872,
+            "rate": 0.0
+          },
+          "observed_errors": 139,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 11,
+            "correct_baseline": 2863,
+            "rate": 0.0038421236465246244
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2908,
+            "rate": 0.0
+          },
+          "observed_errors": 67,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Sol",
+      "family": "thr",
+      "seed": 4,
+      "oracle_observed_selection_regressions": 28,
+      "oracle_regressions_on_slip_cases": 28,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6821,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 2,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 28,
+            "correct_baseline": 6715,
+            "rate": 0.004169769173492182
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6821,
+            "rate": 0.0
+          },
+          "observed_errors": 162,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 16,
+            "correct_baseline": 6745,
+            "rate": 0.0023721275018532247
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6859,
+            "rate": 0.0
+          },
+          "observed_errors": 146,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 9,
+            "correct_baseline": 2865,
+            "rate": 0.0031413612565445027
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2911,
+            "rate": 0.0
+          },
+          "observed_errors": 64,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "admitted",
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 0,
+      "oracle_observed_selection_regressions": 36,
+      "oracle_regressions_on_slip_cases": 36,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6162,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 2,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 36,
+            "correct_baseline": 6085,
+            "rate": 0.005916187345932621
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6162,
+            "rate": 0.0
+          },
+          "observed_errors": 149,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 31,
+            "correct_baseline": 6026,
+            "rate": 0.0051443743776966476
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6121,
+            "rate": 0.0
+          },
+          "observed_errors": 157,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 11,
+            "correct_baseline": 2563,
+            "rate": 0.004291845493562232
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2599,
+            "rate": 0.0
+          },
+          "observed_errors": 58,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "regression_on_C",
+        "no_significant_improvement",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "regression_on_C",
+        "regression_on_C",
+        "no_significant_improvement",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 1,
+      "oracle_observed_selection_regressions": 36,
+      "oracle_regressions_on_slip_cases": 36,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6122,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 2,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 36,
+            "correct_baseline": 6038,
+            "rate": 0.0059622391520370984
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6122,
+            "rate": 0.0
+          },
+          "observed_errors": 156,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 53,
+            "correct_baseline": 6191,
+            "rate": 0.008560814084962043
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6241,
+            "rate": 0.0
+          },
+          "observed_errors": 156,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 12,
+            "correct_baseline": 2619,
+            "rate": 0.004581901489117984
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2670,
+            "rate": 0.0
+          },
+          "observed_errors": 75,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 2,
+      "oracle_observed_selection_regressions": 35,
+      "oracle_regressions_on_slip_cases": 35,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6086,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 2,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 35,
+            "correct_baseline": 6005,
+            "rate": 0.005828476269775187
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6086,
+            "rate": 0.0
+          },
+          "observed_errors": 151,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 45,
+            "correct_baseline": 6068,
+            "rate": 0.007415952537903757
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6173,
+            "rate": 0.0
+          },
+          "observed_errors": 195,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 12,
+            "correct_baseline": 2619,
+            "rate": 0.004581901489117984
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2650,
+            "rate": 0.0
+          },
+          "observed_errors": 55,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "no_significant_improvement",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "no_significant_improvement",
+        "regression_on_C",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 3,
+      "oracle_observed_selection_regressions": 48,
+      "oracle_regressions_on_slip_cases": 48,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6162,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 2,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 48,
+            "correct_baseline": 6086,
+            "rate": 0.007886953664147224
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6162,
+            "rate": 0.0
+          },
+          "observed_errors": 172,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 29,
+            "correct_baseline": 6056,
+            "rate": 0.004788639365918098
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6137,
+            "rate": 0.0
+          },
+          "observed_errors": 139,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 22,
+            "correct_baseline": 2617,
+            "rate": 0.008406572411157814
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2640,
+            "rate": 0.0
+          },
+          "observed_errors": 67,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "no_significant_improvement",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "no_significant_improvement",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "scope",
+      "seed": 4,
+      "oracle_observed_selection_regressions": 37,
+      "oracle_regressions_on_slip_cases": 37,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6189,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 2,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 37,
+            "correct_baseline": 6101,
+            "rate": 0.006064579577118505
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6189,
+            "rate": 0.0
+          },
+          "observed_errors": 162,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 31,
+            "correct_baseline": 6080,
+            "rate": 0.005098684210526316
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6164,
+            "rate": 0.0
+          },
+          "observed_errors": 146,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 14,
+            "correct_baseline": 2625,
+            "rate": 0.005333333333333333
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2661,
+            "rate": 0.0
+          },
+          "observed_errors": 64,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "regression_on_C",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 0,
+      "oracle_observed_selection_regressions": 21,
+      "oracle_regressions_on_slip_cases": 21,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6810,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 21,
+            "correct_baseline": 6696,
+            "rate": 0.0031362007168458782
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6810,
+            "rate": 0.0
+          },
+          "observed_errors": 156,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 23,
+            "correct_baseline": 6806,
+            "rate": 0.0033793711431090215
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6916,
+            "rate": 0.0
+          },
+          "observed_errors": 156,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 8,
+            "correct_baseline": 2879,
+            "rate": 0.0027787426189649182
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2921,
+            "rate": 0.0
+          },
+          "observed_errors": 58,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 1,
+      "oracle_observed_selection_regressions": 25,
+      "oracle_regressions_on_slip_cases": 25,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6817,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 25,
+            "correct_baseline": 6716,
+            "rate": 0.0037224538415723644
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6817,
+            "rate": 0.0
+          },
+          "observed_errors": 151,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 29,
+            "correct_baseline": 6788,
+            "rate": 0.00427224513847967
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6884,
+            "rate": 0.0
+          },
+          "observed_errors": 154,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 11,
+            "correct_baseline": 2879,
+            "rate": 0.0038207711010767626
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2937,
+            "rate": 0.0
+          },
+          "observed_errors": 80,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 2,
+      "oracle_observed_selection_regressions": 21,
+      "oracle_regressions_on_slip_cases": 21,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6868,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 21,
+            "correct_baseline": 6750,
+            "rate": 0.003111111111111111
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6868,
+            "rate": 0.0
+          },
+          "observed_errors": 160,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 19,
+            "correct_baseline": 6744,
+            "rate": 0.0028173190984578885
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6889,
+            "rate": 0.0
+          },
+          "observed_errors": 183,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 10,
+            "correct_baseline": 2921,
+            "rate": 0.003423485107839781
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2958,
+            "rate": 0.0
+          },
+          "observed_errors": 57,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 3,
+      "oracle_observed_selection_regressions": 28,
+      "oracle_regressions_on_slip_cases": 28,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6857,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 28,
+            "correct_baseline": 6733,
+            "rate": 0.004158621713946235
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6857,
+            "rate": 0.0
+          },
+          "observed_errors": 180,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 34,
+            "correct_baseline": 6752,
+            "rate": 0.005035545023696682
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6838,
+            "rate": 0.0
+          },
+          "observed_errors": 154,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 9,
+            "correct_baseline": 2892,
+            "rate": 0.0031120331950207467
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2942,
+            "rate": 0.0
+          },
+          "observed_errors": 68,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "struct",
+      "seed": 4,
+      "oracle_observed_selection_regressions": 30,
+      "oracle_regressions_on_slip_cases": 30,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6838,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 30,
+            "correct_baseline": 6739,
+            "rate": 0.004451699065143196
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6838,
+            "rate": 0.0
+          },
+          "observed_errors": 159,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 19,
+            "correct_baseline": 6698,
+            "rate": 0.0028366676619886533
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6805,
+            "rate": 0.0
+          },
+          "observed_errors": 145,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 9,
+            "correct_baseline": 2903,
+            "rate": 0.003100241129865656
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2955,
+            "rate": 0.0
+          },
+          "observed_errors": 70,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "effective_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.25
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 0,
+      "oracle_observed_selection_regressions": 12,
+      "oracle_regressions_on_slip_cases": 12,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6826,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 12,
+            "correct_baseline": 6701,
+            "rate": 0.0017907774958961348
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6826,
+            "rate": 0.0
+          },
+          "observed_errors": 149,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 26,
+            "correct_baseline": 6775,
+            "rate": 0.003837638376383764
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6880,
+            "rate": 0.0
+          },
+          "observed_errors": 157,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 9,
+            "correct_baseline": 2850,
+            "rate": 0.003157894736842105
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2890,
+            "rate": 0.0
+          },
+          "observed_errors": 58,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 1,
+      "oracle_observed_selection_regressions": 23,
+      "oracle_regressions_on_slip_cases": 23,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6779,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 23,
+            "correct_baseline": 6669,
+            "rate": 0.003448792922477133
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6779,
+            "rate": 0.0
+          },
+          "observed_errors": 156,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 32,
+            "correct_baseline": 6738,
+            "rate": 0.004749183734045711
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6830,
+            "rate": 0.0
+          },
+          "observed_errors": 156,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 9,
+            "correct_baseline": 2895,
+            "rate": 0.0031088082901554403
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2952,
+            "rate": 0.0
+          },
+          "observed_errors": 75,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 2,
+      "oracle_observed_selection_regressions": 23,
+      "oracle_regressions_on_slip_cases": 23,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6829,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 23,
+            "correct_baseline": 6724,
+            "rate": 0.003420582986317668
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6829,
+            "rate": 0.0
+          },
+          "observed_errors": 151,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 32,
+            "correct_baseline": 6663,
+            "rate": 0.0048026414527990394
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6794,
+            "rate": 0.0
+          },
+          "observed_errors": 195,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 10,
+            "correct_baseline": 2894,
+            "rate": 0.0034554250172771253
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2929,
+            "rate": 0.0
+          },
+          "observed_errors": 55,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 3,
+      "oracle_observed_selection_regressions": 34,
+      "oracle_regressions_on_slip_cases": 34,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6831,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 2,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 34,
+            "correct_baseline": 6727,
+            "rate": 0.00505425895644418
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6831,
+            "rate": 0.0
+          },
+          "observed_errors": 172,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 22,
+            "correct_baseline": 6777,
+            "rate": 0.003246274162608824
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6872,
+            "rate": 0.0
+          },
+          "observed_errors": 139,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 11,
+            "correct_baseline": 2863,
+            "rate": 0.0038421236465246244
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2908,
+            "rate": 0.0
+          },
+          "observed_errors": 67,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    },
+    {
+      "model": "Haiku",
+      "family": "thr",
+      "seed": 4,
+      "oracle_observed_selection_regressions": 28,
+      "oracle_regressions_on_slip_cases": 28,
+      "oracle_rule_only_selection_regression": {
+        "regressed": 0,
+        "correct_baseline": 6821,
+        "rate": 0.0
+      },
+      "oracle_reached": true,
+      "admitted": 1,
+      "blocked_cumulative": 0,
+      "harmful_admissions_on_noisy_validation": 0,
+      "metrics": {
+        "selection": {
+          "observed_regression": {
+            "regressed": 28,
+            "correct_baseline": 6715,
+            "rate": 0.004169769173492182
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6821,
+            "rate": 0.0
+          },
+          "observed_errors": 162,
+          "rule_only_errors": 0
+        },
+        "validation": {
+          "observed_regression": {
+            "regressed": 16,
+            "correct_baseline": 6745,
+            "rate": 0.0023721275018532247
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 6859,
+            "rate": 0.0
+          },
+          "observed_errors": 146,
+          "rule_only_errors": 0
+        },
+        "evaluation": {
+          "observed_regression": {
+            "regressed": 9,
+            "correct_baseline": 2865,
+            "rate": 0.0031413612565445027
+          },
+          "rule_only_regression": {
+            "regressed": 0,
+            "correct_baseline": 2911,
+            "rate": 0.0
+          },
+          "observed_errors": 64,
+          "rule_only_errors": 0
+        }
+      },
+      "decisions": [
+        "regression_on_C",
+        "regression_on_C",
+        "admitted",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement",
+        "no_significant_improvement"
+      ],
+      "final_harness": {
+        "primitive": "direct_stake_check",
+        "scope": [
+          "adverse_media_high",
+          "adverse_media_low",
+          "designation",
+          "pep_domestic",
+          "pep_foreign"
+        ],
+        "theta": 0.4
+      }
+    }
+  ]
+}
